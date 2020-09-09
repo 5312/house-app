@@ -1,0 +1,209 @@
+.fixed {
+	position: fixed;
+}
+
+.tblr {
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+.bg-white {
+	background: white;
+}
+
+.flex {
+	display: flex;
+}
+
+.a-center {
+	align-items: center;
+}
+
+.w100 {
+	width: 100%;
+}
+
+.h100 {
+	height: 100%;
+}
+
+.inline-block {
+	display: inline-block;
+}
+
+.nowrap {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.flex1 {
+	flex: 1;
+}
+
+.flex-shrink {
+	flex-shrink: 0;
+}
+
+.j-center {
+	justify-content: center;
+}
+
+.j-start {
+	justify-content: flex-start;
+}
+
+.j-end {
+	justify-content: flex-end;
+}
+
+.j-between {
+	justify-content: space-between;
+}
+
+.a-center {
+	align-items: center;
+}
+
+.a-start {
+	align-items: flex-start;
+}
+
+.a-end {
+	align-items: flex-end;
+}
+
+.flex-column {
+	flex-direction: column;
+}
+
+.flex-row {
+	flex-direction: row;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.absolute {
+	position: absolute;
+}
+
+.relative {
+	position: relative;
+}
+
+.radius {
+	border-radius: 50%;
+}
+
+.border-radius-8 {
+	border-radius: 8rpx;
+}
+
+.bg-bule {
+	background: #EDEDED;
+}
+
+.text-white {
+	color: white;
+}
+
+.height-80 {
+	height: 80rpx;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.border-bottom {
+	border-bottom: 1rpx solid #f4f4f5;
+}
+
+.border-top {
+	border-top: 1rpx solid #f4f4f5;
+}
+
+.border-right {
+	border-right: 1rpx solid #f4f4f5;
+}
+
+.border {
+	border: 1rpx solid #f4f4f5;
+}
+
+.bg-white {
+	background: #FFFFFF;
+}
+
+.min-height-100 {
+	min-height: 100vh;
+}
+
+.tabbar-bg {
+	background: #EDEDED;
+}
+
+.page-bg {
+	background: #E6E6E6;
+}
+
+.padding-lr-40 {
+	padding: 0 40rpx;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.text-blue {
+	color: #479AFE;
+}
+
+.height-line-80 {
+	height: 80rpx;
+	line-height: 80rpx;
+}
+
+.form-top .u-form-item {
+	line-height: 40rpx !important;
+}
+
+.margin-b-20 {
+	margin-bottom: 20rpx;
+}
+
+.margin-l-10 {
+	margin-left: 10rpx;
+}
+
+.margin-l-30 {
+	margin-left: 30rpx;
+}
+
+.margin-r-20 {
+	margin-right: 20rpx;
+}
+
+.text-grey {
+	color: #c8c9cc;
+}
+
+.header-bg{
+	background: #49A8E2;
+}
