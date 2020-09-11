@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "a-navbar": "/components/a-base/a-navbar",
+    "u-subsection": "/uview-ui/components/u-subsection/u-subsection"
+  }
+}

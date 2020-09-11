@@ -165,6 +165,12 @@
 			}
 		},
 		onLoad(){
+			 this.$tool.uniRequest({
+				url:"rsdangan/jiben/?id=40",
+				success:(res)=>{
+					console.log('zhishi=',res)
+				}
+			}) 
 			// this.$tool.uniShowToast({title:"请输入用户名",icon:"none"})
 		},
 		methods:{

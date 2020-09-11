@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "a-navbar": "/components/a-base/a-navbar",
+    "u-time-line": "/uview-ui/components/u-time-line/u-time-line",
+    "u-time-line-item": "/uview-ui/components/u-time-line-item/u-time-line-item"
+  }
+}

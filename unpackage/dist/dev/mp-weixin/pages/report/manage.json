@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-search": "/uview-ui/components/u-search/u-search",
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "u-dropdown-list": "/uview-ui/components/u-dropdown-list/u-dropdown-list",
+    "u-button": "/uview-ui/components/u-button/u-button",
+    "u-empty": "/uview-ui/components/u-empty/u-empty"
+  }
+}

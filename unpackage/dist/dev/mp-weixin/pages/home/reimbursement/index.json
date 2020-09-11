@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "a-navbar": "/components/a-base/a-navbar",
+    "u-subsection": "/uview-ui/components/u-subsection/u-subsection",
+    "u-form": "/uview-ui/components/u-form/u-form",
+    "u-form-item": "/uview-ui/components/u-form-item/u-form-item",
+    "u-steps": "/uview-ui/components/u-steps/u-steps",
+    "u-icon": "/uview-ui/components/u-icon/u-icon"
+  }
+}

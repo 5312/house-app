@@ -57,7 +57,19 @@
 		},{
 			"path": "pages/mailList/detail"		
 		}
-	],
+	    ,{
+            "path" : "pages/report/ask",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/report/list",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/report/list2",
+            "style" : {}
+        }
+    ],
 	"easycom": {
 		"^a-(.*)": "@/components/a-base/a-$1.vue",
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"

@@ -53,7 +53,7 @@
 						password:this.password
 					},
 					success:(res)=>{
-						this.$tool.uniSetStorage('token',res.token)
+						this.$tool.uniSetStorage('token',res.Accept)
 						this.$tool.uniReLaunch({
 							url:"/pages/home/index"
 						})
