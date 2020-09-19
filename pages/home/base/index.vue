@@ -1,33 +1,33 @@
 <template>
 	<view class="income-gu page-bg min-height-100">
 		<a-navbar :title="navbarTitle" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
-		<view class="content">
+		<view class="content" v-if="userInfo">
 			<view class="header-person header-bg text-white flex a-center j-start flex-row" v-if="pageType==='person'">
 				<view class="left flex-shrink">
-					<u-avatar src='http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg' size="120"></u-avatar>
+					<u-avatar :src='userInfo.touxiang' size="120"></u-avatar>
 				</view>
 				<view class="right flex1">
 					<view class="name">
-						姓名：Ace
+						姓名：{{userInfo.ygmingcheng}}
 					</view>
 					<view class="time">
-						当前职务：实习置业顾问
+						当前职务：{{userInfo.gangwei}}
 					</view>
 					<view class="time">
-						当前店铺：橡树2号店01组
+						当前店铺：{{userInfo.bumen}}
 					</view>
 				</view>
 			</view>
 			<view class="header-shop-group header-bg text-white flex a-center j-start flex-row" v-if="pageType==='shopGroup' || pageType==='shop'">
 				<view class="right flex1">	
-					<view class="time">
-						所属店铺：橡树2号店01组
+					<view class="time" v-if="currentMonthPerformance">
+						所属店铺：{{currentMonthPerformance.bumen}}
 					</view>
 				</view>
 			</view>
 			<view class="table bg-white">
 				<view class="line flex a-center flex-row j-between border-bottom" @click="toOther('sameMonth')">
-					<text>当月业绩（2020-08）</text>
+					<text>当月业绩（{{currentMonth}}）</text>
 					<u-icon name="arrow-right" class="text-grey"></u-icon>
 				</view>
 				<view class="flex a-center flex-row j-between box-1-wrap">
@@ -36,7 +36,7 @@
 							分成业绩
 						</view>
 						<view class="value">
-							0.00
+							{{currentMonthPerformance.yeji}}
 						</view>
 					</view>
 					<view class="box-1">
@@ -44,12 +44,12 @@
 							已收业绩
 						</view>
 						<view class="value">
-							0.00
+							{{currentMonthPerformance.shishou}}
 						</view>
 					</view>
 				</view>
 			</view>
-			<view class="table bg-white">
+			<view class="table bg-white" v-if="allPerformance">
 				<view class="line flex a-center flex-row j-between border-bottom" @click="toOther('total')">
 					<text>总业绩</text>
 					<u-icon name="arrow-right" class="text-grey"></u-icon>
@@ -60,7 +60,7 @@
 							分成业绩
 						</view>
 						<view class="value">
-							0.00
+							{{allPerformance.yeji}}
 						</view>
 					</view>
 					<view class="box-1">
@@ -68,12 +68,12 @@
 							已收业绩
 						</view>
 						<view class="value">
-							0.00
+							{{allPerformance.shishou}}
 						</view>
 					</view>
 				</view>
 			</view>
-			<view class="table bg-white">
+			<view class="table bg-white" v-if="rankPerformance">
 				<view class="line flex a-center flex-row j-between border-bottom" @click="toOther('rank')">
 					<text>业绩排名</text>
 					<u-icon name="arrow-right" class="text-grey"></u-icon>
@@ -99,44 +99,51 @@
 		data(){
 			return{
 				pageType:"person",
+				userInfo:null,
 				rankList:[],
 				navbarTitle:'',
+				currentMonthPerformance:'',
+				currentMonth:'',
+				allPerformance:null,
+				rankPerformance:null,
 				rankShopList:[
 					{
 						name:"当月门店排名",
+						prop:'ypaiming',
 						value:"0"
 					},{
 						name:"门店总排名",
+						prop:'zpaiming',
 						value:"0"
 					},
 				],
 				rankShopGroupList:[
 					{
-						name:"当月门店内排名",
+						name:"当月店组排名",
+						prop:'ypaiming',
 						value:"0"
 					},{
-						name:"当月店组总排名",
+						name:"店组总排名",
+						prop:'zpaiming',
 						value:"0"
-					},{
-						name:"门店总业绩排名",
-						value:"0"
-					},{
-						name:"店组总业绩排名",
-						value:"0"
-					}
+					},
 				],
 				rankPersonList:[
 					{
 						name:"当前店铺内排名",
+						prop:'ydpaiming',
 						value:"0"
 					},{
 						name:"当月个人总排名",
+						prop:'yrpaiming',
 						value:"0"
 					},{
 						name:"店铺内业绩总排名",
+						prop:'zdpaiming',
 						value:"0"
 					},{
 						name:"个人总业绩排名",
+						prop:'zrpaiming',
 						value:"0"
 					}
 				]
@@ -144,25 +151,134 @@
 		},
 		onLoad(options){
 			this.pageType=options.type
-			this.init()
+			this.userInfo=this.$tool.uniGetStorage('userInfo')
+			this.currentMonth=this.$u.timeFormat(String(new Date().getTime()), 'yyyy-mm')
+			this.userInfo && this.init()
 		},
 		methods:{
 			init(){
 				switch(this.pageType){
 					case "person":
-						this.rankList=this.rankPersonList
+						this.rankList=this.rankPersonList					
+						this.getPerson()
 						this.navbarTitle="个人业绩"
 						break
 					case "shopGroup":
-						this.rankList=this.rankShopGroupList
+						this.rankList=this.rankShopList
+						this.getS(4)
 						this.navbarTitle="店组业绩"
 						break
 					case "shop":
 						this.rankList=this.rankShopList
+						this.getS(3)
 						this.navbarTitle="店铺业绩"
 						break
 				}
 				
+			},
+			getS(type){
+				this.getSCurrentMonth(type)
+				this.getSAll(type)
+				this.getSRank(type)
+			},
+			getSCurrentMonth(type){
+				this.$tool.uniRequest({
+					url:"juece/zdyeji/",
+					method:'GET',
+					params:{
+						id:this.$tool.uniGetStorage('userId'),
+						bumen_t:type,  //3店4组
+						bumen_id:this.userInfo.bumen_id,
+						datetimes:this.currentMonth
+					},
+					success:(res)=>{
+						this.currentMonthPerformance=res
+					}
+				})	
+			},
+			getSAll(type){
+				this.$tool.uniRequest({
+					url:"juece/tjzdyeji/",
+					method:'GET',
+					params:{
+						id:this.$tool.uniGetStorage('userId'),
+						bumen_t:type,  //3店4组
+						bumen_id:this.userInfo.bumen_id,
+					},
+					success:(res)=>{
+						this.allPerformance=res
+					}
+				})	
+			},
+			getSRank(type){
+				this.$tool.uniRequest({
+					url:"juece/pmzdyeji/",
+					method:'GET',
+					params:{
+						id:this.$tool.uniGetStorage('userId'),
+						bumen_t:type,  //3店4组
+						bumen_id:this.userInfo.bumen_id,
+					},
+					success:(res)=>{
+						this.rankPerformance=res
+						this.rankPersonList.forEach(item=>{
+							for(let i in res){
+								if(item.prop===i){
+									item.value=res[i] || '0'
+								}
+							}
+						})
+					}
+				})	
+			},
+			getPerson(){
+				this.getPersonCurrentMonth()
+				this.getPersonAll()
+				this.getPersonRank()
+			},
+			getPersonRank(){
+				this.$tool.uniRequest({
+					url:"juece/pmgryeji/",
+					method:'GET',
+					params:{
+						id:this.$tool.uniGetStorage('userId')
+					},
+					success:(res)=>{
+						this.rankPerformance=res
+						this.rankPersonList.forEach(item=>{
+							for(let i in res){
+								if(item.prop===i){
+									item.value=res[i] || '0'
+								}
+							}
+						})
+					}
+				})	
+			},
+			getPersonAll(){
+				this.$tool.uniRequest({
+					url:"juece/tjgryeji/",
+					method:'GET',
+					params:{
+						id:this.$tool.uniGetStorage('userId')
+					},
+					success:(res)=>{
+						this.allPerformance=res
+					}
+				})	
+			},
+			getPersonCurrentMonth(){
+				this.$tool.uniRequest({
+					url:"juece/gryeji/",
+					method:'GET',
+					params:{
+						id:this.$tool.uniGetStorage('userId'),
+						datetimes:this.currentMonth
+					},
+					success:(res)=>{
+						this.currentMonthPerformance=res
+					}
+				})	
 			},
 			toOther(type){
 				let url=''
@@ -186,6 +302,9 @@
 </script>
 
 <style scoped lang="scss">
+	.header-bg{
+		background-color: #19be6b;
+	}
 	.income-gu {
 		.content {
 			.header-person {
@@ -228,7 +347,7 @@
 				}
 
 				.box-1-wrap {
-					color: #8EC1E0;
+					color: #acacac;
 					min-height: 120rpx;
 					padding: 20rpx 0;
 

@@ -1,21 +1,21 @@
 <template>
 	<view class="income-gu page-bg min-height-100">
 		<a-navbar title="工资管理" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
-		<view class="content">
+		<view class="content" v-if="userInfo">
 			<view class="header bg-white flex a-center j-start flex-row">
 				<view class="left flex-shrink">
-					<u-avatar src='http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg'></u-avatar>
+					<u-avatar :src='userInfo.touxiang'></u-avatar>
 				</view>
 				<view class="right flex1">
 					<view class="name">
-						姓名：Ace
+						姓名：{{userInfo.ygmingcheng || ''}}
 					</view>
 					<view class="time">
-						时间：2020-08
+						时间：{{datetimes}}
 					</view>
 				</view>
 			</view>
-			<view class="table bg-white">
+			<view class="table bg-white" v-if="defail">
 				<view class="line flex a-center flex-row j-between border-bottom">
 					<text>收入管理</text>
 					<u-icon name="arrow-right"></u-icon>
@@ -26,20 +26,49 @@
 							累计收入
 						</view>
 						<view class="value">
-							0.00
+							{{defail.zonggz}}
 						</view>
 					</view>
 					<view class="box-1">
 						<view class="name">
-							7月收入
+							{{mouths}}月收入
 						</view>
 						<view class="value">
-							0.00
+							{{defail.heji}}
 						</view>
 					</view>
 				</view>
+				<view class="flex a-center flex-row j-between box-1-wrap">
+					<view class="box-1 ">
+						<view class="name">
+							基本工资
+						</view>
+						<view class="value">
+							{{defail.jibengz}}
+						</view>
+					</view>
+					<view class="box-1">
+						<view class="name">
+							提成工资
+						</view>
+						<view class="value">
+							{{defail.ticheng}}
+						</view>
+					</view>
+				</view>
+				<view class="flex a-center flex-row j-between box-1-wrap">
+					<view class="box-1 ">
+						<view class="name">
+							奖罚工资
+						</view>
+						<view class="value">
+							{{defail.qita}}
+						</view>
+					</view>
+					
+				</view>
 			</view>
-			<view class="table bg-white">
+			<view class="table bg-white" v-if="defail">
 				<view class="line flex a-center flex-row j-between border-bottom">
 					<text>基金管理</text>
 					<u-icon name="arrow-right"></u-icon>
@@ -50,7 +79,7 @@
 							保底基金
 						</view>
 						<view class="value">
-							0.00
+							{{defail.jjbaodi}}
 						</view>
 					</view>
 					<view class="box-1 ">
@@ -58,7 +87,7 @@
 							年基金
 						</view>
 						<view class="value">
-							0.00
+							{{defail.jjnian}}
 						</view>
 					</view>
 					<view class="box-1">
@@ -66,7 +95,7 @@
 							孝心基金
 						</view>
 						<view class="value">
-							0.00
+							{{defail.jjxx}}
 						</view>
 					</view>
 				</view>
@@ -77,7 +106,37 @@
 
 <script>
 	export default {
-
+		data(){
+			return{
+				datetimes:'',
+				userInfo:null,
+				defail:null,
+				mouths:1
+			}
+		},
+		onLoad(){
+			let date=new Date().getTime()
+			this.datetimes=this.$u.timeFormat(date, 'yyyy-mm')
+			this.mouths=parseInt(this.$u.timeFormat(date, 'mm'))
+			this.userInfo=this.$tool.uniGetStorage('userInfo') || null
+			this.userInfo.touxiang=this.userInfo.touxiang ||  "../../../static/image/header.jpg"
+			this.init()
+		},
+		methods:{
+			init(){
+				this.$tool.uniRequest({
+					url:"caiwu/",
+					method:'GET',
+					params:{
+						id:this.$tool.uniGetStorage('userId') || '',
+						datetimes:this.datetimes
+					},
+					success:(res)=>{
+						this.defail=res
+					}
+				})
+			}
+		}
 	}
 </script>
 

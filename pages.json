@@ -47,29 +47,24 @@
 		},{
 			"path": "pages/home/base/rich"		
 		},{
-			"path": "pages/home/reimbursement/index"		
+			"path": "pages/home/reimbursement/index",
+			"enablePullDownRefresh":true
 		},{
 			"path": "pages/home/reimbursement/detail"		
 		},{
+			"path": "pages/home/reimbursement/add"		
+		},{
 			"path": "pages/report/manage"		
+		},{
+			"path": "pages/report/detail"		
 		},{
 			"path": "pages/mailList/index"		
 		},{
 			"path": "pages/mailList/detail"		
+		},{
+			"path": "pages/home/changePassword"		
 		}
-	    ,{
-            "path" : "pages/report/ask",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/report/list",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/report/list2",
-            "style" : {}
-        }
-    ],
+	],
 	"easycom": {
 		"^a-(.*)": "@/components/a-base/a-$1.vue",
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"

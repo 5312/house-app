@@ -23,17 +23,17 @@
 		</view>
 		<u-popup v-model="isShowPopup" length="66%" class="home-left-popup">
 			<view class="relative h100 wrap">
-				<view class="popup-header">
+				<view class="popup-header" v-if="userInfo">
 					<view class="line1 flex a-center j-center flex-row">
-						<u-avatar src="http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg" 
+						<u-avatar :src="userInfo.touxiang" 
 							size="120" class="flex-shrink"></u-avatar>
 						<view class="line-right flex1">
-							<view class="name">刘明</view>
-							<view class="Job">实习置业顾问</view>
+							<view class="name">{{userInfo.ygmingcheng}}</view>
+							<view class="Job">{{userInfo.gangwei}}</view>
 						</view>
 					</view>
-					<view class="line margin-b-20">审核区域大股东-杨李敏</view>
-					<view class="line">橡树2号店-M组-李明012345</view>
+					<!-- <view class="line margin-b-20">{{userInfo.bumen}}</view> -->
+					<view class="line">{{userInfo.bumen}}-{{userInfo.ygmingcheng}}{{userInfo.ygbianhao}}</view>
 				</view>
 				<view class="popup-contet">
 					<view class="pop-line border-bottom flex a-center j-start flex-row" v-for="(item,index) in popList" :key="index" @click="popHandle(item)">
@@ -61,19 +61,8 @@
 					backgroundColor: '#EDEDED',
 				},
 				isShowPopup:false,
-				swiperList: [{
-						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-					},
-					{
-						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-						title: '身无彩凤双飞翼，心有灵犀一点通'
-					},
-					{
-						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-					}
-				],
+				userInfo:null,
+				swiperList: [],
 				popList:[
 					{
 						icon:"",
@@ -92,92 +81,108 @@
 				personList:[
 					{
 						name:"考勤打卡",
-						img:"../../static/icon/a.png",
+						img:require("../../static/icon/a.png"),
 						path:"/pages/home/clockIn/index"
 					},{
 						name:"调店申请",
-						img:"../../static/icon/b.png",
+						img:require("../../static/icon/b.png"),
 						path:"/pages/home/shopTransferApplication/index"
 					},{
 						name:"离职申请",
-						img:"../../static/icon/c.png",
+						img:require("../../static/icon/c.png"),
 						path:"/pages/home/quitApplication/index"		
 					},{
 						name:"个人资料",
-						img:"../../static/icon/d.png",
+						img:require("../../static/icon/d.png"),
 						path:"/pages/home/personalInfo/index"	
 					},{
 						name:"门店导航",
-						img:"../../static/icon/e.png",
+						img:require("../../static/icon/e.png"),
 						path:"/pages/home/shopMap/index"
 					},{
 						name:"员工位置",
-						img:"../../static/icon/f.png",
+						img:require("../../static/icon/f.png"),
 						path:"/pages/home/staffLocation/index"	
 					},{
 						name:"工资管理",
-						img:"../../static/icon/g.png",
+						img:require("../../static/icon/g.png"),
 						path:"/pages/home/incomeGu/index"
 					},{
 						name:"成长树",
-						img:"../../static/icon/h.png",
+						img:require("../../static/icon/h.png"),
 						path:"/pages/home/growthTree/index"
 					},{
 						name:"报单管理",
-						img:"../../static/icon/m.png",
+						img:require("../../static/icon/m.png"),
 						path:"/pages/home/reimbursement/index"
 					},{
 						name:"开店申请",
-						img:"../../static/icon/y.png",
+						img:require("../../static/icon/y.png"),
 						path:"/pages/home/reimbursement/index"
 					},{
 						name:"闭店申请",
-						img:"../../static/icon/z.png",
+						img:require("../../static/icon/z.png"),
 						path:"/pages/home/reimbursement/index"
 					},
 				],
 				achievementList:[
 					{
 						name:"个人业绩",
-						img:"../../static/icon/i.png",
+						img:require("../../static/icon/i.png"),
 						path:"/pages/home/base/index?type=person"
 					},{
 						name:"店组业绩",
-						img:"../../static/icon/j.png",
+						img:require("../../static/icon/j.png"),
 						path:"/pages/home/base/index?type=shopGroup"
 					},{
 						name:"门店业绩",
-						img:"../../static/icon/k.png",
+						img:require("../../static/icon/k.png"),
 						path:"/pages/home/base/index?type=shop"
 					},{
 						name:"未收账",
-						img:"../../static/icon/l.png",
+						img:require("../../static/icon/l.png"),
 						path:"/pages/home/uncollected/index"
 					}
 				],
 				otherList:[
 					{
 						name:"规章制度",
-						img:"../../static/icon/n.png",
+						img:require("../../static/icon/n.png"),
 						path:"/pages/home/rules/index"
 					}
 				]
 			}
 		},
 		onLoad(){
-			 this.$tool.uniRequest({
-				url:"rsdangan/jiben/?id=40",
-				success:(res)=>{
-					console.log('zhishi=',res)
-				}
-			}) 
-			// this.$tool.uniShowToast({title:"请输入用户名",icon:"none"})
+			console.log("home,xxxxxxx")
+			this.userInfo=this.$tool.uniGetStorage('userInfo')
+			this.init()
 		},
 		methods:{
+			init(){
+				this.getBanners()
+			},
+			getBanners(){
+				this.$tool.uniRequest({
+					url:"ad/homead",
+					method:'GET',
+					success:(res)=>{
+						this.swiperList=res
+						this.swiperList.forEach(item=>{
+							item.image=item.img
+						})
+					}
+				})
+			},
 			popHandle(item){
 				switch(item.prop){
 					case 'loginOut':
 						this.loginOut()
+						break
+					case 'changePassword':
+						this.$tool.uniRedirectTo({
+							url:'/pages/home/changePassword'
+						})
 						break
 					default :
 						break
@@ -187,13 +192,11 @@
 				this.$tool.uniRequest({
 					url:"login/logout",
 					method:'GET',
-					// isLogin:true,
 					success:(res)=>{
 						this.$tool.uniRemoveStorage('token')
 						this.$tool.uniReLaunch({
 							url:"/pages/login/index"
 						})
-						console.log(res)
 					}
 				})
 			}

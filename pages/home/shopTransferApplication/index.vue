@@ -2,63 +2,68 @@
 	<view class="shop-transfer-application">
 		<a-navbar title="员工调店申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 		<view class="content">
-			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' :label-style="{color:'#a0cfff'}">
+			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' 
+				v-if='form'>
 				<view class="title bold u-border-bottom">
-					基本信息
+					<u-icon size="28" name="calendar" class="mar"></u-icon><text>基本信息</text>
 				</view>
 				<u-form-item label="姓名">
-					<u-input v-model="form.name" />
+					<u-input v-model="form.ygmingcheng" disabled/>
+				</u-form-item>
+				<u-form-item label="工号">
+					<u-input v-model="form.ygbianhao" disabled/>
 				</u-form-item>
 				<u-form-item label="职位">
-					<u-input v-model="form.intro" />
+					<u-input v-model="form.gangwei" disabled/>
 				</u-form-item>
 				<u-form-item label="所属店组">
-					<u-input v-model="form.showNum" />
+					<u-input v-model="form.bumen" disabled/>
 				</u-form-item>
-				<view class="title bold u-border-bottom">
-					操作信息
+				<view class="margin-box"></view>
+				<view class="title bold u-border-bottom ">
+					<u-icon size="28" name="calendar" class="mar"></u-icon><text>操作信息</text>
 				</view>
 				<u-form-item label="调店时间">
-					<u-input v-model="form.time" type="select" @click="isShowCalendar = true" />
-					<u-calendar v-model="isShowCalendar" mode="date" @change='calendarChange'></u-calendar>
+					<u-input v-model="form.sxshijian" placeholder="请选择时间" type="select" @click="isShowCalendar = true" />
+					<u-calendar v-model="isShowCalendar" mode="date" @change='calendarChange' :isAceClick='true'></u-calendar>
+				
 				</u-form-item>
 				<u-form-item label="调入组名">
-					<u-input v-model="form.groupName" type="select" @click="isShowSelect = true" />
-					<u-action-sheet :list="selectList" v-model="isShowSelect" @click="actionSheetCallback"></u-action-sheet>
+					<u-input v-model="form.groupName" placeholder="请选择店组名" type="select" @click="actionSheet('groupName')" />
+					<u-select v-model="groupName" :list="form.bumenlist" @confirm="confirm1"></u-select>				
+				
+				</u-form-item>
+				<u-form-item label="调动职务">
+					<u-input v-model="form.zhiwuName" placeholder="请选择店组名" type="select"  @click="actionSheet('zhiwu')" />
+					<u-select v-model="zhiwu" :list="form.zhiwu" @confirm="confirm2"></u-select>									
+				
+				</u-form-item>
+				<u-form-item label="调动类型">
+					<u-input v-model="form.biandongName" placeholder="请选择店组名" type="select"  @click="actionSheet('biandong')"  />
+					<u-select v-model="biandong" :list="form.biandong" @confirm="confirm3"></u-select>	
 				</u-form-item>
 				<u-form-item label="调店原因">
-					<u-radio-group v-model="form.leaveStatus" @change="val=>form.leaveStatus=val">
-						<u-radio  v-for="(item, index) in leaveStatusList" :key="index" :name="item.name" shape="circle" >
+					<u-radio-group v-model="form.diao" @change="diaoChange">
+						<u-radio  v-for="(item, index) in leaveStatusList" :key="index" :name="item.value" shape="circle" >
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
-				</u-form-item>
-				<u-form-item label="房源(房源不能跨区域带走)">
-					<u-radio-group v-model="form.houseStatus" @change="val=>form.houseStatus=val">
-						<u-radio  v-for="(item, index) in houseReasonList" :key="index" :name="item.name" shape="circle" >
-							{{item.name}}
-						</u-radio>
-					</u-radio-group>
-				</u-form-item>
-				<u-form-item label="客源">
-					<u-radio-group v-model="form.guestStatus" @change="val=>form.guestStatus=val">
-						<u-radio  v-for="(item, index) in guestList" :key="index" :name="item.name" shape="circle" >
-							{{item.name}}
-						</u-radio>
-					</u-radio-group>
-				</u-form-item>
-				<u-form-item label="端口是否赠送">
-					<u-radio-group v-model="form.portStatus" @change="val=>form.portStatus=val">
-						<u-radio  v-for="(item, index) in portList" :key="index" :name="item.name" shape="circle" >
-							{{item.name}}
-						</u-radio>
-					</u-radio-group>
+				</u-form-item>			
+				<u-form-item label="房源接收人">
+					<u-input v-model="form.fzouName" placeholder="请选择房源接收人" type="select" @click="actionSheet('fzou')" />
+					<u-select v-model="fzou" :list="form.yhlist" @confirm="confirm4"></u-select>
+									
+				</u-form-item>			
+				<u-form-item label="客源接收人">
+					<u-input v-model="form.yzouName" placeholder="请选择客源接收人" type="select" @click="actionSheet('yzou')" />
+					<u-select v-model="yzou" :list="form.yhlist" @confirm="confirm5"></u-select>
+						
 				</u-form-item>
 				<u-form-item label="申请原因">
-					<u-input v-model="form.reason" type='textarea'/>
+					<u-input v-model="form.bdyuanyin" type='textarea'/>
 				</u-form-item>
 			</u-form>
-			<u-button  class="custom-style" >提交</u-button>
+			<u-button  class="custom-style" @click='submit'>提交</u-button>
 		</view>
 	</view>
 </template>
@@ -67,39 +72,22 @@
 	export default {
 		data() {
 			return {
-				form: {
-					name: '',
-					intro: '',
-					showNum: '',
-					time: '',
-					groupName: '',
-					leaveStatus:'',
-					houseStatus:'',
-					guestStatus:'',
-					portStatus:'',
-					reason:""
-				},
-				portList: [{
-					name: '是'
-				}, {
-					name: '否'
-				},{
-					name: '暂无端口'
-				}],
-				guestList: [{
-					name: '带走'
-				}, {
-					name: '不带走'
-				}],
-				houseReasonList: [{
-					name: '带走'
-				}, {
-					name: '不带走'
-				}],
+				housed:false,
+				kd:false,
+				form:null,
+				groupName:false,
+				zhiwu:false,
+				biandong:false,
+				fzou:false,
+				yzou:false,
+				
+				
 				leaveStatusList: [{
-					name: '本人申请'
+					name: '本人申请',
+					value:1
 				}, {
-					name: '公司调配'
+					name: '公司调配',
+					value:2
 				}],
 				isShowCalendar: false,
 				isShowSelect: false,
@@ -115,24 +103,103 @@
 				]
 			}
 		},
+		onLoad(){
+			this.getDetail()
+		},
 		methods: {
+			diaoChange(e){
+				this.form.diao=e
+			},
+			getDetail(){
+				this.$tool.uniRequest({
+					url:"rsdangan/biandong",
+					method:'GET',				
+					success:(res)=>{
+						this.form=res
+						this.form.bumenlist.forEach(item=>{
+							item.label=item.name
+							item.value=item.id				
+						})
+						this.form.zhiwu.forEach(item=>{
+							item.label=item.remark
+							item.value=item.id				
+						})
+						this.form.biandong.forEach(item=>{
+							item.label=item.lxming
+							item.value=item.xsshunxu				
+						})
+						this.form.yhlist.forEach(item=>{
+							item.label=item.ygmingcheng
+							item.value=item.uid				
+						})
+					}
+				})
+			},
+			confirm1(e){
+				this.form.groupName=e[0].label
+				this.form.groupNameId=e[0].value
+			},
+			confirm2(e){
+				this.form.zhiwuName=e[0].label
+				this.form.zhiwuNameId=e[0].value
+			},
+			confirm3(e){
+				this.form.biandongName=e[0].label
+				this.form.biandongNameId=e[0].value
+			},
+			confirm4(e){
+				this.form.fzouName=e[0].label
+				this.form.fzouNameId=e[0].value
+			},
+			confirm5(e){
+				this.form.yzouName=e[0].label
+				this.form.yzouNameId=e[0].value
+			},
+			submit(){
+				let params={
+					sxshijian:this.form.sxshijian || '',
+					bumen:this.form.groupNameId || '',
+					diao:this.form.diao || '',
+					fzou:this.form.fzouNameId || '',
+					yzou:this.form.yzouNameId || '',
+					biandong:this.form.biandongNameId || '',
+					bdyuanyin:this.form.bdyuanyin || '',
+				}
+				this.$tool.uniRequest({
+					url:"rsdangan/biandong",
+					method:'POST',		
+					params,
+					success:(res)=>{
+						this.$tool.uniShowToast({
+							title:"调店申请成功！"
+						})
+						setTimeout(()=>{
+							this.$tool.uniSwitchTab({url:'/pages/home/index'})
+						},2000)
+					}
+				})
+			},
+			actionSheet(type){
+				this[type]=true
+			},
 			calendarChange(val) {
-				console.log(val)
-				this.form.time = val.result
-			},
-			actionSheetCallback(index) {
-				this.form.groupName = this.selectList[index].text
-			},
-			radioGroupChange(val){
-				console.log(val)
-				this.form[val]=val
-				
-			}
+				this.form.sxshijian = val.result
+			}			
 		}
 	}
 </script>
 
 <style scoped lang="scss">
+	.mar{
+		margin-right: 10rpx;
+	}
+	.margin-box{
+		position: relative;
+		left: -100rpx;
+		width: 200%;
+		height: 20rpx;
+		background-color: #EDEDED;
+	}
 	.shop-transfer-application {
 		.custom-style {
 			color: #FFFFFF;

@@ -1,19 +1,20 @@
 <template>
 	<view class="shop-map padding-lr-40">
-		<a-navbar title="门店导航" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
-		<view class="content">
+		<a-navbar title="门店导航" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>	
+		<view class="content" :key='collapseKey' v-if="isShowConent">
 			<u-collapse event-type="close"  >
-				<u-collapse-item :index="index" @change="itemChange" :title="item.title" v-for="(item, index) in itemList" :key="index" class="border-bottom">
+				<u-collapse-item :index="index" @change="itemChange" :title="getTitle(item)" :open='isOpen'
+					v-for="(item, index) in itemList" :key="index" class="border-bottom">
 					<view class="line-list">
-						<view class="line flex a-center j-start flex-row" v-for="(val,i) in item.children">
+						<view class="line flex a-center j-start flex-row" v-for="(val,i) in item.list">
 							<view class="left flex-shrink">
-								<u-avatar src='http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg'></u-avatar>
+								<u-avatar :src='val.touxiang'></u-avatar>
 							</view>
 							<view class="mid flex1">
-								<view class="name bold">{{val.name}}</view>
-								<view class="address">{{val.address}}</view>
+								<view class="name bold">{{val.dianming}}</view>
+								<view class="address">{{val.dizhi}}</view>
 							</view>
-							<view class="right flex a-center j-center flex-column text-blue" @click="openLocation">
+							<view class="right flex a-center j-center flex-column text-blue" @click="openLocation(val)">
 								<u-icon name="map-fill"></u-icon>
 								<view class="text">到这去</view>
 							</view>
@@ -29,43 +30,39 @@
 	export default {
 		data() {
 			return {
-				itemList: [{
-					title: "成华区（4）",
-					open: true,
-					disabled: true,
-					children:[
-						{
-							name:"四海店",
-							address:"成都市xxx区xx街xx号1楼7号成都市xxx区xx街xx号1楼7号"
-						},{
-							name:"四海店",
-							address:"成都市xxx区xx街xx号1楼7号"
-						},{
-							name:"四海店",
-							address:"成都市xxx区xx街xx号1楼7号"
-						},{
-							name:"四海店",
-							address:"成都市xxx区xx街xx号1楼7号"
-						},
-					]
-				},{
-					title: "xx区（1）",
-					open: true,
-					disabled: true,
-					children:[
-						{
-							name:"四海店",
-							address:"成都市xxx区xx街xx号1楼7号"
-						}
-					]
-				}],
+				collapseKey:0,
+				itemList:[],
+				isOpen:false,
+				isShowConent:true
 			}
 		},
+		onLoad(){
+			this.init()
+		},
 		methods:{
-			openLocation(){
+			init(){
+				this.isOpen=false
+			
+				this.$tool.uniRequest({
+					url: "rbac/daohang/",
+					method: 'GET',
+					success: (res) => {
+						this.itemList=res		
+						
+						setTimeout(()=>{
+							this.collapseKey++
+							// this.isOpen=true
+						},600)
+					}
+				})
+			},
+			getTitle(item){
+				return `${item.qu}（${item.list?item.list.length:0}）`
+			},
+			openLocation(item){
 				uni.openLocation({
-				    latitude:90.0,
-					longitude:50.5,
+				    latitude:item.lat,
+					longitude:item.lng,
 				    success: function (res) {
 				        const latitude = res.latitude;
 				        const longitude = res.longitude;

@@ -62,7 +62,9 @@
 
 			};
 		},
+		
 		methods: {
+			
 			change(index) {
 				this.current = index;
 			},

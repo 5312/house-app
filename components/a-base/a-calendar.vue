@@ -13,23 +13,24 @@
 				<u-icon name="arrow-right-double" class="margin-l-40" @click="actionHandle('nextYear')"></u-icon>
 			</view>
 		</view>
-		<view class="t-info flex a-center j-between flex-row text-white">
+		<!-- <view class="t-info flex a-center j-between flex-row text-white">
 			<view class="info-box flex1 flex a-center j-center flex-column" v-for="(item,index) in infoList" :key='index'>
 				<view class="name">{{item.name}}</view>
 				<view class="value">{{item.value}}</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="t-body">
 			<view class="t-body-header flex a-center j-between flex-row">
 				<text v-for="(item,index) in weekList" :key='index' class="inline-block week-cell cell flex1">{{item}}</text>
 			</view>
-			<view class="t-body-main">
+			<view class="t-body-main" :key='tobdyKey'>
 				<u-row>
 					<u-col :span="12/7" v-for="i in weekDay">
 						<text class="inline-block day-cell day-cell-disabled cell flex1 w100">{{preMonthSize - weekDay + i}}</text>
 					</u-col>
 					<u-col :span="12/7" v-for="item in  monthList[nowMonth - 1]" @click="selectTime(item)">
-						<text class="inline-block day-cell cell flex1 w100" :class="[todayYear===nowYear && todayMonth===todayMonth && clickActiveIndex==item && 'day-cell-active']">
+						<text class="inline-block day-cell cell flex1 w100" 
+							:class="[todayYear===nowYear && todayMonth===nowMonth && clickActiveIndex=== item && 'day-cell-active',todayYear===nowYear && todayMonth===nowMonth && todayDay=== item && 'day-cell-today']">
 							{{item}}
 							<text :style="[getTriangleTopClass(item)]" class="absolute inline-block triangle-right"></text>
 							<text :style="[getTriangleBottomClass(item)]" class="absolute inline-block triangle-right"></text>
@@ -42,10 +43,10 @@
 			</view>
 		</view>
 		<view class="t-footer flex a-center j-between flex-row">
-			<view class="t-footer-box flex a-center j-center flex-row" v-for="(item,index) in footerList" :key='index'>
+			<!-- <view class="t-footer-box flex a-center j-center flex-row" v-for="(item,index) in footerList" :key='index'>
 				<text class="color inline-block" :style="{background:item.bg}"></text>
 				<text class="label">{{item.name}}</text>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -115,10 +116,20 @@
 		created() {
 			this.init()
 		},
+		props:{
+			dateStatusList:{
+				type:Array,
+				default:()=>([])
+			}
+		},
 		computed: {
 			preMonthSize() { //上一个月有多少天
 				return this.nowMonth - 1 === 0 ? 31 : this.monthList[this.nowMonth - 2]
-			}
+			},
+			tobdyKey(){
+				console.log(this.dateStatusList)
+				return this.dateStatusList.length
+			},
 		},
 		methods: {
 			init() {
@@ -129,17 +140,40 @@
 				this.clickActiveIndex = this.nowDay
 				this.initDate()
 			},
+			
 			getTriangleTopClass(item) {
-				return {			
+				let style={
 					to:0,
-					borderTop: '20rpx solid red'
-				}
+				}			
+				let date=`${this.nowYear}-${parseInt(this.nowMonth)<10?'0'+this.nowMonth:this.nowMonth}-${parseInt(item)<10?'0'+item:item}`
+		
+				this.dateStatusList.forEach(val=>{						
+					if(val.date===date && val.am){
+						if(val.am.type==='1'){
+							style.borderTop= '20rpx solid green'
+						}else if(val.am.type==='2'){
+							style.borderTop= '20rpx solid red'	
+						}					
+					}
+				})
+				return style
 			},
 			getTriangleBottomClass(item) {
-				return {
-					bottom:0,
-					borderBottom: '20rpx solid yellow'
+				let style={
+					bottom:0,							
 				}
+				let date=`${this.nowYear}-${parseInt(this.nowMonth)<10?'0'+this.nowMonth:this.nowMonth}-${parseInt(item)<10?'0'+item:item}`
+				
+				this.dateStatusList.forEach(val=>{		
+					if(val.date===date && val.pm){
+						if(val.pm.type==='1'){
+							style.borderBottom= '20rpx solid green'
+						}else if(val.pm.type==='2'){
+							style.borderBottom= '20rpx solid red'	
+						}					
+					}			
+				})	
+				return style
 			},
 			initDate() {
 				if ((this.nowYear % 4 === 0 && this.nowYear % 100 !== 0) || this.nowYear % 400 === 0) {
@@ -151,13 +185,24 @@
 				this.weekDay = firstDay === 7 ? 0 : firstDay
 				const remineDay = this.getWeekDay(this.nowYear, this.nowMonth, this.monthList[this.nowMonth - 1]) // 获得最后一天是星期几，往后填充多少个
 				this.lastWeekDay = remineDay === 7 ? 6 : 6 - remineDay
+				this.$emit('getNowDate',{
+					year:this.nowYear,
+					month:this.nowMonth,
+					day:this.clickActiveIndex,
+					isClick:false
+				})
 			},
 			getWeekDay(year, month, day) { // 根据年月日获得为星期几
 				return new Date(`${year}/${month}/${day}`).getDay()
 			},
 			selectTime(index) {
 				this.clickActiveIndex = index
-
+				this.$emit('getNowDate',{
+					year:this.nowYear,
+					month:this.nowMonth,
+					day:index,
+					isClick:true
+				})
 			},
 			actionHandle(type) {
 				switch (type) {
@@ -263,7 +308,9 @@
 						background: #fef0f0;
 						border-radius: 4rpx;
 					}
-
+					&-today{
+						color: red !important;
+					}
 					&-disabled {
 						color: #A8A8A8;
 						cursor: not-allowed;

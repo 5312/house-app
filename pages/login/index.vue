@@ -54,6 +54,8 @@
 					},
 					success:(res)=>{
 						this.$tool.uniSetStorage('token',res.Accept)
+						this.$tool.uniSetStorage('userId',res.id)
+						this.$tool.uniSetStorage('userInfo',res)
 						this.$tool.uniReLaunch({
 							url:"/pages/home/index"
 						})

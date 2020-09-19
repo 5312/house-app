@@ -2,32 +2,32 @@
 	<view class="report relative">
 		<u-navbar :is-back="false" :background="{backgroundColor: '#EDEDED'}" :height='50'>
 			<view class="slot-wrap header flex a-center j-start flex-row">
-				<u-search placeholder="请输入搜索内容" v-model="searchVal" :clearabled="true" bg-color="#fff" :show-action="false" ></u-search>
-				<u-icon name="search" color="#ffffff" size="56" class="margin-l-30"></u-icon>
+				<u-search placeholder="请输入搜索内容" v-model="searchVal" :clearabled="true" bg-color="#fff" :show-action="false" @search='init'></u-search>
+				<u-icon name="search" color="#ffffff" size="56" class="margin-l-30" @click="init"></u-icon>
 			</view>
 		</u-navbar>
 		<view class="content">
 			<view>
-				<u-dropdown-list :dropdownList='dropdownList' ></u-dropdown-list>
+				<u-dropdown-list :dropdownList='dropdownList' @change='dropdownChange'></u-dropdown-list>
 				<u-notice-bar mode="horizontal" :list="list"></u-notice-bar>
 			</view>
 			<view class="list-wrap">
 				<view v-for="(x,y) in shop" class="list border-bottom flex a-start j-start flex-row" @click="toPage(x)">
 					<view class="left flex-shrink">
-						<image :src="x.src" class="img"></image>
-						<view class="posi">
-							住宅好房
+						<image :src="x.img" class="img"></image>
+						<view class="posi" v-if="x.imgtage">
+							{{x.imgtage}}
 						</view>
 					</view>
 					<view class="right">
-						<view class="title">{{x.name}}</view>
+						<view class="title">{{x.xmbiaoti}}</view>
 						<view class='tags'>
-							<u-tag class="tag" v-for="item in x.tag" size='mini' mode="dark" :text="item.name" :type="item.type" />
+							<text v-for="item in x.tage" class="tag" :style="{background:item.yanse}">{{item.name}}</text>							
 						</view>
 						<view class="detail">
-							<view>装修：精装</view>
-							<view>总价(万)：29-70</view>
-							<view>产权年限(年)：70</view>
+							<view>编号：{{x.ysbianhao}}</view>
+							<view>均价：{{x.junjia}}</view>
+							<view>产权年限(年)：{{x.cqnx}}</view>
 						</view>
 						<view></view>
 					</view>
@@ -45,127 +45,116 @@
 				searchVal:'',
 				dropdownList:[
 					{ show: false, options: [
-						{ id: 0, text: '区域项目', value: '', select: false },
-						{ id: 1, text: '全场券', value: 1, select: false },
-						{ id: 2, text: '品类券', value: 2, select: false },
-						{ id: 3, text: '单品券', value: 3, select: false },
-						{ id: 4, text: '业务券', value: 4, select: false }
+						{ id: 0, text: '楼盘区域', value: '', type:'area',select: false }						
 					] },
 					{ show: false, options: [
-						{ id: 0, text: '产品类型', value: '', select: false },
-						{ id: 1, text: '全场券', value: 1, select: false },
-						{ id: 2, text: '品类券', value: 2, select: false },
-						{ id: 3, text: '单品券', value: 3, select: false },
-						{ id: 4, text: '业务券', value: 4, select: false }
+						{ id: 0, text: '楼盘类型', value: '',type:'type', select: false }					
 					] },
 					{ show: false, options: [
-						{ id: 0, text: '筛选条件', value: '', select: false },
-						{ id: 1, text: '全场券', value: 1, select: false },
-						{ id: 2, text: '品类券', value: 2, select: false },
-						{ id: 3, text: '单品券', value: 3, select: false },
-						{ id: 4, text: '业务券', value: 4, select: false }
+						{ id: 0, text: '楼盘状态', value: '',type:'status', select: false }						
 					] }
 				],
-				shop: [{
-						name: "峨眉悦山府（还有好东西",
-						src: '../../static/image/tang.jpg',
-						tag: [{
-								name: '自助',
-								type: 'primary'
-							},
-							{
-								name: '文化',
-								type: 'warning'
-							}, {
-								name: '新人',
-								type: 'success'
-							}
-						]
-					},
-					{
-						name: "峨眉悦山府（还有好东西xxxxxxxxxxxxxxxx)",
-						src: '../../static/image/tang.jpg',
-						tag: [{
-								name: '自助',
-								type: 'primary'
-							},
-							{
-								name: '文化',
-								type: 'warning'
-							}, {
-								name: '新人',
-								type: 'success'
-							}
-						]
-					},
-					{
-						name: "峨眉悦山府（还有好东西",
-						src: '../../static/image/tang.jpg',
-						tag: []
-					},
-					{
-						name: "峨眉悦山府（还有好东西",
-						src: '../../static/image/tang.jpg',
-						tag: [{
-								name: '自助',
-								type: 'primary'
-							},
-							{
-								name: '文化',
-								type: 'warning'
-							}, {
-								name: '新人',
-								type: 'success'
-							}
-						]
-					},
-					{
-						name: "峨眉悦山府（还有好东西",
-						src: '../../static/image/tang.jpg',
-						tag: [{
-								name: '自助',
-								type: 'primary'
-							},
-							{
-								name: '文化',
-								type: 'warning'
-							}, {
-								name: '新人',
-								type: 'success'
-							}
-						]
-					},
-					{
-						name: "峨眉悦山府（还有好东西",
-						src: '../../static/image/tang.jpg',
-						tag: [{
-								name: '自助',
-								type: 'primary'
-							},
-							{
-								name: '文化',
-								type: 'warning'
-							}, {
-								name: '新人',
-								type: 'success'
-							}
-						]
-					},
-				],
+				shop: [],
+				count:0,
 				list: [
-					'寒雨连江夜入吴',
-					'平明送客楚山孤',
-					'洛阳亲友如相问',
-					'一片冰心在玉壶'
+					'暂时没有推送消息'
 				]
 			}
 		},
+		onLoad(){
+			console.log("report,xxxxxxx")
+			this.init()
+		},
 		methods: {
-			toPage(item){
-				console.log(11)
-				this.$tool.uniNavigateTo({
-					url:"/pages/report/manage"
+			init(){
+				this.getList()
+			},
+			getList(){
+				let quyu,wuyelx,xlpzt=''
+				console.log(this.dropdownList)
+				this.dropdownList.forEach((item,i)=>{
+					switch(i){
+						case 0:
+							if(item.options && item.options.length>0){
+								item.options.forEach(val=>{
+									if(val.select) quyu=val.id
+								})
+							}						
+						case 1:
+							if(item.options && item.options.length>0){
+								item.options.forEach(val=>{
+									if(val.select) wuyelx=val.id
+								})
+							}
+							
+						case 2:
+							if(item.options && item.options.length>0){
+								item.options.forEach(val=>{
+									if(val.select) xlpzt=val.id
+								})
+							}							
+						default :
+							break
+					}
 				})
+				this.$tool.uniRequest({
+					url:"xinfang/ysfy",
+					method:'GET',
+					params:{
+						quyu,
+						wuyelx,
+						xlpzt,
+						sousuo:this.searchVal
+					},
+					success:(res)=>{
+						this.shop=res.ysfang || []
+						this.count+=1
+						if(this.count>1)return
+						this.dropdownList=[
+							{ show: false, options: [
+								{ id: 0, text: '楼盘区域', value: '', type:'area',select: false }						
+							] },
+							{ show: false, options: [
+								{ id: 0, text: '楼盘类型', value: '',type:'type', select: false }					
+							] },
+							{ show: false, options: [
+								{ id: 0, text: '楼盘状态', value: '',type:'status', select: false }						
+							] }
+						]
+						res.quyu.forEach(item=>{
+							let obj=item
+							obj.text=item.xzqming
+							obj.value=item.id
+							obj.select=false
+							obj.type='area'
+							this.dropdownList[0].options.push(obj)
+						})
+						res.xlpzt.forEach(item=>{
+							let obj=item
+							obj.text=item.lxming
+							obj.value=item.id
+							obj.select=false
+							obj.type='status'
+							this.dropdownList[2].options.push(obj)
+						})
+						res.wuyelx.forEach(item=>{
+							let obj=item
+							obj.text=item.lxming
+							obj.value=item.id
+							obj.select=false
+							obj.type='type'
+							this.dropdownList[1].options.push(obj)
+						})
+					}
+				})
+			},
+			toPage(item){
+				this.$tool.uniNavigateTo({
+					url:`/pages/report/detail?id=${item.id}`
+				})
+			},
+			dropdownChange(value,option){
+				this.getList()			
 			}
 		}
 	}
@@ -175,18 +164,22 @@
 	.header{
 		padding: 0 40rpx;
 	}
+	*{
+		font-size: 32rpx;
+	}
 	.flex-dropdown{
 		left: 0;
 		right: 0;
 		top: 100rpx;
 		z-index: 10;
+		font-size: 40rpx !important;
 	}
 	
 	.list {
 		padding: 30rpx;
 		.left {
-			width: 200rpx;
-			height: 200rpx;
+			width: 300rpx;
+			height: 260rpx;
 			position: relative;
 			margin-right: 20rpx;
 			.img {
@@ -209,7 +202,7 @@
 			width: calc(100% - 220rpx);
 			.title{
 				margin-bottom: 10rpx;
-				font-size: 30rpx;
+				font-size: 40rpx;
 				font-weight: 600;
 				overflow: hidden;
 				text-overflow: ellipsis;
@@ -225,9 +218,14 @@
 			.tags {
 				display: flex;
 				align-items: center;
-				margin-bottom: 10rpx;
-				
+				margin-bottom: 10rpx;			
 				.tag {
+					display: inline-block;
+					padding: 4rpx 6rpx;
+					font-size: 12rpx;
+					color: white;
+					border-radius: 4rpx;
+					margin-bottom: 6rpx;
 					&:not(:last-child){
 						margin-right: 10rpx;
 					}

@@ -92,6 +92,10 @@
 	export default {
 		name: 'u-calendar',
 		props: {
+			isAceClick:{
+				type: Boolean,
+				default: false
+			},
 			safeAreaInsetBottom: {
 				type: Boolean,
 				default: false
@@ -391,8 +395,8 @@
 				}
 			},
 			dateClick: function(day) {
-				day += 1;
-				if (!this.openDisAbled(this.year, this.month, day)) {
+				day += 1;			
+				if (!this.openDisAbled(this.year, this.month, day) || this.isAceClick) {
 					this.day = day;
 					let date = `${this.year}-${this.month}-${day}`;
 					if (this.mode == 'date') {

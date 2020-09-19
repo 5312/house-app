@@ -1,24 +1,23 @@
 <template>
 	<view class="mail-list">
 		<u-navbar :background="{backgroundColor: '#EDEDED'}" title="" :is-back="false" :height='50' :border-bottom='false'>
-			<view class="header flex j-between a-center flex-row">
-				<view class="left padding-lr-40">
-					<u-icon name="list" size="50"></u-icon>
-				</view>
+			<view class="header flex j-center text-center a-center flex-row w100">
+				通讯录
 			</view>
 		</u-navbar>
 		<view class="content">
-			<u-index-list :scrollTop="scrollTop">
-				<view v-for="(item, index) in indexList" :key="index">
+			<u-index-list :scrollTop="scrollTop" :indexList="abcList">
+				<view v-for="(item, index) in indexList" :key="index" >
 					<u-index-anchor :index="item.index" />
-					<view v-for="(x,y) in item.key" :key="y" class="list-cell" @click="toDetail(item)">
-						<image class="leftHead" :src="x.img" mode=""></image>
+					<view v-for="(x,y) in item.key" :key="y" class="list-cell" @click="toDetail(x)">
+						<!-- <image class="leftHead" src="../../static/image/header.jpg" mode=""></image> -->
+						<u-image class="leftHead" width="100rpx" shape="circle"  height="100rpx" :src="x.touxiang" :lazy-load="true"></u-image>
 						<view class="textname">
-							<view class="name">{{x.name}}</view>
-							<text class="tel">{{x.tel}}</text>
-							<text class="detail">{{x.detail}}</text>
+							<view class="name">{{x.ygmingcheng}}-{{x.bumen}}</view>
+							<text class="tel">{{x.dianhua}}</text>
+							<text class="detail">{{x.gangwei}}</text>
 						</view>
-						<u-icon name="arrow-right" color="#c8c9cc" size="28"></u-icon>
+						<u-icon name="arrow-right" class="flex-shrink" color="#c8c9cc" size="28"></u-icon>
 					</view> 
 				</view>
 			</u-index-list>
@@ -31,100 +30,49 @@
 		data() {
 			return {
 				scrollTop: 0,
-				/* indexList: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
-					"V", "W", "X", "Y", "Z"
-				], */
-				indexList: [
-					{
-						"index":'A',
-						"key": [
-							{
-							a: 'A',
-							name: "安鹏理-双流区-香墅2  号店M组",
-							tel: "18700003333(无)",
-							detail: "实习置业顾问",
-							img: "../../static/image/header.jpg"
-						},
-						{
-							a: 'A',
-							name: "安鹏理-双流区-香墅2  号店M组",
-							tel: "18700003333(无)",
-							detail: "实习置业顾问",
-							img: "../../static/image/header.jpg"
-						},
-						{
-							a: 'A',
-							name: "安鹏理-双流区-香墅2  号店M组",
-							tel: "18700003333(无)",
-							detail: "实习置业顾问",
-							img: "../../static/image/header.jpg"
-						}
-						] 
-					},
-					{
-						"index":'B',
-						"key": [{
-							a: 'B',
-							name: "夲许-双流区-香墅2  号店M组",
-							tel: "18700003333(无)",
-							detail: "实习置业顾问",
-							img: "../../static/image/header.jpg"
-						}] 
-					},{
-						"index":'C',
-						"key": [{
-							a: 'C',
-							name: "慈禧-双流区-香墅2  号店M组",
-							tel: "18700003333(无)",
-							detail: "实习置业顾问",
-							img: "../../static/image/header.jpg"
-						}] 
-					},
-					{
-						"index":'H',
-						"key": [{
-							a: 'H',
-							name: "黄金许-双流区-香墅2  号店M组",
-							tel: "18700003333(无)",
-							detail: "实习置业顾问",
-							img: "../../static/image/header.jpg"
-						},{
-							a: 'H',
-							name: "黄金许-双流区-香墅2  号店M组",
-							tel: "18700003333(无)",
-							detail: "实习置业顾问",
-							img: "../../static/image/header.jpg"
-						},{
-							a: 'H',
-							name: "黄金许-双流区-香墅2  号店M组",
-							tel: "18700003333(无)",
-							detail: "实习置业顾问",
-							img: "../../static/image/header.jpg"
-						}] 
-					},
-					{
-						"index":'L',
-						"key": [{
-							a: 'L',
-							name: "刘-双流区-香墅2  号店M组",
-							tel: "18700003333(无)",
-							detail: "实习置业顾问",
-							img: "../../static/image/header.jpg"
-						}] 
-					},
-				]
+				indexList: null,
+				abcList:[]
 			}
 		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
 		},
 		onLoad() {
-
+			this.init()
 		},
 		methods: {
+			init(){
+				this.$tool.uniRequest({
+					url:"rbac/tongxun/",
+					method:'GET',									
+					success:(res)=>{
+						let arr=res
+						this.abcList=[]
+						arr.forEach(item=>{
+							this.abcList.push(item.shou)						
+						})
+						let set=new Set(this.abcList)
+						this.abcList=[...set]
+						this.abcList.sort()
+						this.indexList=[]
+						this.abcList.forEach(item=>{
+							let obj={
+								'index':item,
+								"key":[]
+							}
+							arr.forEach(item1=>{
+								if(item===item1.shou){
+									obj['key'].push(item1)
+								}
+							})
+							this.indexList.push(obj)
+						})
+					}
+				})
+			},
 			toDetail(item){
 				this.$tool.uniNavigateTo({
-					url:"/pages/mailList/detail"
+					url:`/pages/mailList/detail?userId=${item.id}`
 				})
 			}
 		}
@@ -146,11 +94,15 @@
 		background-color: #fff;
 		align-items: center;
 		.leftHead{
-			width: 100rpx;
-			height: 100rpx;
+			// width: 100rpx;
+			// height: 100rpx;
 			border-radius: 50%;
+			flex-shrink: 0;
+			margin-right: 40rpx;
 		}
 		.textname{
+			flex: 1;
+			margin-right: 20rpx;
 			.name{
 				font-size: 32rpx;
 				font-weight: 600;

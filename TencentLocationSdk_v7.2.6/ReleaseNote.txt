@@ -1,0 +1,4 @@
+变化：
+1、修复了7.2.5版本反馈的一些bug，提高了稳定性。
+2、定位SDK远端Maven仓库版本升级到7.2.6。
+	只需要在gradle中关联implementation 'com.tencent.map.geolocation:TencentLocationSdk-openplatform:7.2.6'即可。

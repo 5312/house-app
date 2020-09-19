@@ -19,35 +19,69 @@
 				list:[
 					{
 						name:"入职时间",
-						info:"2020-08-05",
-						arrow:true,
+						info:"",
+						arrow:false,
+						prop:"rzshijian",
 						path:""
 					},{
 						name:"部门",
-						info:"销售部",
-						arrow:true,
+						info:"",
+						arrow:false,
+						prop:'bumen',
 						path:""
 					},{
 						name:"职位",
-						info:"实习置业顾问",
-						arrow:true,
+						info:"",
+						arrow:false,
+						prop:'gangwei',
 						path:""
 					},{
-						name:"入职来源",
-						info:"xxx-内部推荐",
-						arrow:true,
+						name:"推荐人",
+						info:"",
+						arrow:false,
+						prop:'daoshi',
 						path:""
 					},{
-						name:"从业经验",
-						info:"暂无",
-						arrow:true,
+						name:"转正时间",
+						info:"",
+						arrow:false,
+						prop:'zztime',
 						path:""
 					},{
-						name:"资格证书编号",
-						info:"xxxxxx",
+						name:"投保状态",
+						info:"",
+						prop:'tbzhuangtai',
+						arrow:false
+					},{
+						name:"合同状态",
+						info:"",
+						prop:'htzhuangtai',
 						arrow:false
 					}
 				]
+			}
+		},
+		onLoad(){
+			this.init()
+		},
+		methods:{
+			init(){
+				this.$tool.uniRequest({
+					url:"rsdangan/ruzhi/",
+					method:'GET',
+					params:{
+						id:this.$tool.uniGetStorage('userId')
+					},
+					success:(res)=>{
+						this.list.forEach(item=>{
+							for(let i in res){
+								if(item.prop==i){
+									item.info=res[i]
+								}
+							}
+						})
+					}
+				})	
 			}
 		}
 	}

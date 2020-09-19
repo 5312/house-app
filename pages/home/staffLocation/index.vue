@@ -3,7 +3,8 @@
 		 <a-navbar title="员工位置" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 		 <view class="content">
 		 	<view class="map-box relative">
-		 		<map style="width: 100%; height: 100%" :latitude="latitude" :longitude="longitude" :markers="covers" :scale="18">
+		 		<map style="width: 100%; height: 100%" :latitude="latitude" v-if="isMap" id='staffMap'
+					:longitude="longitude" :markers="covers" :scale="scale"  :key='mapKey'>
 		 		</map>
 				
 				<view class="search-input-box flex a-center flex-row j-between absolute">
@@ -11,22 +12,23 @@
 				</view>
 		 	</view>
 			<view class="list">
-				<view class="box flex a-center j-between border-bottom flex-row" v-for="(item,index) in staffList" :key='index'>
+				<view class="box flex a-center j-between border-bottom flex-row" 
+					v-for="(item,index) in staffList" :key='index' @click="selectLocation(item)">
 					<view class="left flex-shrink">
-						<u-image width="100rpx" height='100rpx' shape='circle'  src='http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg'></u-image>
+						<u-image width="100rpx" height='100rpx' shape='circle'  :src='item.touxiang'></u-image>
 					</view>
 					<view class="mid flex1">
 						<view class="name bold">
-							{{item.name}}-{{item.jum}}({{item.account}})
+							{{item.ygmingcheng}}-{{item.gangwei}}({{item.ygbianhao}})
 						</view>
 						<view class="time">
-							获取时间：{{$u.timeFormat(item.time, 'yyyy-mm-dd hh:MM:ss')}}
+							获取时间：{{item.addtime}}
 						</view>
 					</view>
-					<view class="right flex-shrink flex a-center flex-row j-center text-white border-radius-8">
+					<!-- <view class="right flex-shrink flex a-center flex-row j-center text-white border-radius-8">
 						<u-icon name="plus"></u-icon>
 						<text>关注</text>
-					</view>
+					</view> -->
 				</view>
 			</view>
 		 </view>
@@ -38,23 +40,11 @@
 		data(){
 			return{
 				searchVal:'',
-				staffList:[
-					{
-						img:"",
-						name:"王小二",
-						jum:"合伙人",
-						account:"010203",
-						time:new Date().getTime()+'',
-						isFollow:false
-					},{
-						img:"",
-						name:"王小二",
-						jum:"合伙人",
-						account:"010203",
-						time:new Date().getTime()+'',
-						isFollow:false
-					}
-				],
+				isMap:false,
+				staffMap:null,
+				scale:18,
+				mapKey:0,
+				staffList:[],
 				latitude: 39.909,
 				longitude: 116.39742,
 				covers: [{
@@ -63,6 +53,65 @@
 					iconPath: '../../../static/location.png'
 				}],
 			}
+		},
+		onLoad(){
+			this.getStafflocation()
+			this.getStaffList()
+		},
+		
+		methods:{
+			selectLocation(item){
+				if(!item && !item.point){
+					return
+				}
+				let lon=parseFloat(item.point.split(",")[0])
+				let  lat=parseFloat(item.point.split(",")[1])
+				this.isMap=false
+				this.latitude=lat
+				this.longitude=lon
+				this.covers[0].latitude = lat
+				this.covers[0].longitude = lon		
+				uni.createMapContext("staffMap",this).moveToLocation({
+					longitude:lon,
+					latitude:lat,
+					success:res=>{
+						console.log('ok',res)
+						console.log(lon,lat)
+						console.log(item)
+					},
+					fail:err=>{
+						console.log('err',err)
+					}
+				})
+				this.isMap=true
+			},
+			getStaffList(){
+				this.$tool.uniRequest({
+					url: "kaoqin/weizhilist",
+					method: 'GET',
+					params: {
+						xingming:''
+					},
+					success: (res) => {
+						this.staffList=res
+					}
+				})
+			},
+			getStafflocation() {
+				let _this = this
+				uni.getLocation({
+					type: 'gcj02',
+					geocode: true,
+					success: function(res) {
+						let ress = res.longitude+ ',' + res.latitude 
+						_this.longitude = res.longitude
+						_this.latitude = res.latitude
+						_this.covers[0].latitude = res.latitude
+						_this.covers[0].longitude = res.longitude	
+						_this.isMap=true					
+					}
+				});			
+			},
 		}
 	}
 </script>

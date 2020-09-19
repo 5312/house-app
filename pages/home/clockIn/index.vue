@@ -1,36 +1,40 @@
 <template>
-	<view class="clock-in">		
+	<view class="clock-in">
 		<a-navbar title="考勤打卡" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
-		<u-tabs :list="list" :is-scroll="false" :current="current" @change="change" height='100'></u-tabs>
+		<u-tabs :list="list" active-color='#07c160' :is-scroll="false" :current="current" @change="change" height='100'></u-tabs>
 		<view class="content">
-			<view class="content-1" v-show="current===0">
+			<view class="content-1" v-if="current!==2">
 				<view class="map-box">
-					<map style="width: 100%; height: 300px;" :latitude="latitude" :longitude="longitude" :markers="covers" :scale="18">
+					<map id='myMap' style="width: 100%; height: 300px;" :latitude="latitude"  :longitude="longitude" :markers="covers"
+					 :scale="18" @tap="tapMap" v-show="isMap">
 					</map>
 				</view>
 				<view class="info-box">
-					<view class="line">上班时间：{{workTime()}}</view>
-					<view class="line">下班时间：无记录 未签到</view>
-					<view class="line">当前职务：实习置业顾问</view>
+					<view class="line">上班时间：{{workTimeRocord && workTimeRocord.list && workTimeRocord.list.length 
+						? workTimeRocord.list[0].addtime:'未打卡'}}</view>
+					<view class="line">下班时间：{{workTimeRocord && workTimeRocord.list && workTimeRocord.list.length 
+					    &&	workTimeRocord.list[1] ?workTimeRocord.list[1].addtime:'未打卡'}}</view>
+					<view class="line" v-if="userInfo">当前职务：{{userInfo.gangwei || ''}}</view>
 				</view>
 				<view class="count-box flex a-center j-center">
-					<view class="count-bg radius flex a-center j-center">
-						<u-count-down :timestamp="timestamp" bg-color="transparent" color="#fff" separator-color="#fff"></u-count-down>
+					<view class="count-bg radius flex  a-center j-center" @click="punchClock" :class="[this.workTimeRocord && this.workTimeRocord.list.length>=2 && 'bg-grey']">
+						<view class="count-text" v-if="!this.workTimeRocord || this.workTimeRocord.list.length<2">签到</view>
+						<text>{{currentTimeVal}}</text>
 					</view>
 				</view>
-			</view>
-			<view class="content-2" v-show="current===1">
-				<view>
-						1
+				<view class="address-info" v-if="workTimeRocord">
+					{{workTimeRocord && workTimeRocord.dizhi || ''}}
 				</view>
 			</view>
 			<view class="content-3" v-if="current===2">
 				<view class="record-box">
-					<a-calendar  ref='calendarDom' ></a-calendar>
+					<a-calendar  ref='calendarDom' @getNowDate='getNowDate' :dateStatusList='dateStatusList'></a-calendar>
 				</view>
 				<view class="record-time">
-					<view class="line border-bottom border-top">上班：</view>
-					<view class="line border-bottom">下班：</view>
+					<view class="line border-bottom border-top">上班：{{currentWorkTime && currentWorkTime.am &&
+						currentWorkTime.am.addtime || '无记录'}}</view>
+					<view class="line border-bottom">下班：{{ currentWorkTime && currentWorkTime.pm &&
+						currentWorkTime.pm.addtime || '无记录'}}</view>
 					<view class="line-info">提示：未审核考勤将不计算工资，请联系上一级及时审核！</view>
 				</view>
 			</view>
@@ -42,7 +46,14 @@
 	export default {
 		data() {
 			return {
-				isShowCalendar:true,
+				isMap:false,
+				isShowCalendar: true,
+				currentCalender: null,
+				workTimeRocord: null,
+				dateStatusList: [],
+				currentWorkTime: null,
+				userInfo: null,
+				currentTimeVal: null,
 				list: [{
 					name: '正常打卡'
 				}, {
@@ -58,54 +69,205 @@
 					longitude: 116.39742,
 					iconPath: '../../../static/location.png'
 				}],
-				timestamp:86400
+				timestamp: 86400,
+				address:''
 			}
+		},
+		onLoad() {
+			this.userInfo = this.$tool.uniGetStorage('userInfo')
+			this.getcurrentTimeVal()
+			this.getClockInfo(()=>{
+				this.getMapInfo()
+			})
+			
 		},
 		
 		methods: {
+			tapMap(e){		
+				let that=this
+				let maps = uni.createMapContext("myMap", this).$getAppMap();
+				maps.onclick = function(point) {
+					if(that.current==1){
+					   that.longitude = point.longitude
+					   that.latitude = point.latitude
+					   that.covers[0].latitude = point.latitude
+					   that.covers[0].longitude = point.longitude
+			        }	
+				}
+			},
+			getNowDate(obj) {
+				this.currentCalender = obj
+				this.currentCalender && this.getRocord(obj.isClick)
+			},
+			getcurrentTimeVal() {
+				setInterval(() => {
+					this.currentTimeVal = this.$u.timeFormat(String(new Date().getTime()), 'hh:MM:ss');
+				}, 1000)
+			},
+			punchClock() {
+				if (this.workTimeRocord && this.workTimeRocord.list.length >= 2) {
+					return
+				}
+				let _this = this
+				let index = this.current
+				if (index !== 2) {
+					index += 1
+				} else {
+					return
+				}
+				let ress = this.longitude+ ',' + this.latitude
+				let params= {
+						type: index, //打卡类型1正常2外出
+						location: ress,
+						ress: _this.workTimeRocord && _this.workTimeRocord.dizhi || _this.address,
+						remark: ''
+					}
+				console.log(params)
+				_this.$tool.uniRequest({
+					url: "kaoqin/qiandao",
+					method: 'POST',
+					params,
+					success: (res) => {
+						_this.getMapInfo()
+					}
+				})
+
+			},		
+			getClockInfo(callback=null) {
+				let _this = this
+				uni.getLocation({
+					type: 'gcj02',
+					geocode: true,
+					success: function(res) {	
+						console.log(res)
+						_this.longitude = res.longitude
+						_this.latitude = res.latitude
+						_this.covers[0].latitude = res.latitude
+						_this.covers[0].longitude = res.longitude	
+						_this.address=res.address.province+res.address.city+res.address.district+res.address.street+res.address.streetNum+res.address.poiName+res.address.cityCode
+						_this.isMap=true
+						callback && callback()
+					}
+				})
+			},
+			getMapInfo(){
+				let ress = this.longitude+ ',' + this.latitude 
+				this.$tool.uniRequest({
+					url: "kaoqin/qiandao",
+					method: 'GET',
+					params: {
+						type: this.current+1, //打卡类型1正常2外出
+						location: ress,
+						ress: this.workTimeRocord && this.workTimeRocord.dizhi || this.address,
+						remark: ''
+					},
+					success: (res) => {
+						console.log(res)
+						this.workTimeRocord = res
+					}
+				})
+			},
 			change(index) {
 				this.current = index;
+				if (index !== 2) {				
+					if(index===0){
+						this.getClockInfo(()=>{
+							this.getMapInfo()
+						})
+					}else{
+						this.getMapInfo()
+					}
+					
+				}
 			},
-			workTime(){
-				let timer=new Date().getTime()
-				let result=this.$u.timeFormat(timer, 'yyyy-mm-dd hh:MM')
-				return result
+			getRocord(isClick = false) {
+				if (!isClick) {
+					this.getRocordMonth()
+				}
+				this.getRocordMonth(true)
 			},
-			
+			getRocordMonth(isDay = false) {
+				this.$tool.uniRequest({
+					url: "kaoqin/qiandaolist",
+					method: 'GET',
+					params: {
+						yuefen: `${this.currentCalender.year}-${this.currentCalender.month}`,
+						ri: isDay ? this.currentCalender.day : ""
+					},
+					success: (res) => {
+						if (isDay) {
+							this.currentWorkTime = res && res[0] || null
+						} else {
+							this.dateStatusList = res || []
+						}
+					}
+				})
+			},
+
+
 		}
 	}
 </script>
 
 <style scoped lang="scss">
-	.clock-in{
-		.content{
-			.content-1{
-				.info-box{
+	.clock-in {
+		.bg-grey {
+			background: grey !important;
+
+		}
+
+		.address-info {
+			color: #cccccc;
+			font-size: 24rpx;
+			margin: 20rpx 0 60rpx 0;
+			text-align: center;
+			width: 80%;
+			margin-left: 10%;
+		}
+
+		.content {
+			.content-1 {
+				.info-box {
 					padding: 30rpx 40rpx;
-					.line{
+
+					.line {
 						height: 60rpx;
 						line-height: 60rpx;
 					}
 				}
-				.count-box{
+
+				.count-box {
 					margin-top: 40rpx;
-					.count-bg{
+
+					.count-bg {
 						width: 200rpx;
 						height: 200rpx;
-						background: #c8c9cc;
-						color:#FFFFFF;
-						
+						background: #19be6b;
+						color: #FFFFFF;
+						text-align: center;
+						line-height: 50rpx;
+						display: flex;
+						flex-direction: column;
+
+						.count-text {
+							line-height: 80rpx;
+							// margin-top: 30rpx;
+							font-size: 40rpx;
+							font-weight: 600;
+						}
 					}
 				}
 			}
-			.content-3{
-				.record-time{				
-					.line{
+
+			.content-3 {
+				.record-time {
+					.line {
 						height: 80rpx;
 						line-height: 80rpx;
 						padding: 0 40rpx;
 					}
-					.line-info{
+
+					.line-info {
 						line-height: 1.6;
 						min-height: 80rpx;
 						padding: 20rpx 40rpx;

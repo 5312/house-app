@@ -6,7 +6,9 @@
 		<view class="list">
 			<u-grid :col="4" :border='border'>
 				<u-grid-item v-for="(item,index) in list" @click.native.stop.prevent="toPage(item)">
-					<u-image width="80rpx" height="80rpx" :src="item.img"></u-image>
+					<u-image width="80rpx" height="80rpx" :src="item.img" :lazy-load="true"></u-image>
+					<!-- <u-image width="80rpx" height="80rpx" src="http://ming.ydeshui.com/Upload/ad/ad2.jpeg" :lazy-load="true"></u-image> -->
+					
 					<view class="grid-text name">{{item.name}}</view>
 				</u-grid-item>					
 			</u-grid>
@@ -30,9 +32,12 @@
 				default:false
 			}
 		},
+		onReady(){
+			console.log("重新渲染了")
+		},
 		methods:{
 			toPage(item){
-				this.$tool.uniRedirectTo({
+				this.$tool.uniNavigateTo({
 					url:item.path
 				})
 			}

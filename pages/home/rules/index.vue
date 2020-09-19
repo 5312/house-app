@@ -2,11 +2,11 @@
 	<view class="rules">
 		<a-navbar title="公司规章制度" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 		<view class="content">
-			<u-collapse>
-				<u-collapse-item :title="item.head" v-for="(item, index) in itemList" :key="index" class="bg-white border-bottom" @change='collapseChange'>
-					<view class="page-bg border-bottom flex a-center j-between flex-row padding-lr-40 height-line-80"  v-for="(val,i) in itemListChildren" 
-						@click="toDetail(item)" :key='i'>
-						<text>{{val.name}}</text>
+			<u-collapse  :key='collapseKey'>
+				<u-collapse-item :title="item.head" v-for="(item, index) in itemList" :key="index" class="bg-white border-bottom">
+					<view class="page-bg border-bottom flex a-center j-between flex-row padding-lr-40 height-line-80"  v-for="(val,i) in item.children"  
+						v-if="item.children && item.children.length"	@click="toDetail(item,val)" :key='i'>
+						<text>{{val.title}}</text>
 						<u-icon name="arrow-right" color="#c8c9cc"></u-icon>
 					</view>
 				</u-collapse-item>
@@ -20,42 +20,53 @@
 		data(){
 			return{
 				itemListChildren:[],
+				collapseKey:0,
 				itemList:[
 					{
 						head:"人事部",
-						fenlei:4
+						fenlei:4,
+						children:[]
 					},{
 						head:"行政部",
-						fenlei:6
+						fenlei:6,
+						children:[]
 					},{
 						head:"财务部",
-						fenlei:7
+						fenlei:7,
+						children:[]
 					}
 				]
 			}
 		},
 		onLoad(){
-			this.getListInfo()
+			this.init()
 		},
-		methods:{
-			collapseChange(val){
-				console.log(val)
+		methods:{			
+			init(){
+				let _this=this
+				for (let i=0;i<=this.itemList.length-1;i++){
+					let item=this.itemList[i]
+					_this.getListInfo(item.fenlei,(res)=>{
+						_this.itemList[i].children=res
+						_this.collapseKey+=1					
+					})
+				}
 			},
-			getListInfo(){
+			getListInfo(fenlei,callback){			
 				this.$tool.uniRequest({
 					url:"gongsi/zhishi/",
 					method:'GET',					
 					params:{
-						fenlei:6
+						fenlei:fenlei
 					},
 					success:(res)=>{
-						this.itemListChildren=[]
+						callback(res)
 					}
 				})
 			},
-			toDetail(item){
+			toDetail(item,val){
 				this.$tool.uniNavigateTo({
-					url:"/pages/home/base/rich"
+					url:`/pages/home/base/rich?fromPage=rules&id=${val.id}`
 				})
 			}
 		}
