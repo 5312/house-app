@@ -38,7 +38,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="flex a-center flex-row j-between box-1-wrap">
+				<!-- <view class="flex a-center flex-row j-between box-1-wrap">
 					<view class="box-1 ">
 						<view class="name">
 							基本工资
@@ -55,8 +55,8 @@
 							{{defail.ticheng}}
 						</view>
 					</view>
-				</view>
-				<view class="flex a-center flex-row j-between box-1-wrap">
+				</view> -->
+				<!-- <view class="flex a-center flex-row j-between box-1-wrap">
 					<view class="box-1 ">
 						<view class="name">
 							奖罚工资
@@ -66,9 +66,9 @@
 						</view>
 					</view>
 					
-				</view>
+				</view> -->
 			</view>
-			<view class="table bg-white" v-if="defail">
+			<!-- <view class="table bg-white" v-if="defail">
 				<view class="line flex a-center flex-row j-between border-bottom">
 					<text>基金管理</text>
 					<u-icon name="arrow-right"></u-icon>
@@ -99,7 +99,7 @@
 						</view>
 					</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>

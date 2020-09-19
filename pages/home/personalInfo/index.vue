@@ -17,7 +17,7 @@
 						<u-icon name="arrow-right" color="#c8c9cc" class="margin-l-10"></u-icon>
 					</view>
 				</view>
-				<u-gap height="10" v-if="index !=(list.length-1)"></u-gap>
+				<u-gap height="30" v-if="index !=(list.length-1)"></u-gap>
 			</template>
 		</view>
 	</view>

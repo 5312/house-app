@@ -6,7 +6,7 @@
 					<u-icon name="list"></u-icon>
 				</view>
 				<view class="right flex j-end a-center flex-row">
-					<u-icon name="scan" class="scan-icon"></u-icon>
+					<!-- <u-icon name="scan" class="scan-icon"></u-icon> -->
 					<u-icon name="chat"></u-icon>
 				</view>
 			</view>
@@ -44,9 +44,9 @@
 						</view>
 					</view>
 				</view>
-				<view class="popup-footer absolute border-top" @click="isShowPopup=false">
+				<view class="popup-footer absolute border-top" @click="loginOut">
 					<u-icon name="close-circle" ></u-icon>
-					<text>退出</text>
+					<text>退出账号</text>
 				</view>
 			</view>
 		</u-popup>
@@ -72,11 +72,12 @@
 						icon:"",
 						name:"修改密码",
 						prop:"changePassword"
-					},{
+					},
+					/* {
 						icon:"",
 						name:"退出账号",
 						prop:"loginOut"
-					}
+					} */
 				],
 				personList:[
 					{
@@ -175,6 +176,8 @@
 				})
 			},
 			popHandle(item){
+				console.log(item)
+				return
 				switch(item.prop){
 					case 'loginOut':
 						this.loginOut()

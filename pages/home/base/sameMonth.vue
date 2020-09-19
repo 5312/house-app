@@ -91,10 +91,10 @@
 				personCurrentIndex:0,
 				list: [
 					{
-						name: '租单'
+						name: '售单'
 					},
 					{
-						name: '卖单'
+						name: '租单'
 					},{
 						name: '新盘'
 					}

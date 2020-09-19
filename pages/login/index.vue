@@ -1,24 +1,25 @@
 <template>
 	<view class="wrap fixed tblr flex a-center j-center">
+		<u-modal v-model="show" z-index="999" @confirm="confirm" title="版本更新" :content='content' ref="uModal" :async-close="true"></u-modal>
 		<view class="conter">
 			<image class="logo" src="../../static/image/logo.png" mode=""></image>
 			<view class="inp">
 				<view class="input">
 					<u-icon class="icon" name="account"></u-icon>
-					<u-input  v-model.trim="bianhao" :type="type1" :border="border1" />
+					<u-input v-model.trim="bianhao" :type="type1" :border="border1" />
 				</view>
 				<view class="input">
 					<u-icon class="icon" name="lock-fill"></u-icon>
-					<u-input  v-model.trim="password" :type="type2" :border="border2" />
+					<u-input v-model.trim="password" :type="type2" :border="border2" />
 				</view>
-				<u-button class='btn' type="success"  @click.native='login' >登录</u-button>
+				<u-button class='btn' type="success" @click.native='login'>登录</u-button>
 			</view>
-			<view class="bottom">
+			<!-- <view class="bottom">
 				<text>忘记密码？</text>
-			</view>
+			</view> -->
 		</view>
 		<view class="version">
-			<text>OA办公系统</text>
+			<text>版本:v{{versioninfo}}</text>
 		</view>
 	</view>
 </template>
@@ -27,6 +28,10 @@
 	export default {
 		data() {
 			return {
+				show: false,
+				content: null,
+				versioninfo: '1.0.0',
+				url: null,
 				bianhao: '10007',
 				type1: 'text',
 				border1: true,
@@ -35,9 +40,71 @@
 				border2: true
 			}
 		},
+		onLoad() {
+			let _this = this;
+			//#ifdef APP-PLUS  
+			plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {
+				_this.versioninfo = widgetInfo.version;
+				let header = {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				}
+				_this.$tool.uniShowLoading({})
+				uni.request({
+					url: 'http://ming.ydeshui.com/api/version/',
+					method: 'GET',
+					withCredentials: false,
+					data: {
+						version: widgetInfo.versionCode
+					},
+					header: header,
+					success: function(result) {
+						console.log('ver', result)
+						if (result.data.code == 0) {
+							_this.show = true;
+							_this.content = result.data.msg;
+							_this.url = result.data.data[0].url;
+						}
+					},
+					fail: (err) => {
+						_this.$tool.uniShowToast({
+							title: "请求失败，请重试",
+							icon: "none"
+						})
+					},
+					complete: () => {
+						this.uniHideLoading()
+						complete ? complete() : false
+					}
+				})
+			})
+			//#endif  
+		},
 		methods: {
-			login(){
-				if(!this.password){
+			confirm() {
+				let downUrl = this.url;
+				let _this = this;
+				console.log(downUrl)
+				var dtask = plus.downloader.createDownload(downUrl, {}, function(d, status) {
+					// 下载完成
+					_this.show = false;
+					if (status == 200) {
+						plus.runtime.install(plus.io.convertLocalFileSystemURL(d.filename), {}, {}, function(error) {
+							uni.showToast({
+								title: '安装失败',
+								duration: 1500
+							});
+						})
+					} else {
+						uni.showToast({
+							title: '更新失败',
+							duration: 1500
+						});
+					}
+				});
+				dtask.start();
+			},
+			login() {
+				if (!this.password) {
 					this.uniShowToast({
 						title: "请输入用户名",
 						icon: "none"
@@ -45,24 +112,24 @@
 					return
 				}
 				this.$tool.uniRequest({
-					url:"login/",
-					method:'POST',
-					isLogin:true,
-					params:{
-						bianhao:this.bianhao,
-						password:this.password
+					url: "login/",
+					method: 'POST',
+					isLogin: true,
+					params: {
+						bianhao: this.bianhao,
+						password: this.password
 					},
-					success:(res)=>{
-						this.$tool.uniSetStorage('token',res.Accept)
-						this.$tool.uniSetStorage('userId',res.id)
-						this.$tool.uniSetStorage('userInfo',res)
+					success: (res) => {
+						this.$tool.uniSetStorage('token', res.Accept)
+						this.$tool.uniSetStorage('userId', res.id)
+						this.$tool.uniSetStorage('userInfo', res)
 						this.$tool.uniReLaunch({
-							url:"/pages/home/index"
+							url: "/pages/home/index"
 						})
 					}
-				})			
+				})
 			},
-			
+
 		}
 	}
 </script>
@@ -89,42 +156,51 @@
 				height: 250rpx;
 				margin: auto;
 			}
-			.inp{
-				width:80%;
-				margin:auto;
-				.input{
-					position:relative;
-					.u-input{
-						padding:0 20rpx 0 50rpx!important;
+
+			.inp {
+				width: 80%;
+				margin: auto;
+
+				.input {
+					position: relative;
+
+					.u-input {
+						padding: 0 20rpx 0 50rpx !important;
 					}
-					.icon{
+
+					.icon {
 						position: absolute;
-						top:25rpx;
-						left:10rpx;
+						top: 25rpx;
+						left: 10rpx;
 					}
+
 					margin-top:60rpx;
 				}
-				.btn{
-					margin-top:50rpx;
+
+				.btn {
+					margin-top: 50rpx;
 				}
 			}
-			.bottom{
+
+			.bottom {
 				text-align: right;
-				padding:50rpx;
+				padding: 50rpx;
 			}
 		}
-		.version{
+
+		.version {
 			position: absolute;
-			bottom:100rpx;
-			width:100%;
-			margin:auto;
+			bottom: 100rpx;
+			width: 100%;
+			margin: auto;
 			text-align: center;
-			text{
+
+			text {
 				background: rgba(136, 136, 136, 0.68);
-				padding:10rpx 20rpx;
-				border-radius:30rpx;
-				color:#fff;
-				
+				padding: 10rpx 20rpx;
+				border-radius: 30rpx;
+				color: #fff;
+
 			}
 		}
 	}

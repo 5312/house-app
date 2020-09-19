@@ -110,7 +110,7 @@
 				currentIndex: 0,
 				leixing:null,
 				leixingList: [{
-						name: '卖单'
+						name: '售单'
 					},
 					{
 						name: '租单'
@@ -228,9 +228,10 @@
 			},
 			submit() {
 				let params = this.$u.deepClone(this.form)
-				if(this.leixing==='卖单'){
+				console.log(this.leixing)
+				if(this.leixing==='售单'){
 					params.leixing=1
-				}else if(this.leixing==='租赁'){
+				}else if(this.leixing==='租单'){
 					params.leixing=2
 				}else if(this.leixing==='新盘'){
 					params.leixing=3

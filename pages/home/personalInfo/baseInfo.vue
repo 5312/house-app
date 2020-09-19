@@ -4,8 +4,11 @@
 		<view class="content">
 			<u-gap height="10"></u-gap>
 			<u-form class="form" :model="form" ref="uForm" v-if="form">
-				<u-form-item class="bg" label-width='150' label-align='rigth' label="姓名">
+				<u-form-item class="bg col" label-width='150' label-align='rigth'  label="姓名">
 					<view>{{form.ygmingcheng}}</view>
+				</u-form-item>
+				<u-form-item class="bg" label-width='150' label-align='rigth' label="工号">
+					<view>{{form.ygbianhao}}</view>
 				</u-form-item>
 				<u-form-item class="bg" label-width='150' label-align='rigth' label="性别">
 					<u-radio-group class="bg  flex" v-model="form.xingbie" :disabled="!isEdit">
@@ -13,9 +16,6 @@
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
-				</u-form-item>
-				<u-form-item class="bg" label-width='150' label-align='rigth' label="工号">
-					<view>{{form.ygbianhao}}</view>
 				</u-form-item>
 				<u-form-item class="bg" label-width='150' label-align='rigth' label="籍贯">
 					<u-input v-model="form.jiguan" :disabled="!isEdit" placeholder='' />
@@ -46,9 +46,9 @@
 				</u-form-item>
 			</u-form>
 			<view class="btn-wrap">
-				<u-button type="success" class="btn" v-if="!isEdit" @click="isEdit=true">修改</u-button>
-				<u-button type="success" class="btn" v-if="isEdit" @click="submit">提交</u-button>
-				<u-button v-if="isEdit" @click="isEdit=false">取消</u-button>
+				<u-button type="success" class="btn"  @click="submit">修改</u-button>
+				<!-- <u-button type="success" class="btn" v-if="isEdit" @click="submit">提交</u-button> -->
+				<!-- <u-button v-if="isEdit" @click="isEdit=false">取消</u-button> -->
 			</view>
 		</view>
 	</view>
@@ -95,7 +95,7 @@
 						this.form = res
 						this.form.minzu_list.forEach(item=>{
 							item.label=item.lxming
-							item.value=item.id
+							item.value=item.xsshunxu
 							if(item.id===this.form.minzu){
 								this.form.minzu=item.lxming
 								this.form.minzuId=item.id
@@ -103,15 +103,15 @@
 						})
 						this.form.hunyin_list.forEach(item=>{
 							item.label=item.lxming
-							item.value=item.id
+							item.value=item.xsshunxu
 							if(item.id===this.form.hunyin){
 								this.form.hunyin=item.lxming
 								this.form.hunyinId=item.id
-							}
+							}  
 						})
 						this.form.mianmao_list.forEach(item=>{
 							item.label=item.lxming
-							item.value=item.id
+							item.value=item.xsshunxu
 							if(item.id===this.form.zzmianmao){
 								this.form.zzmianmao=item.lxming
 								this.form.zzmianmaoId=item.id
@@ -119,12 +119,13 @@
 						})
 						this.form.xueli_list.forEach(item=>{
 							item.label=item.lxming
-							item.value=item.id
+							item.value=item.xsshunxu
 							if(item.id===this.form.xueli){
 								this.form.xueli=item.lxming
 								this.form.xueliId=item.id
 							}
 						})
+						console.log(this.form)
 					}
 				})
 			},
@@ -153,14 +154,16 @@
 			},
 			submit(){
 				let params= this.$u.deepClone(this.form)
+				
 				delete params.minzu_list
 				delete params.xueli_list
 				delete params.hunyin_list
 				delete params.mianmao_list
-				params.minzu=params.minzuId
-				params.xueli=params.xueliId
-				params.hunyin=params.hunyinId
-				params.zzmianmao=params.zzmianmaoId
+				params.minzu=params.minzuId || ''
+				params.xueli=params.xueliId || ''
+				params.hunyin=params.hunyinId || ''
+				params.zzmianmao=params.zzmianmaoId || ''
+				console.log(params)
 				this.$tool.uniRequest({
 					url: "rsdangan/bianji/",
 					method: 'POST',
@@ -169,7 +172,7 @@
 						this.$tool.uniShowToast({
 							title:"修改成功！"
 						})
-						this.isEdit=false
+						//this.isEdit=false
 						this.init()
 					}
 				})
@@ -182,14 +185,16 @@
 </script>
 
 <style scoped lang="scss">
+
 	.personal-base-info {
+		padding:20rpx;
 		.form {
 			border-radius: 20rpx;
 			overflow: hidden;
 
 			.bg {
 				background: #fff;
-
+				padding-right: 20rpx;
 				.fx {
 					display: flex;
 					padding: 20rpx 10rpx;

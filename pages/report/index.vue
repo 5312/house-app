@@ -45,13 +45,13 @@
 				searchVal:'',
 				dropdownList:[
 					{ show: false, options: [
-						{ id: 0, text: '楼盘区域', value: '', type:'area',select: false }						
+						{ id: 0, text: '全部区域', value: '', type:'area',select: false }						
 					] },
 					{ show: false, options: [
-						{ id: 0, text: '楼盘类型', value: '',type:'type', select: false }					
+						{ id: 0, text: '全部类型', value: '',type:'type', select: false }					
 					] },
 					{ show: false, options: [
-						{ id: 0, text: '楼盘状态', value: '',type:'status', select: false }						
+						{ id: 0, text: '全部状态', value: '',type:'status', select: false }						
 					] }
 				],
 				shop: [],
@@ -112,13 +112,13 @@
 						if(this.count>1)return
 						this.dropdownList=[
 							{ show: false, options: [
-								{ id: 0, text: '楼盘区域', value: '', type:'area',select: false }						
+								{ id: 0, text: '全部区域', value: '', type:'area',select: false }						
 							] },
 							{ show: false, options: [
-								{ id: 0, text: '楼盘类型', value: '',type:'type', select: false }					
+								{ id: 0, text: '全部类型', value: '',type:'type', select: false }					
 							] },
 							{ show: false, options: [
-								{ id: 0, text: '楼盘状态', value: '',type:'status', select: false }						
+								{ id: 0, text: '全部状态', value: '',type:'status', select: false }						
 							] }
 						]
 						res.quyu.forEach(item=>{
@@ -222,7 +222,7 @@
 				.tag {
 					display: inline-block;
 					padding: 4rpx 6rpx;
-					font-size: 12rpx;
+					font-size: 30rpx;
 					color: white;
 					border-radius: 4rpx;
 					margin-bottom: 6rpx;

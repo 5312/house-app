@@ -2,7 +2,7 @@
 	<view class="entry-info min-height-100 page-bg">	
 		<a-navbar title="入职信息" @back="$tool.uniRedirectTo({url:'/pages/home/personalInfo/index'})"></a-navbar>
 		<view class="content">
-			<u-gap height="12"></u-gap>
+			<!-- <u-gap height="12"></u-gap> -->
 			<template v-for="(item,index) in list">
 				<a-section :item="item" :key='index' :class="[index !==3 && index !==7 &&'border-bottom']"
 					 @select="select" :isArrow='item.arrow'></a-section>				
@@ -89,14 +89,18 @@
 
 <style scoped lang="scss">
 .entry-info{
+	padding:20rpx;
 	.header{
 		height: 240rpx;
+		border-radius: 20rpx;
 		.name{
 			margin-top: 14rpx;
 			font-size: 30rpx;
 		}
 	}
 	.content{
+		border-radius: 20rpx;
+		overflow: hidden;
 		.line{
 			height: 80rpx;
 			padding: 0 20rpx;

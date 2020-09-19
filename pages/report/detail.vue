@@ -7,128 +7,128 @@
 		<view class="bg title">基本信息</view>
 		<u-form class="form" v-if="form">
 			<u-form-item class="bg" label-align="right" label="楼盘编号:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.ysbianhao"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.ysbianhao"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="项目标题:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.xmbiaoti"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.xmbiaoti"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="楼盘状态:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.loupanzt"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.loupanzt"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="均价:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.junjia"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.junjia"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="总价:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.zongjia"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.zongjia"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="优惠:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.youhui"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.youhui"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="地铁站:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.ditiezhan"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.ditiezhan"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="区域位置:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.quyu"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.quyu"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="新房顾问:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.weihurenid"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.weihurenid"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="联系电话:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.dianhua"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.dianhua"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="楼盘地址:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.lpdizhi"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.lpdizhi"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="售楼处地址:" label-width='170'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.slcdizhi"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.slcdizhi"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="开发商:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.kaifashang"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.kaifashang"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="开盘时间:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.kaipansj"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.kaipansj"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="售卖资格:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.smzglx"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.smzglx"></u-input>
 			</u-form-item>
 			
 			<view class="detail">详情</view>
 			<u-form-item class="bg" label-align="right" label="建筑类型:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.jianzhulx"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.jianzhulx"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="占地面积:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.zdmianji"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.zdmianji"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="建筑面积:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.zjmianji"></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.zjmianji"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="规划户数:" label-width='150'>
 				<u-input type="text" :disabled="false"  placeholder='' v-model="form.guihuahs" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="物业类型:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.wuyelx" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.wuyelx" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="绿化率:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.lvhualv" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.lvhualv" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="容积率:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.rongjilv" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.rongjilv" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="产权年限:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.cqnx" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.cqnx" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="项目特色:" label-width='150'>
-				<u-input type="textarea" :disabled="false"  placeholder='' v-model="form.xmtese" ></u-input>
+				<u-input type="textarea" :disabled="true"  placeholder='' v-model="form.xmtese" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="楼盘户型:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.jushi" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.jushi" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="物业公司:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.wuyegongsi" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.wuyegongsi" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="物业费:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.wuyefei" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.wuyefei" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="地上车位:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.dschewei" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.dschewei" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="地下车位:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.dxchewei" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.dxchewei" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="车位配比:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.cwpeibi" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.cwpeibi" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="供水方式:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.gongshuifs" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.gongshuifs" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="供电方式:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.gongdianfs" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.gongdianfs" ></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="供暖方式:" label-width='150'>
-				<u-input type="text" :disabled="false"  placeholder='' v-model="form.gongnuanfs" ></u-input>
+				<u-input type="text" :disabled="true"  placeholder='' v-model="form.gongnuanfs" ></u-input>
 			</u-form-item>
 			<view class="rim">周边规划 - 地铁</view>
 			<view class="bg ta">
-				<u-input type="textarea " height="200" :disabled="false"  placeholder='' v-model="form.zbghdt" ></u-input>
+				<u-input type="textarea " height="200" :disabled="true"  placeholder='' v-model="form.zbghdt" ></u-input>
 			</view>
 			<view class='rim'>周边规划 - 购物</view>
 			<view class="bg ta">
-				<u-input  type="textarea" height='200' :disabled="false"  placeholder='' v-model="form.zbghgw" ></u-input>
+				<u-input  type="textarea" height='200' :disabled="true"  placeholder='' v-model="form.zbghgw" ></u-input>
 			</view>
 			<view class="rim">周边规划 - 公园</view>
 			<view class="bg ta">
-				<u-input type="textarea" height="200" :disabled="false"  placeholder='' v-model="form.zbghgy" ></u-input>
+				<u-input type="textarea" height="200" :disabled="true"  placeholder='' v-model="form.zbghgy" ></u-input>
 			</view>
 			<view class="rim">周边规划 - 其他</view>
 			<view class="bg ta">
-				<u-input type="textarea" height="200" :disabled="false"  placeholder='' v-model="form.zbghqt" ></u-input>
+				<u-input type="textarea" height="200" :disabled="true"  placeholder='' v-model="form.zbghqt" ></u-input>
 			</view>
 			<view class="rim">新房顾问</view>
 			<view class="bg ta height" v-if="list && list.length">
-				<view class="item" v-for="(x , index ) in list" :key='index'>
+				<view class="item" v-for="(x , index ) in xinfang" :key='index'>
 					<u-image class='inline' width='60px' height='60px'  :src='x.touxiang' shape='circle'></u-image>
 					<view class="inline right">
-						<view class="tit">{{x.name}}({{x.dianhua}})</view>
+						<view class="tit">{{x.name}}</view><!-- ({{x.dianhua}}) -->
 						<!-- <view class='bott'>{{x.de}}</view> -->
 					</view>
 				</view>
@@ -136,12 +136,12 @@
 			<view class="rim">户型素材</view>
 			<view class="bg bottom">
 				<view class="inlinebox">
-					<u-image class='img' v-for='(x,index) in swiperList' :key='index' :src='x.image' width='370' height='370'></u-image>
+					<u-image class='img' v-for='(x,index) in huxing' :key='index' :src='x.image' width='370' height='370'></u-image>
 				</view>				
 			</view>
 			<view class="btn">
-				<u-button :ripple="true" class="b" type='primary'><u-icon name='phone'></u-icon>电话咨询</u-button>
-				<u-button :ripple="true" class='b' type='success'><u-icon name='file-text'></u-icon>客户报备</u-button>
+			<!-- 	<u-button :ripple="true" class="b" type='primary'><u-icon name='phone'></u-icon>电话咨询</u-button> -->
+				<u-button :ripple="true" class='b' type='success' @click="keubaobei"><u-icon name='file-text'></u-icon>客户报备</u-button>
 			</view>
 		</u-form>
 	</view>
@@ -156,12 +156,20 @@
 				value:"没有对应参数",
 				list: [],
 				swiperList: [],
+				xinfang:[],
+				huxing:[],
 			}
 		},
 		onLoad(options){
 			options.id && this.getDetail(options.id)
 		},
 		methods:{
+			keubaobei(){
+				uni.showToast({
+					title:'稍后开放',
+					icon:'none'
+				})
+			},
 			getDetail(id){
 				this.$tool.uniRequest({
 					url:"xinfang/ysneirong/",
@@ -170,11 +178,13 @@
 						id
 					},
 					success:(res)=>{
+						console.log(res)
 						this.detail=res
 						this.form=res.ysfang
 						this.form.xmtese=res.xmtese.map(item=>item.lxming).join(',')
-						this.swiperList=res.ysphoto
-						this.list=res.xfguwens
+						this.swiperList=res.xmtese
+						this.list=res.xfguwens;
+						this.huxing = res.ysphoto;
 					}
 				})
 			},

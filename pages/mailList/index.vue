@@ -11,7 +11,7 @@
 					<u-index-anchor :index="item.index" />
 					<view v-for="(x,y) in item.key" :key="y" class="list-cell" @click="toDetail(x)">
 						<!-- <image class="leftHead" src="../../static/image/header.jpg" mode=""></image> -->
-						<u-image class="leftHead" width="100rpx" shape="circle"  height="100rpx" :src="x.touxiang" :lazy-load="true"></u-image>
+						<u-image class="leftHead" width="100rpx" shape="circle"  height="100rpx" :src="x.touxiang || moren" :lazy-load="true"></u-image>
 						<view class="textname">
 							<view class="name">{{x.ygmingcheng}}-{{x.bumen}}</view>
 							<text class="tel">{{x.dianhua}}</text>
@@ -31,7 +31,8 @@
 			return {
 				scrollTop: 0,
 				indexList: null,
-				abcList:[]
+				abcList:[],
+				moren:'../../static/image/header.jpg'
 			}
 		},
 		onPageScroll(e) {
@@ -80,6 +81,10 @@
 </script>
 
 <style lang="scss" scoped>
+	.header{
+		font-size: 32rpx;
+		font-weight: 700;
+	}
 	.list-cell {
 		display: flex;
 		box-sizing: border-box;
@@ -93,6 +98,7 @@
 		line-height: 24px;
 		background-color: #fff;
 		align-items: center;
+		border-bottom:1px solid #ddd;
 		.leftHead{
 			// width: 100rpx;
 			// height: 100rpx;

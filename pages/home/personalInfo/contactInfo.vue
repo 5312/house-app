@@ -87,6 +87,7 @@
 
 <style scoped lang="scss">
 .contact-info{
+	padding:20rpx;
 	.header{
 		height: 240rpx;
 		.name{

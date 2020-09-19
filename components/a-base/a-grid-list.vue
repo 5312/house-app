@@ -37,6 +37,13 @@
 		},
 		methods:{
 			toPage(item){
+				if(item.name == '开店申请' || item.name == '闭店申请'){
+					uni.showToast({
+						title:'稍后开放',
+						icon:'none'
+					})
+					return
+				}
 				this.$tool.uniNavigateTo({
 					url:item.path
 				})
