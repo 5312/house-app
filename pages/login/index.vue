@@ -49,6 +49,7 @@
 					'Content-Type': 'application/x-www-form-urlencoded',
 				}
 				_this.$tool.uniShowLoading({})
+				console.log(widgetInfo.versionCode)
 				uni.request({
 					url: 'http://ming.ydeshui.com/api/version/',
 					method: 'GET',
@@ -58,6 +59,7 @@
 					},
 					header: header,
 					success: function(result) {
+						_this.$tool.uniHideLoading({})
 						console.log('ver', result)
 						if (result.data.code == 0) {
 							_this.show = true;
@@ -72,8 +74,8 @@
 						})
 					},
 					complete: () => {
-						this.uniHideLoading()
-						complete ? complete() : false
+						_this.$tool.uniHideLoading({})
+						//complete ? complete() : false
 					}
 				})
 			})

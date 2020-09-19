@@ -2,8 +2,8 @@
     "name" : "明远OA",
     "appid" : "__UNI__6B5A0F4",
     "description" : "",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "1.0.2",
+    "versionCode" : 102,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
