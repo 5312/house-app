@@ -68,6 +68,10 @@
             "path" : "pages/home/shopTransferApplication/newpage",
             "style" : {}
         }
+        ,{
+            "path" : "pages/home/shopTransferApplication/goout",
+            "style" : {}
+        }
     ],
 	"easycom": {
 		"^a-(.*)": "@/components/a-base/a-$1.vue",
