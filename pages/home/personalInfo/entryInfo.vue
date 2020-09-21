@@ -47,12 +47,14 @@
 						arrow:false,
 						prop:'zztime',
 						path:""
-					},{
+					},
+					/*{
 						name:"投保状态",
 						info:"",
 						prop:'tbzhuangtai',
 						arrow:false
-					},{
+					},
+					*/{
 						name:"合同状态",
 						info:"",
 						prop:'htzhuangtai',

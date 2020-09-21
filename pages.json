@@ -64,7 +64,11 @@
 		},{
 			"path": "pages/home/changePassword"		
 		}
-	],
+	    ,{
+            "path" : "pages/home/shopTransferApplication/newpage",
+            "style" : {}
+        }
+    ],
 	"easycom": {
 		"^a-(.*)": "@/components/a-base/a-$1.vue",
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"

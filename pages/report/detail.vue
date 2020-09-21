@@ -182,7 +182,7 @@
 						this.detail=res
 						this.form=res.ysfang
 						this.form.xmtese=res.xmtese.map(item=>item.lxming).join(',')
-						this.swiperList=res.xmtese
+						this.swiperList=res.topphoto
 						this.list=res.xfguwens;
 						this.huxing = res.ysphoto;
 					}

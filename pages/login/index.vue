@@ -32,10 +32,10 @@
 				content: null,
 				versioninfo: '1.0.0',
 				url: null,
-				bianhao: '10007',
+				bianhao: '',
 				type1: 'text',
 				border1: true,
-				password: '222222',
+				password: '',
 				type2: 'password',
 				border2: true
 			}
