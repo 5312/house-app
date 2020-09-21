@@ -22,9 +22,9 @@
 				</u-form-item>
 			</u-form>
 			<view class="btn-wrap">
-				<u-button type="success" class="btn" v-if="!isEdit" @click="isEdit=true">修改</u-button>
-				<u-button type="success" class="btn" v-if="isEdit" @click="submit">提交</u-button>
-				<u-button v-if="isEdit" @click="isEdit=false">取消</u-button>
+				<!-- <u-button type="success" class="btn" v-if="!isEdit" @click="isEdit=true">修改</u-button> -->
+				<u-button type="success" class="btn" @click="submit">提交</u-button>
+				<!-- <u-button v-if="isEdit" @click="isEdit=false">取消</u-button> -->
 			</view>
 		</view>
 	</view>
@@ -77,7 +77,7 @@
 							title:"修改成功！"
 						})
 						this.init()
-						this.isEdit=false
+						//this.isEdit=false
 					}
 				})
 			},
