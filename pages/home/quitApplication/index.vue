@@ -157,7 +157,7 @@
 					success:(res)=>{
 						if(res.id){
 							_this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/goout?id=${res.id}`})
-							
+							return;
 						}
 						this.form=res
 						this.form.lizhiyy.forEach(item=>{
@@ -229,7 +229,7 @@
 						})
 						setTimeout(()=>{
 							this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/goout?id=${res.id}`})
-						},400)
+						},1000)
 					}
 				})
 			},

@@ -111,13 +111,14 @@
 				this.form.diao=e
 			},
 			getDetail(){
+				let _this = this;
 				this.$tool.uniRequest({
 					url:"rsdangan/biandong",
 					method:'GET',				
 					success:(res)=>{
 						if(res.id){
-							_this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/goout?id=${res.id}`})
-
+							_this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/newpage?id=${res.id}`})
+							return;
 						}
 						this.form=res
 						this.form.bumenlist.forEach(item=>{
@@ -168,18 +169,20 @@
 					yzou:this.form.yzouNameId || '',
 					biandong:this.form.biandongNameId || '',
 					bdyuanyin:this.form.bdyuanyin || '',
+					zhiwu:this.form.zhiwuNameId || '',
 				}
 				this.$tool.uniRequest({
 					url:"rsdangan/biandong",
 					method:'POST',		
 					params,
 					success:(res)=>{
+						console.log(res.id)
 						this.$tool.uniShowToast({
 							title:"调店申请成功！"
 						})
 						setTimeout(()=>{
 							this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/newpage?id=${res.id}`})
-						},2000)
+						},1000)
 					}
 				})
 			},

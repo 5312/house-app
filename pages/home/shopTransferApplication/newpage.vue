@@ -50,7 +50,7 @@
 			<u-steps active-color="#78c340" :list="numList" :current="current" direction='column'></u-steps>
 		</view>
 		<view class='btn'>
-			<u-button class="custom-style">撤回申请</u-button>
+			<u-button class="custom-style" @click="backApplication">撤回申请</u-button>
 		</view>
 	</view>
 </template>
@@ -66,17 +66,15 @@
 					"yzhiwu": "资深经纪人",      //原职务
 				},
 				current:'1',
-				numList: [{
-						name: '提交申请'
-					},
+				numList: [
 					{
-						name: '现店长审核'
+						name: '店长审核'
 					},
 					{
 						name: '区长审核'
 					},
 					{
-						name: '人事部审核'
+						name: '人事审核'
 					},
 					{
 						name: '审核完成'
@@ -102,9 +100,27 @@
 					success: (res) => {
 						console.log(res)
 						that.form = res
-						that.current  = res.spzt + 1
+						that.current  = res.spzt 
 					}
 				})
+			},
+			backApplication(){//撤回申请
+				let _this = this
+				this.$tool.uniRequest({
+					url:'rsdangan/backsq',
+					method:'GET',
+					params:{
+						id:this.id
+					},
+					success:function(res,msg){
+						
+						_this.$tool.uniShowToast({
+							title:msg.msg
+						})
+						_this.$tool.uniSwitchTab({url:`/pages/home/index`})
+					}
+				})
+				
 			}
 		}
 	}

@@ -90,7 +90,7 @@ export default {
 						icon: "none"
 					})
 				} else if (res.data.code == 1) {
-					success && success(res.data.data)
+					success && success(res.data.data,res.data)
 				} else if (res.data.code == -1) {
 					this.uniRemoveStorage('token')
 					this.uniReLaunch({
