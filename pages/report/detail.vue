@@ -2,7 +2,7 @@
 	<view class="wrap">
 		<a-navbar title="房屋详情" @back="$tool.uniSwitchTab({url:'/pages/report/index'})"></a-navbar>
 		<view class="banners" v-if="swiperList && swiperList.length">
-			<u-swiper :list="swiperList" :mode="'dot'" :height="400"></u-swiper>
+			<u-swiper :list="swiperList" name="image" :mode="'dot'" :height="400"></u-swiper>
 		</view>
 		<view class="bg title">基本信息</view>
 		<u-form class="form" v-if="form">
@@ -109,7 +109,8 @@
 			</u-form-item>
 			<view class="rim">周边规划 - 地铁</view>
 			<view class="bg ta">
-				<u-input type="textarea " height="200" :disabled="true"  placeholder='' v-model="form.zbghdt" ></u-input>
+				<!-- <u-input class="ditie" type="textarea "  :disabled="true"  placeholder='' v-model="form.zbghdt" ></u-input> -->
+				<view>{{ditie}}</view>
 			</view>
 			<view class='rim'>周边规划 - 购物</view>
 			<view class="bg ta">
@@ -125,7 +126,7 @@
 			</view>
 			<view class="rim">新房顾问</view>
 			<view class="bg ta height" v-if="list && list.length">
-				<view class="item" v-for="(x , index ) in xinfang" :key='index'>
+				<view class="item" v-for="(x , index ) in list" :key='index'>
 					<u-image class='inline' width='60px' height='60px'  :src='x.touxiang' shape='circle'></u-image>
 					<view class="inline right">
 						<view class="tit">{{x.name}}</view><!-- ({{x.dianhua}}) -->
@@ -156,8 +157,13 @@
 				value:"没有对应参数",
 				list: [],
 				swiperList: [],
-				xinfang:[],
-				huxing:[],
+				huxing:[]
+			}
+		},
+		computed:{
+			ditie(){
+				let reg = /[a-z]/g
+				return	this.form.zbghdt
 			}
 		},
 		onLoad(options){
@@ -181,7 +187,7 @@
 						console.log(res)
 						this.detail=res
 						this.form=res.ysfang
-						this.form.xmtese=res.xmtese.map(item=>item.lxming).join(',')
+						//this.form.xmtese=res.xmtese.map(item=>item.lxming).join(',')
 						this.swiperList=res.topphoto
 						this.list=res.xfguwens;
 						this.huxing = res.ysphoto;
@@ -218,6 +224,10 @@
 				font-size:20rpx;
 			}
 		}
+		.ditie{
+			width:100%;
+			white-space: pre-wrap;
+		}
 		.item{
 			margin:20rpx;
 		}
@@ -239,6 +249,7 @@
 		.banners {
 			padding: 20rpx;
 			position: fixed;
+			margin-top:50px;
 			top:0;
 			width:100%;
 			z-index: 9;

@@ -22,7 +22,7 @@
 					<view class="right">
 						<view class="title">{{x.xmbiaoti}}</view>
 						<view class='tags'>
-							<text v-for="item in x.tage" class="tag" :style="{background:item.yanse}">{{item.name}}</text>							
+							<text v-for="item in x.tage" class="tag" :style="{background:item.yanse}">{{item.name}}</text>
 						</view>
 						<view class="detail">
 							<view>编号：{{x.ysbianhao}}</view>
@@ -42,146 +42,209 @@
 	export default {
 		data() {
 			return {
-				searchVal:'',
-				dropdownList:[
-					{ show: false, options: [
-						{ id: 0, text: '全部区域', value: '', type:'area',select: false }						
-					] },
-					{ show: false, options: [
-						{ id: 0, text: '全部类型', value: '',type:'type', select: false }					
-					] },
-					{ show: false, options: [
-						{ id: 0, text: '全部状态', value: '',type:'status', select: false }						
-					] }
+				pageNum:1,//分页
+				total:null,//总数
+				intPage:null,//当前
+				searchVal: '',
+				dropdownList: [{
+						show: false,
+						options: [{
+							id: 0,
+							text: '全部区域',
+							value: '',
+							type: 'area',
+							select: false
+						}]
+					},
+					{
+						show: false,
+						options: [{
+							id: 0,
+							text: '全部类型',
+							value: '',
+							type: 'type',
+							select: false
+						}]
+					},
+					{
+						show: false,
+						options: [{
+							id: 0,
+							text: '全部状态',
+							value: '',
+							type: 'status',
+							select: false
+						}]
+					}
 				],
 				shop: [],
-				count:0,
+				count: 0,
 				list: [
 					'暂时没有推送消息'
 				]
 			}
 		},
-		onLoad(){
+		onLoad() {
 			console.log("report,xxxxxxx")
 			this.init()
 		},
+		onPullDownRefresh() {
+			console.log("下拉了")
+			/* this.pageNum = 1
+			this.getList() */
+		},
+		onReachBottom() {
+			console.log("触底了")
+			if (this.intPage < this.total) {
+				this.pageNum += 1
+				this.getList()
+			}
+		},
 		methods: {
-			init(){
+			init() {
 				this.getList()
 			},
-			getList(){
-				let quyu,wuyelx,xlpzt=''
+			getList() {
+				let quyu, wuyelx, xlpzt = ''
 				console.log(this.dropdownList)
-				this.dropdownList.forEach((item,i)=>{
-					switch(i){
+				this.dropdownList.forEach((item, i) => {
+					switch (i) {
 						case 0:
-							if(item.options && item.options.length>0){
-								item.options.forEach(val=>{
-									if(val.select) quyu=val.id
-								})
-							}						
-						case 1:
-							if(item.options && item.options.length>0){
-								item.options.forEach(val=>{
-									if(val.select) wuyelx=val.id
+							if (item.options && item.options.length > 0) {
+								item.options.forEach(val => {
+									if (val.select) quyu = val.id
 								})
 							}
-							
-						case 2:
-							if(item.options && item.options.length>0){
-								item.options.forEach(val=>{
-									if(val.select) xlpzt=val.id
+						case 1:
+							if (item.options && item.options.length > 0) {
+								item.options.forEach(val => {
+									if (val.select) wuyelx = val.id
 								})
-							}							
-						default :
+							}
+
+						case 2:
+							if (item.options && item.options.length > 0) {
+								item.options.forEach(val => {
+									if (val.select) xlpzt = val.id
+								})
+							}
+						default:
 							break
 					}
 				})
 				this.$tool.uniRequest({
-					url:"xinfang/ysfy",
-					method:'GET',
-					params:{
+					url: "xinfang/ysfy",
+					method: 'GET',
+					params: {
 						quyu,
 						wuyelx,
 						xlpzt,
-						sousuo:this.searchVal
+						sousuo: this.searchVal,
+						p:this.pageNum,//分页
 					},
-					success:(res)=>{
-						this.shop=res.ysfang || []
-						this.count+=1
-						if(this.count>1)return
-						this.dropdownList=[
-							{ show: false, options: [
-								{ id: 0, text: '全部区域', value: '', type:'area',select: false }						
-							] },
-							{ show: false, options: [
-								{ id: 0, text: '全部类型', value: '',type:'type', select: false }					
-							] },
-							{ show: false, options: [
-								{ id: 0, text: '全部状态', value: '',type:'status', select: false }						
-							] }
+					success: (res) => {
+						this.intPage  = res.intPage;//当前页
+						this.total = res.totalpage;//总页数
+						this.shop.push(...res.ysfang || []);
+						console.log(this.shop)
+						this.count += 1
+						if (this.count > 1) return
+						this.dropdownList = [{
+								show: false,
+								options: [{
+									id: 0,
+									text: '全部区域',
+									value: '',
+									type: 'area',
+									select: false
+								}]
+							},
+							{
+								show: false,
+								options: [{
+									id: 0,
+									text: '全部类型',
+									value: '',
+									type: 'type',
+									select: false
+								}]
+							},
+							{
+								show: false,
+								options: [{
+									id: 0,
+									text: '全部状态',
+									value: '',
+									type: 'status',
+									select: false
+								}]
+							}
 						]
-						res.quyu.forEach(item=>{
-							let obj=item
-							obj.text=item.xzqming
-							obj.value=item.id
-							obj.select=false
-							obj.type='area'
+						res.quyu.forEach(item => {
+							let obj = item
+							obj.text = item.xzqming
+							obj.value = item.id
+							obj.select = false
+							obj.type = 'area'
 							this.dropdownList[0].options.push(obj)
 						})
-						res.xlpzt.forEach(item=>{
-							let obj=item
-							obj.text=item.lxming
-							obj.value=item.id
-							obj.select=false
-							obj.type='status'
+						res.xlpzt.forEach(item => {
+							let obj = item
+							obj.text = item.lxming
+							obj.value = item.id
+							obj.select = false
+							obj.type = 'status'
 							this.dropdownList[2].options.push(obj)
 						})
-						res.wuyelx.forEach(item=>{
-							let obj=item
-							obj.text=item.lxming
-							obj.value=item.id
-							obj.select=false
-							obj.type='type'
+						res.wuyelx.forEach(item => {
+							let obj = item
+							obj.text = item.lxming
+							obj.value = item.id
+							obj.select = false
+							obj.type = 'type'
 							this.dropdownList[1].options.push(obj)
 						})
 					}
 				})
 			},
-			toPage(item){
+			toPage(item) {
 				this.$tool.uniNavigateTo({
-					url:`/pages/report/detail?id=${item.id}`
+					url: `/pages/report/detail?id=${item.id}`
 				})
 			},
-			dropdownChange(value,option){
-				this.getList()			
+			dropdownChange(value, option) {
+				this.getList()
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.header{
+	.header {
 		padding: 0 40rpx;
 	}
-	*{
+
+	* {
 		font-size: 32rpx;
 	}
-	.flex-dropdown{
+
+	.flex-dropdown {
 		left: 0;
 		right: 0;
 		top: 100rpx;
 		z-index: 10;
 		font-size: 40rpx !important;
 	}
-	
+
 	.list {
 		padding: 30rpx;
+
 		.left {
 			width: 300rpx;
 			height: 260rpx;
 			position: relative;
 			margin-right: 20rpx;
+
 			.img {
 				width: 100%;
 				height: 100%;
@@ -200,7 +263,8 @@
 
 		.right {
 			width: calc(100% - 220rpx);
-			.title{
+
+			.title {
 				margin-bottom: 10rpx;
 				font-size: 40rpx;
 				font-weight: 600;
@@ -208,6 +272,7 @@
 				text-overflow: ellipsis;
 				white-space: nowrap;
 			}
+
 			.detail {
 				font-size: 20rpx;
 				margin-left: 10rpx;
@@ -218,7 +283,8 @@
 			.tags {
 				display: flex;
 				align-items: center;
-				margin-bottom: 10rpx;			
+				margin-bottom: 10rpx;
+
 				.tag {
 					display: inline-block;
 					padding: 4rpx 6rpx;
@@ -226,7 +292,8 @@
 					color: white;
 					border-radius: 4rpx;
 					margin-bottom: 6rpx;
-					&:not(:last-child){
+
+					&:not(:last-child) {
 						margin-right: 10rpx;
 					}
 				}

@@ -2,8 +2,8 @@
     "name" : "明远OA",
     "appid" : "__UNI__6B5A0F4",
     "description" : "",
-    "versionName" : "1.0.2",
-    "versionCode" : 102,
+    "versionName" : "1.0.3",
+    "versionCode" : 103,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -105,6 +105,9 @@
                         "spotlight@2x" : "unpackage/res/icons/80x80.png"
                     }
                 }
+            },
+            "splashscreen" : {
+                "androidStyle" : "common"
             }
         }
     },

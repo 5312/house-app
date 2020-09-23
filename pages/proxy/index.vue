@@ -9,7 +9,8 @@
 			</view>
 		</view>
 		<view class="content">
-			<view class="listCard">
+			<u-empty v-if="list.length<=0" text="数据为空" mode="data"></u-empty>
+			<view v-else="list.length>0" class="listCard">
 				<view v-for="(item,index) in list" :key='index' class="card border">
 					<view class="top">
 						<u-tag :text="item.type" mode="dark"  bg-color='#78C340'/>
@@ -33,7 +34,7 @@
 						<text>{{item.time}}</text>
 					</view>
 				</view>
-			</view>
+			</view> 
 		</view>
 	</view>
 </template>
@@ -43,26 +44,27 @@
 		data() {
 			return {
 				searchVal: '',
-				list: [{
-						type: '公寓',
-						name: "锦汇城",
-						time: '2018-02-01'
-					},
-					{
-						type: '公寓',
-						name: "锦汇城",
-						time: '2018-02-01'
-					},
-					{
-						type: '公寓',
-						name: "锦汇城",
-						time: '2018-02-01'
-					},
-					{
-						type: '公寓',
-						name: "锦汇城",
-						time: '2018-02-01'
-					}
+				list: [
+					// {
+					// 	type: '公寓',
+					// 	name: "锦汇城",
+					// 	time: '2018-02-01'
+					// },
+					// {
+					// 	type: '公寓',
+					// 	name: "锦汇城",
+					// 	time: '2018-02-01'
+					// },
+					// {
+					// 	type: '公寓',
+					// 	name: "锦汇城",
+					// 	time: '2018-02-01'
+					// },
+					// {
+					// 	type: '公寓',
+					// 	name: "锦汇城",
+					// 	time: '2018-02-01'
+					// }
 				]
 			}
 		}
