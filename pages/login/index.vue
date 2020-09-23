@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap fixed tblr flex a-center j-center">
-		<u-modal v-model="show" z-index="999" @confirm="confirm" title="版本更新" :content='content' ref="uModal" :async-close="true"></u-modal>
+		<u-modal v-model="show" z-index="999" @confirm="confirm" confirm-text='升级' show-cancel-button='true' title="版本更新" :content='content' ref="uModal" :async-close="true"></u-modal>
 		<view class="conter">
 			<image class="logo" src="../../static/image/logo.png" mode=""></image>
 			<view class="inp">

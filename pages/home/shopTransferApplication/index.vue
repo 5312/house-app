@@ -115,6 +115,10 @@
 					url:"rsdangan/biandong",
 					method:'GET',				
 					success:(res)=>{
+						if(res.id){
+							_this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/goout?id=${res.id}`})
+
+						}
 						this.form=res
 						this.form.bumenlist.forEach(item=>{
 							item.label=item.name
@@ -174,7 +178,7 @@
 							title:"调店申请成功！"
 						})
 						setTimeout(()=>{
-							this.$tool.uniSwitchTab({url:'/pages/home/index'})
+							this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/newpage?id=${res.id}`})
 						},2000)
 					}
 				})

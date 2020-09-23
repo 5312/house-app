@@ -177,7 +177,7 @@
 			},
 			popHandle(item){
 				console.log(item)
-				return
+				
 				switch(item.prop){
 					case 'loginOut':
 						this.loginOut()

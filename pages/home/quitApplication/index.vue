@@ -150,10 +150,15 @@
 		},
 		methods: {
 			getDetail(){
+				let _this = this
 				this.$tool.uniRequest({
 					url:"rsdangan/lizhi",
 					method:'GET',				
 					success:(res)=>{
+						if(res.id){
+							_this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/goout?id=${res.id}`})
+							
+						}
 						this.form=res
 						this.form.lizhiyy.forEach(item=>{
 							item.label=item.bankname
@@ -223,8 +228,8 @@
 							title:"离职申请提交成功！"
 						})
 						setTimeout(()=>{
-							this.$tool.uniSwitchTab({url:'/pages/home/index'})
-						},2000)
+							this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/goout?id=${res.id}`})
+						},400)
 					}
 				})
 			},

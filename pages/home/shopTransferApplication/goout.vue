@@ -3,41 +3,41 @@
 		<a-navbar title="员工离店申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 		<view class="content">
 			<view class="header">
-				<image class="head" src="../../../static/image/header.jpg" mode=""></image>
+				<image class="head" :src="form.touxiang" mode=""></image>
 				<view class="h-right">
-					<view>姓名：{{name}}</view>
-					<view>申请时间：{{time}}</view>
+					<view>姓名：{{form.ygmingcheng}}</view>
+					<view>申请时间：{{form.bdshijian}}</view>
 				</view>
 			</view>
 			<view class="details flex a-center j-between flex-row">
-				<view>离职类型：<text class="fw">{{ type }}</text></view>
+				<view>离职类型：<text class="fw">{{form.lizhiyy }}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>现职务：<text class="fw">资深职业顾问</text></view>
+				<view>现职务：<text class="fw">{{form.yzhiwu}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>现店组：<text class="fw">A组</text></view>
+				<view>现店组：<text class="fw">{{form.ybumen}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
 				<view>是否带走房源：<text class="fw">带走</text></view>
 				<view>是否带走客源：<text class="fw">带走</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>房源接收人：<text class="fw"></text></view>
+				<view>房源接收人：<text class="fw">{{form.fzou}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>客源接收人：<text class="fw"></text></view>
+				<view>客源接收人：<text class="fw">{{form.yzou}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>离职生效日期：<text class="fw">2020/07/07</text></view>
+				<view>离职生效日期：<text class="fw">{{form.sxshijian}}</text></view>
 			</view>
 			<view class="details flex  a-center j-between flex-row">
-				<view>离职：</view>
+				<view>离职原因：{{form.bdyuanyin}}</view>
 			</view>
 		</view>
 		<view class="gtap"></view>
 		<view class="list">
-			<u-steps active-color="#78c340" :list="numList" :current="1" direction='column'></u-steps>
+			<u-steps active-color="#78c340" :list="numList" :current="current" direction='column'></u-steps>
 		</view>
 		<view class='btn'>
 			<u-button class="custom-style">撤回申请</u-button>
@@ -49,10 +49,14 @@
 	export default {
 		data() {
 			return {
-				name: '刘旭',
-				time: '2020/09/17:19:33',
-				sex: '男',
-				type: "公司调配",
+				id:null,
+				form:{
+					name: '刘旭',
+					time: '2020/09/17:19:33',
+					sex: '男',
+					type: "公司调配",
+				},
+				current:'1',
 				numList: [{
 						name: '提交申请'
 					},
@@ -71,8 +75,26 @@
 				]
 			}
 		},
+		onLoad(option){
+			this.id = option.id;
+			this.init();
+		},
 		methods: {
-
+			init(){
+				let params = {
+					id:this.id
+				}
+				let that = this
+				this.$tool.uniRequest({
+					url: "Dshenpi/lizhi",
+					method: 'GET',
+					params,
+					success: (res) => {
+						that.form = res
+						that.current  = res.spzt + 1
+					}
+				})
+			}
 		}
 	}
 </script>

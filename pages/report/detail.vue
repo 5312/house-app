@@ -137,7 +137,7 @@
 			<view class="rim">户型素材</view>
 			<view class="bg bottom">
 				<view class="inlinebox">
-					<u-image class='img' v-for='(x,index) in huxing' :key='index' :src='x.image' width='370' height='370'></u-image>
+					<u-image @click='perview(index)' class='img' v-for='(x,index) in huxing' :key='index' :src='x.image' width='370' height='370'></u-image>
 				</view>				
 			</view>
 			<view class="btn">
@@ -170,6 +170,24 @@
 			options.id && this.getDetail(options.id)
 		},
 		methods:{
+			perview(index){
+				console.log(index)
+				let urls = [];
+				let arr = this.huxing ;
+				for(let i= 0 ; i< arr.length ; i++){
+					urls.push(arr[i].image)
+				}
+				uni.previewImage({
+					current:index,
+					urls:urls,
+					success:function(e){
+						console.log(e)
+					},
+					fail:function(e){
+						console.log(e)
+					}
+				})
+			},
 			keubaobei(){
 				uni.showToast({
 					title:'稍后开放',
@@ -249,7 +267,7 @@
 		.banners {
 			padding: 20rpx;
 			position: fixed;
-			margin-top:50px;
+			margin-top:55px;
 			top:0;
 			width:100%;
 			z-index: 9;

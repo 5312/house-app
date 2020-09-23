@@ -18,7 +18,7 @@
 				</view>
 				<view class="count-box flex a-center j-center">
 					<view class="count-bg radius flex  a-center j-center" @click="punchClock" :class="[this.workTimeRocord && this.workTimeRocord.list.length>=2 && 'bg-grey']">
-						<view class="count-text" v-if="!this.workTimeRocord || this.workTimeRocord.list.length<2">签到</view>
+						<view class="count-text" v-if="!this.workTimeRocord || this.workTimeRocord.list.length<2">打卡</view>
 						<text>{{currentTimeVal}}</text>
 					</view>
 				</view>
@@ -240,6 +240,7 @@
 					margin-top: 40rpx;
 
 					.count-bg {
+						box-shadow:1px 1px 6px 11px #6ce8aa;
 						width: 200rpx;
 						height: 200rpx;
 						background: #19be6b;
