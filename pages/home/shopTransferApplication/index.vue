@@ -120,6 +120,7 @@
 							_this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/newpage?id=${res.id}`})
 							return;
 						}
+						
 						this.form=res
 						this.form.bumenlist.forEach(item=>{
 							item.label=item.name
