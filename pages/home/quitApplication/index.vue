@@ -155,8 +155,9 @@
 					url:"rsdangan/lizhi",
 					method:'GET',				
 					success:(res)=>{
+						console.log(res)
 						if(res.id){
-							_this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/goout?id=${res.id}`})
+							_this.$tool.uniRedirectTo({url:`/pages/home/quitApplication/goout?id=${res.id}`})
 							return;
 						}
 						this.form=res
