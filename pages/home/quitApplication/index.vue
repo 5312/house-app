@@ -229,7 +229,7 @@
 							title:"离职申请提交成功！"
 						})
 						setTimeout(()=>{
-							this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/goout?id=${res.id}`})
+							this.$tool.uniRedirectTo({url:`/pages/home/quitApplication/goout?id=${res.id}`})
 						},1000)
 					}
 				})

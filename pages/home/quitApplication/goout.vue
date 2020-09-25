@@ -42,6 +42,10 @@
 		<view class='btn'>
 			<u-button class="custom-style" @click="backApplication">撤回申请</u-button>
 		</view>
+		<u-modal v-model="show" mode="center" @confirm="confirm" @cancel="cancel" :mask-close-able="true" title=""
+		 :show-cancel-button="true">
+			<view class="t"> 是否撤回？</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -49,16 +53,16 @@
 	export default {
 		data() {
 			return {
-				id:null,
-				form:{
+				show: false,
+				id: null,
+				form: {
 					name: '刘旭',
 					time: '2020/09/17:19:33',
 					sex: '男',
 					type: "公司调配",
 				},
-				current:'1',
-				numList: [
-					{
+				current: '1',
+				numList: [{
 						name: '店长审核'
 					},
 					{
@@ -73,14 +77,14 @@
 				]
 			}
 		},
-		onLoad(option){
+		onLoad(option) {
 			this.id = option.id;
 			this.init();
 		},
 		methods: {
-			init(){
+			init() {
 				let params = {
-					id:this.id
+					id: this.id
 				}
 				let that = this
 				this.$tool.uniRequest({
@@ -90,26 +94,33 @@
 					success: (res) => {
 						console.log(res)
 						that.form = res
-						that.current  = res.spzt 
+						that.current = res.spzt
 					}
 				})
 			},
-			backApplication(){//撤回申请
+			cancel(){//取消
+				
+			},
+			confirm() { //确认
 				let _this = this;
 				this.$tool.uniRequest({
-					url:'rsdangan/backsq',
-					method:'GET',
-					params:{
-						id:this.id
+					url: 'rsdangan/backsq',
+					method: 'GET',
+					params: {
+						id: this.id
 					},
-					success:function(res,msg){
+					success: function(res, msg) {
 						_this.$tool.uniShowToast({
-							title:msg.msg
+							title: msg.msg
 						})
-						_this.$tool.uniSwitchTab({url:`/pages/home/index`})
+						_this.$tool.uniSwitchTab({
+							url: `/pages/home/index`
+						})
 					}
 				})
-				
+			},
+			backApplication() { //撤回申请
+				this.show = true;
 			}
 		}
 	}
@@ -119,7 +130,9 @@
 	.gtap {
 		height: 20rpx;
 	}
-
+	.t{
+		text-align: center;
+	}
 	.fw {
 		font-weight: 700;
 	}
