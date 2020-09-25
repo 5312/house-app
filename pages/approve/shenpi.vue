@@ -84,12 +84,10 @@
 					p:_this.intPage//页码
 				};
 				api.ywsp(data).then(res => {
-					//res.list[0].neirong = `<li style=''>离职原因:123123</li>`
 					_this.detailList.push(...res.list);
 					_this.totalcount = res.totalcount//总共条数
 					_this.totalpage = res.totalpage//总共页数
 					_this.intPage = res.intPage//当前页码
-					console.log(_this.detailList)
 				});
 			},
 			xiangqing(id){
@@ -103,8 +101,10 @@
 </script>
 
 <style lang="scss" scoped>
+
 	page{
 		background-color:  #EDEDED;
+
 	}
 	.hi{
 		height: 20rpx;
@@ -119,10 +119,13 @@
 			line-height: 40rpx;
 			margin:40rpx;
 			margin-bottom:10rpx;
+			list-style: none;
 			.time{
 				font-size: 24rpx;
 				color:#bebebe;
+				
 			}
+			
 		}
 		.title{
 			font-size: 32rpx;

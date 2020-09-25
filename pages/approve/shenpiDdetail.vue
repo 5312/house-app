@@ -20,7 +20,7 @@
 					</view>
 					<view class="center fixheig">
 						<view class="title">{{x.leixing}}</view>
-						<view>{{x.mgs || '（未审批）'}}</view>
+						<view :class="{ bohui:x.bohui == 1 }">{{x.msg || '（未审批）'}}</view>
 					</view>
 					<view class=" fixheig">{{x.addtime == 0 ? '':x.addtime}}</view>
 				</view>
@@ -31,8 +31,8 @@
 			<u-button type="primary" :ripple="true" @click="show = true;status=1;title='驳回理由'">拒绝</u-button>
 			<u-button type="primary" :ripple="true" @click="show = true;status=0;title='批示内容'">同意</u-button>
 		</view>
-		<u-modal v-model="show" mode="center" @confirm="confirm" :mask-close-able="true" :title="title" :show-cancel-button="true">
-			<u-field v-model="msg" placeholder="请输入批示" class="inp" type="textarea" :error-message='errmsg'>
+		<u-modal v-model="show" mode="center" @confirm="confirm" @cancel="cancel" :mask-close-able="true" :title="title" :show-cancel-button="true">
+			<u-field v-model="msg" placeholder="请审批意见" class="inp" type="textarea" :error-message='errmsg'>
 			</u-field>
 		</u-modal>
 	</view>
@@ -46,7 +46,7 @@
 				title:'批示内容',
 				show: false,
 				current: '',
-				status: '', //同意or驳回
+				status: '', //0同意or1驳回
 				errmsg: '',
 				msg: '',
 				id: '',
@@ -67,17 +67,21 @@
 		onLoad(option) {
 			this.id = option.id; //id,请求参数
 			this.current = option.current
-			this.showData();
+			this.showData();//页面数据
 		},
 		methods: {
 			confirm() { //确认\
-				this.show = true
+				this.show = true;
 				if (this.msg) {
 					this.submitRequest(1);
 					this.show = false;
+					this.msg = '';
 				} else {
 					this.errmsg = '请输入批示'
 				}
+			},
+			cancel(){
+				this.msg = '';
 			},
 			submitRequest() {
 				let data = {
@@ -89,7 +93,8 @@
 				let _this = this
 				api.submitShenPi(data).then(res => {
 					_this.show = false;
-				})
+				});
+				this.showData();//审批后刷新页面
 			},
 			showData() {
 				let data = {
@@ -118,7 +123,9 @@
 	.warning {
 		background-color: #FD9640;
 	}
-
+	.bohui{
+		color:#FD9640;
+	}
 	.fixheig {
 		height: 100rpx;
 		margin: 30rpx 0;
