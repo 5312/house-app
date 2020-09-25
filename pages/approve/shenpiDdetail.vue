@@ -6,9 +6,10 @@
 			<view class="small">{{bumen}}</view>
 			<view class="status">等{{sbr}}处理</view>
 		</view>
-		<view class="wrap">
+		<view class="wrap" v-if="neirong">
 			<view v-html="neirong"></view>
 		</view>
+		<u-empty v-else text="数据为空" class="empty" mode="list"></u-empty>
 		<view class="bottom">
 			<view class='title'>流程</view>
 			<view v-for="(x,y) in numList" :key='y' class="">
@@ -28,8 +29,8 @@
 			</view>
 		</view>
 		<view v-if='current == 0 && sh_zhuangtai != 3' class="bb flex a-center j-between">
-			<u-button type="primary" :ripple="true" @click="show = true;status=1;title='驳回理由'">拒绝</u-button>
-			<u-button type="primary" :ripple="true" @click="show = true;status=0;title='批示内容'">同意</u-button>
+			<u-button type="warning" :ripple="true" @click="show = true;status=1;title='驳回理由'">拒绝</u-button>
+			<u-button type="success" :ripple="true" @click="show = true;status=0;title='批示内容'">同意</u-button>
 		</view>
 		<u-modal v-model="show" mode="center" @confirm="confirm" @cancel="cancel" :mask-close-able="true" :title="title" :show-cancel-button="true">
 			<u-field v-model="msg" placeholder="请审批意见" class="inp" type="textarea" :error-message='errmsg'>
@@ -119,7 +120,10 @@
 	.success {
 		background-color: #08C081;
 	}
-
+	
+	.empty{
+		padding:50rpx 0;
+	}
 	.warning {
 		background-color: #FD9640;
 	}
@@ -129,6 +133,9 @@
 	.fixheig {
 		height: 100rpx;
 		margin: 30rpx 0;
+		white-space: nowrap;
+		text-align: right;
+		max-width: 100rpx;
 	}
 
 	page {

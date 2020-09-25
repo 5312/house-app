@@ -50,8 +50,11 @@
 			<u-steps active-color="#78c340" :list="numList" :current="current" direction='column'></u-steps>
 		</view>
 		<view class='btn'>
-			<u-button class="custom-style" @click="backApplication">撤回申请</u-button>
+			<u-button class="custom-style" @click="backApplication" >撤回申请</u-button>
 		</view>
+		<u-modal v-model="show" mode="center" @confirm="confirm" @cancel="cancel" :mask-close-able="true" title="" :show-cancel-button="true">
+			<view class="t"> 是否撤回？</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -59,6 +62,7 @@
 	export default {
 		data() {
 			return {
+				show:false,
 				form:{
 					ygmingcheng: '刘旭',
 					bdshijian: '2020/09/17:19:33',
@@ -104,7 +108,10 @@
 					}
 				})
 			},
-			backApplication(){//撤回申请
+			cancel(){//取消
+				
+			},
+			confirm(){//确认
 				let _this = this
 				this.$tool.uniRequest({
 					url:'rsdangan/backsq',
@@ -121,6 +128,11 @@
 					}
 				})
 				
+			},
+			backApplication(){//撤回申请
+
+				this.show = true;
+				
 			}
 		}
 	}
@@ -130,7 +142,9 @@
 	.gtap {
 		height: 20rpx;
 	}
-
+	.t{
+		text-align: center;
+	}
 	.fw {
 		font-weight: 700;
 	}

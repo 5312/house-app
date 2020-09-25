@@ -2,7 +2,8 @@
 	<view>
 		<a-navbar title="审批" @back="$tool.uniSwitchTab({url:'/pages/home/index'})" background-color='#fff'></a-navbar>
 		<u-tabs  active-color="#00ff7f" inactive-color="#000" :current='current' @change="change" bar-width="150"  :list="list" :is-scroll="false"></u-tabs>
-		<view v-if='current == 0' class="wrap">
+		<u-empty v-if="detailList.length == 0" text="数据为空" class="empty" mode="list"></u-empty>
+		<view v-if='current == 0 && detailList.length>0' class="wrap">
 			<view v-for="(x,y) in detailList" :key='y'>
 				<view class="detail" @click="xiangqing(x.id)">
 					<view class="title">{{ x.to_title }}</view>
@@ -19,7 +20,7 @@
 				<view class="hi"></view>
 			</view>
 		</view>
-		<view v-if="current == 1" class="wrap">
+		<view v-else-if="current == 1  && detailList.length>0" class="wrap">
 			<view v-for="(x,y) in detailList" :key='y'>
 				<view class="detail" @click="xiangqing(x.id)">
 					<view class="title">{{ x.to_title }}</view>
@@ -36,6 +37,7 @@
 				<view class="hi"></view>
 			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -105,6 +107,9 @@
 	page{
 		background-color:  #EDEDED;
 
+	}
+	.empty{
+		padding:50rpx 0;
 	}
 	.hi{
 		height: 20rpx;
