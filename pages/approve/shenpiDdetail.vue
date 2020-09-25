@@ -4,7 +4,7 @@
 		<view class="header">
 			<view class="title">{{to_title}}</view>
 			<view class="small">{{bumen}}</view>
-			<view v-if="sh_zhuangtai == -1" class="info">审批被拒绝</view>
+			<view v-if="sh_zhuangtai == -1" class="bohui">审批被拒绝</view>
 			<view v-else class="status">等{{sbr}}处理</view>
 		</view>
 		<view class="wrap" v-if="neirong">
@@ -123,9 +123,7 @@
 	.success {
 		background-color: #08C081;
 	}
-	.info{
-		color:#959595;
-	}
+
 	.empty{
 		padding:50rpx 0;
 	}
