@@ -21,7 +21,7 @@
 					</view>
 					<view class="center fixheig">
 						<view class="title">{{x.leixing}}</view>
-						<view :class="{ bohui:x.bohui == 1 }">{{x.msg || '（未审批）'}}</view>
+						<view :class="{ bohui:x.bohui == 1 }">{{x.msg == '0'?'':'（未审批）'}}</view>
 					</view>
 					<view class=" fixheig">{{x.addtime == 0 ? '':x.addtime}}</view>
 				</view>
@@ -102,6 +102,7 @@
 					id: this.id,
 				}
 				let _this = this;
+				console.log('页面数据')
 				api.shengPiXiangQing(data).then(result => {
 					//console.log(result)
 					_this.to_title = result.to_title;
