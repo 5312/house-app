@@ -88,7 +88,14 @@
 					p:_this.intPage//页码
 				};
 				api.ywsp(data).then(res => {
-					_this.detailList.push(...res.list);
+					let arr = res.list;
+					for(let i=0; i< res.list.length;i++){
+							arr[i].neirong.split('#').join('<p>')
+						let ht =arr[i].neirong.split('#').join('</br>');
+						arr[i].neirong = ht
+					}
+					console.log(arr)
+					_this.detailList.push(...arr);
 					_this.totalcount = res.totalcount//总共条数
 					_this.totalpage = res.totalpage//总共页数
 					_this.intPage = res.intPage//当前页码
