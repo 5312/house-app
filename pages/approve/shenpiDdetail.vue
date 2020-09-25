@@ -21,7 +21,8 @@
 					</view>
 					<view class="center fixheig">
 						<view class="title">{{x.leixing}}</view>
-						<view :class="{ bohui:x.bohui == 1 }">{{x.msg == '0'?'':'（未审批）'}}</view>
+						<view :class="{ bohui:x.bohui == 1 }" v-if="x.bohui != 1">{{x.msg == '0'?'':'（未审批）'}}</view>
+						<view :class="{ bohui:x.bohui == 1 }" v-if="x.bohui == 1">{{x.msg}}</view>
 					</view>
 					<view class=" fixheig col">{{x.addtime == 0 ? '':x.addtime}}</view>
 				</view>
