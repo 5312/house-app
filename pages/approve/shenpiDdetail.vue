@@ -15,7 +15,7 @@
 				<view class="flex a-center lis">
 					<view class="imageCircle">
 						{{x.xingming}}
-						<u-icon v-if="x.sh_type == 1" name="checkbox-mark" class="icon success" color="#fff"></u-icon>
+						<u-icon v-if="x.sh_type == 1 && x.bohui!=1" name="checkbox-mark" class="icon success" color="#fff"></u-icon>
 						<u-icon v-if='x.bohui == 1' name='more-dot-fill' class='icon warning' color="#fff"></u-icon>
 					</view>
 					<view class="center fixheig">
@@ -28,10 +28,10 @@
 			</view>
 		</view>
 		<view v-if='current == 0 && sh_zhuangtai != 3' class="bb flex a-center j-between">
-			<u-button type="primary" :ripple="true" @click="show = true;status=0">拒绝</u-button>
-			<u-button type="primary" :ripple="true" @click="show = true;status=1">同意</u-button>
+			<u-button type="primary" :ripple="true" @click="show = true;status=1;title='驳回理由'">拒绝</u-button>
+			<u-button type="primary" :ripple="true" @click="show = true;status=0;title='批示内容'">同意</u-button>
 		</view>
-		<u-modal v-model="show" mode="center" @confirm="confirm" :mask-close-able="true" title="批示" :show-cancel-button="true">
+		<u-modal v-model="show" mode="center" @confirm="confirm" :mask-close-able="true" :title="title" :show-cancel-button="true">
 			<u-field v-model="msg" placeholder="请输入批示" class="inp" type="textarea" :error-message='errmsg'>
 			</u-field>
 		</u-modal>
@@ -43,6 +43,7 @@
 	export default {
 		data() {
 			return {
+				title:'批示内容',
 				show: false,
 				current: '',
 				status: '', //同意or驳回
