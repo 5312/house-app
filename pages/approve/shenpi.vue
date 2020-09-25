@@ -14,7 +14,8 @@
 						<u-tag v-if="x.sh_zhuangtai == 0" text="店长审核" type="success" shape="circle"></u-tag>
 						<u-tag v-if="x.sh_zhuangtai == 1" text="区长审核" type="success" shape="circle"></u-tag>
 						<u-tag v-if="x.sh_zhuangtai == 2" text="后台审核" type="success" shape="circle"></u-tag>
-						<u-tag v-if="x.sh_zhuangtai == 3" text="结案" type="info" shape="circle"></u-tag>
+						<u-tag v-if="x.sh_zhuangtai == 3" text="审批通过" type="info" shape="circle"></u-tag>
+						<u-tag v-if="x.sh_zhuangtai == '-1'" text="审批拒绝" type="error" shape="circle"></u-tag>
 					</view>
 				</view>
 				<view class="hi"></view>

@@ -23,7 +23,7 @@
 						<view class="title">{{x.leixing}}</view>
 						<view :class="{ bohui:x.bohui == 1 }">{{x.msg == '0'?'':'（未审批）'}}</view>
 					</view>
-					<view class=" fixheig">{{x.addtime == 0 ? '':x.addtime}}</view>
+					<view class=" fixheig col">{{x.addtime == 0 ? '':x.addtime}}</view>
 				</view>
 				<view v-if="y != numList.length-1" class="line"></view>
 			</view>
@@ -33,7 +33,7 @@
 			<u-button type="success" :ripple="true" @click="show = true;status=0;title='批示内容'">同意</u-button>
 		</view>
 		<u-modal v-model="show" mode="center" @confirm="confirm" @cancel="cancel" :mask-close-able="true" :title="title" :show-cancel-button="true">
-			<u-field v-model="msg" placeholder="请审批意见" class="inp" type="textarea" :error-message='errmsg'>
+			<u-field v-model="msg" label=""  label-width='0px'  placeholder="请审批意见" class="inp" type="textarea" :error-message='errmsg'>
 			</u-field>
 		</u-modal>
 	</view>
@@ -125,6 +125,9 @@
 	.empty{
 		padding:50rpx 0;
 	}
+	.col{
+		color:#888888;
+	}
 	.warning {
 		background-color: #FD9640;
 	}
@@ -136,9 +139,12 @@
 		margin: 30rpx 0;
 		white-space: nowrap;
 		text-align: right;
-		max-width: 100rpx;
+		width:200rpx;
+		overflow: hidden;
 	}
-
+	.tetxalign{
+			text-align: left;
+	}
 	page {
 		.title {
 			font-size: 32rpx;
@@ -169,7 +175,6 @@
 				margin: 80rpx 40rpx;
 				background: #fff;
 				padding: 20rpx;
-				border-radius: 20rpx;
 				line-height: 80rpx;
 			}
 
@@ -192,7 +197,7 @@
 	}
 
 	.inp {
-		margin-left: 20rpx;
+		
 	}
 
 	.icon {
@@ -202,7 +207,9 @@
 		border-radius: 50%;
 		/* box-shadow: 1px 1px 1px 1px #ddd; */
 	}
+	.lis{
 
+	}
 	.line {
 		border: 1px solid #ddd;
 		width: 65rpx;
