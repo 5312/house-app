@@ -22,7 +22,7 @@
 					</view>
 					<view class="center fixheig">
 						<view class="title">{{x.leixing}}</view>
-						<view class="tl" :class="{ bohui:x.bohui == 1 }" v-if="x.bohui != 1">{{x.msg == '0'?'':'（未审批）'}}</view>
+						<view class="tl" :class="{ bohui:x.bohui == 1 }" v-if="x.bohui != 1">{{x.msg?x.msg:x.msg== '0'?'':'（未审批）'}}</view>
 						<view class="tl" :class="{ bohui:x.bohui == 1 }" v-if="x.bohui == 1">{{x.msg}}</view>
 					</view>
 					<view class=" fixheig col">{{x.addtime == 0 ? '':x.addtime}}</view>
@@ -107,10 +107,13 @@
 				console.log('页面数据')
 				api.shengPiXiangQing(data).then(result => {
 					//console.log(result)
+				
+					let ht =result.neirong.split('#').join('</br>');
+					
 					_this.to_title = result.to_title;
 					_this.bumen = result.bumen;
 					_this.sbr = result.sbr;
-					_this.neirong = result.neirong;
+					_this.neirong = ht;
 					_this.numList = result.list;
 					_this.sh_zhuangtai = result.sh_zhuangtai //当前状态
 				})
