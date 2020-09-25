@@ -73,11 +73,11 @@
             "style" : {}
         }
         ,{
-            "path" : "pages/report/shenpi",
+            "path" : "pages/approve/shenpi",
             "style" : {}
         }
         ,{
-            "path" : "pages/report/shenpiDdetail",
+            "path" : "pages/approve/shenpiDdetail",
             "style" : {}
         }
     ],

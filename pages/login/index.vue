@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap fixed tblr flex a-center j-center">
-		<u-modal v-model="show" z-index="999" @confirm="confirm" confirm-text='升级' show-cancel-button='true' title="版本更新" :content='content' ref="uModal" :async-close="true"></u-modal>
+		<u-modal v-model="show" z-index="999" @confirm="confirm" confirm-text='升级' :show-cancel-button="colse" title="版本更新" :content='content' ref="uModal" :async-close="true"></u-modal>
 		<view class="conter">
 			<image class="logo" src="../../static/image/logo.png" mode=""></image>
 			<view class="inp">
@@ -14,9 +14,6 @@
 				</view>
 				<u-button class='btn' type="success" @click.native='login'>登录</u-button>
 			</view>
-			<!-- <view class="bottom">
-				<text>忘记密码？</text>
-			</view> -->
 		</view>
 		<view class="version">
 			<text>版本:v{{versioninfo}}</text>
@@ -28,6 +25,7 @@
 	export default {
 		data() {
 			return {
+				colse:true,
 				show: false,
 				content: null,
 				versioninfo: '1.0.0',

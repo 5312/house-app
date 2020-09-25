@@ -117,6 +117,10 @@
 						img:require("../../static/icon/m.png"),
 						path:"/pages/home/reimbursement/index"
 					},{
+						name:'审批管理',
+						img:require("../../static/icon/shenpi.png"),
+						path:'/pages/approve/shenpi'
+					},{
 						name:"开店申请",
 						img:require("../../static/icon/y.png"),
 						path:"/pages/home/reimbursement/index"
@@ -155,7 +159,6 @@
 			}
 		},
 		onLoad(){
-			console.log("home,xxxxxxx")
 			this.userInfo=this.$tool.uniGetStorage('userInfo')
 			this.init()
 		},
