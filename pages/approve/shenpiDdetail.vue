@@ -4,7 +4,8 @@
 		<view class="header">
 			<view class="title">{{to_title}}</view>
 			<view class="small">{{bumen}}</view>
-			<view class="status">等{{sbr}}处理</view>
+			<view v-if="sh_zhuangtai == -1" class="info">审批被拒绝</view>
+			<view v-else class="status">等{{sbr}}处理</view>
 		</view>
 		<view class="wrap" v-if="neirong">
 			<view v-html="neirong"></view>
@@ -21,8 +22,8 @@
 					</view>
 					<view class="center fixheig">
 						<view class="title">{{x.leixing}}</view>
-						<view :class="{ bohui:x.bohui == 1 }" v-if="x.bohui != 1">{{x.msg == '0'?'':'（未审批）'}}</view>
-						<view :class="{ bohui:x.bohui == 1 }" v-if="x.bohui == 1">{{x.msg}}</view>
+						<view class="tl" :class="{ bohui:x.bohui == 1 }" v-if="x.bohui != 1">{{x.msg == '0'?'':'（未审批）'}}</view>
+						<view class="tl" :class="{ bohui:x.bohui == 1 }" v-if="x.bohui == 1">{{x.msg}}</view>
 					</view>
 					<view class=" fixheig col">{{x.addtime == 0 ? '':x.addtime}}</view>
 				</view>
@@ -122,7 +123,9 @@
 	.success {
 		background-color: #08C081;
 	}
-	
+	.info{
+		color:#959595;
+	}
 	.empty{
 		padding:50rpx 0;
 	}
@@ -146,10 +149,14 @@
 	.tetxalign{
 			text-align: left;
 	}
+	.tl{
+		text-align: left;
+	}
 	page {
 		.title {
 			font-size: 32rpx;
 			font-weight: 700;
+			text-align: left;
 		}
 
 		.body {
