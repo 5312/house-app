@@ -72,6 +72,14 @@
             "path" : "pages/home/shopTransferApplication/goout",
             "style" : {}
         }
+        ,{
+            "path" : "pages/report/shenpi",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/report/shenpiDdetail",
+            "style" : {}
+        }
     ],
 	"easycom": {
 		"^a-(.*)": "@/components/a-base/a-$1.vue",
