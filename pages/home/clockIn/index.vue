@@ -5,7 +5,7 @@
 		<view class="content">
 			<view class="content-1" v-if="current!==2">
 				<view class="map-box">
-					<map id='myMap' style="width: 100%; height: 300px;" :latitude="latitude"  :longitude="longitude" :markers="covers"
+					<map id='myMap' style="width: 100%; height: 300px;" :latitude="latitude" :longitude="longitude" :markers="covers"
 					 :scale="18" @tap="tapMap" v-show="isMap">
 					</map>
 				</view>
@@ -28,7 +28,7 @@
 			</view>
 			<view class="content-3" v-if="current===2">
 				<view class="record-box">
-					<a-calendar  ref='calendarDom' @getNowDate='getNowDate' :dateStatusList='dateStatusList'></a-calendar>
+					<a-calendar ref='calendarDom' @getNowDate='getNowDate' :dateStatusList='dateStatusList'></a-calendar>
 				</view>
 				<view class="record-time">
 					<view class="line border-bottom border-top">上班：{{currentWorkTime && currentWorkTime.am &&
@@ -46,7 +46,7 @@
 	export default {
 		data() {
 			return {
-				isMap:false,
+				isMap: false,
 				isShowCalendar: true,
 				currentCalender: null,
 				workTimeRocord: null,
@@ -70,29 +70,29 @@
 					iconPath: '../../../static/location.png'
 				}],
 				timestamp: 86400,
-				address:''
+				address: ''
 			}
 		},
 		onLoad() {
 			this.userInfo = this.$tool.uniGetStorage('userInfo')
 			this.getcurrentTimeVal()
-			this.getClockInfo(()=>{
+			this.getClockInfo(() => {
 				this.getMapInfo()
 			})
-			
+
 		},
-		
+
 		methods: {
-			tapMap(e){		
-				let that=this
+			tapMap(e) {
+				let that = this
 				let maps = uni.createMapContext("myMap", this).$getAppMap();
 				maps.onclick = function(point) {
-					if(that.current==1){
-					   that.longitude = point.longitude
-					   that.latitude = point.latitude
-					   that.covers[0].latitude = point.latitude
-					   that.covers[0].longitude = point.longitude
-			        }	
+					if (that.current == 1) {
+						that.longitude = point.longitude
+						that.latitude = point.latitude
+						that.covers[0].latitude = point.latitude
+						that.covers[0].longitude = point.longitude
+					}
 				}
 			},
 			getNowDate(obj) {
@@ -115,13 +115,13 @@
 				} else {
 					return
 				}
-				let ress = this.longitude+ ',' + this.latitude
-				let params= {
-						type: index, //打卡类型1正常2外出
-						location: ress,
-						ress: _this.workTimeRocord && _this.workTimeRocord.dizhi || _this.address,
-						remark: ''
-					}
+				let ress = this.longitude + ',' + this.latitude
+				let params = {
+					type: index, //打卡类型1正常2外出
+					location: ress,
+					ress: _this.workTimeRocord && _this.workTimeRocord.dizhi || _this.address,
+					remark: ''
+				}
 				console.log(params)
 				_this.$tool.uniRequest({
 					url: "kaoqin/qiandao",
@@ -132,31 +132,32 @@
 					}
 				})
 
-			},		
-			getClockInfo(callback=null) {
+			},
+			getClockInfo(callback = null) {
 				let _this = this
 				uni.getLocation({
 					type: 'gcj02',
 					geocode: true,
-					success: function(res) {	
+					success: function(res) {
 						console.log(res)
 						_this.longitude = res.longitude
 						_this.latitude = res.latitude
 						_this.covers[0].latitude = res.latitude
-						_this.covers[0].longitude = res.longitude	
-						_this.address=res.address.province+res.address.city+res.address.district+res.address.street+res.address.streetNum+res.address.poiName+res.address.cityCode
-						_this.isMap=true
+						_this.covers[0].longitude = res.longitude
+						_this.address = res.address.province + res.address.city + res.address.district + res.address.street + res.address
+							.streetNum + res.address.poiName + res.address.cityCode
+						_this.isMap = true
 						callback && callback()
 					}
 				})
 			},
-			getMapInfo(){
-				let ress = this.longitude+ ',' + this.latitude 
+			getMapInfo() {
+				let ress = this.longitude + ',' + this.latitude
 				this.$tool.uniRequest({
 					url: "kaoqin/qiandao",
 					method: 'GET',
 					params: {
-						type: this.current+1, //打卡类型1正常2外出
+						type: this.current + 1, //打卡类型1正常2外出
 						location: ress,
 						ress: this.workTimeRocord && this.workTimeRocord.dizhi || this.address,
 						remark: ''
@@ -169,15 +170,15 @@
 			},
 			change(index) {
 				this.current = index;
-				if (index !== 2) {				
-					if(index===0){
-						this.getClockInfo(()=>{
+				if (index !== 2) {
+					if (index === 0) {
+						this.getClockInfo(() => {
 							this.getMapInfo()
 						})
-					}else{
+					} else {
 						this.getMapInfo()
 					}
-					
+
 				}
 			},
 			getRocord(isClick = false) {
@@ -213,6 +214,7 @@
 	.clock-in {
 		.bg-grey {
 			background: grey !important;
+			box-shadow: 1px 1px 6px 8px #797777 !important;
 
 		}
 
@@ -240,7 +242,7 @@
 					margin-top: 40rpx;
 
 					.count-bg {
-						box-shadow:1px 1px 6px 11px #6ce8aa;
+						box-shadow: 1px 1px 6px 11px #6ce8aa;
 						width: 200rpx;
 						height: 200rpx;
 						background: #19be6b;

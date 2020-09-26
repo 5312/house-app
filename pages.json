@@ -112,7 +112,7 @@
 				"pagePath": "pages/report/index",
 				"iconPath": "static/image/c.png",
 				"selectedIconPath": "static/image/c1.png",
-				"text": "报备"
+				"text": "新房"
 			}, {
 				"pagePath": "pages/mailList/index",
 				"iconPath": "static/image/d.png",

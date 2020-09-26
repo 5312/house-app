@@ -3,7 +3,7 @@
 		<a-navbar title="员工离职申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 		<view class="content">
 			<view class="header">
-				<image class="head" :src="form.touxiang" mode=""></image>
+				<image class="head" :src="form.touxiang || '../../../static/image/header.jpg'" mode=""></image>
 				<view class="h-right">
 					<view>姓名：{{form.ygmingcheng}}</view>
 					<view>申请时间：{{form.bdshijian}}</view>
@@ -18,9 +18,11 @@
 			<view class=" details flex  a-center j-between flex-row">
 				<view>现店组：<text class="fw">{{form.ybumen}}</text></view>
 			</view>
+			 <view class=" details flex  a-center j-between flex-row">
+				<view>银行卡类型：<text class="fw">{{ form.bankname }}</text></view>
+			</view> 
 			<view class=" details flex  a-center j-between flex-row">
-				<view>是否带走房源：<text class="fw">带走</text></view>
-				<view>是否带走客源：<text class="fw">带走</text></view>
+				<view>银行卡号：<text class="fw">{{ form.banknum}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
 				<view>房源接收人：<text class="fw">{{form.fzou}}</text></view>
@@ -29,10 +31,13 @@
 				<view>客源接收人：<text class="fw">{{form.yzou}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>离职生效日期：<text class="fw">{{form.sxshijian}}</text></view>
+				<view>离职生效日期：<text class="fw">{{form.lizhitime}}</text></view>
 			</view>
 			<view class="details flex  a-center j-between flex-row">
 				<view>离职原因：{{form.bdyuanyin}}</view>
+			</view>
+			<view class="details flex  a-center j-between flex-row">
+				<view>档案是否在公司：{{form.dashifou}}</view>
 			</view>
 		</view>
 		<view class="gtap"></view>
@@ -60,6 +65,7 @@
 					time: '2020/09/17:19:33',
 					sex: '男',
 					type: "公司调配",
+					touxiang:'../../../static/image/header.jpg'
 				},
 				current: '1',
 				numList: [{

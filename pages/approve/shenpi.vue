@@ -60,7 +60,7 @@
 					name: '我提交的审批'
 				}],
 				style:{
-					li:'font-weight:700;color:#000;'
+					span:''
 				}
 			}
 		},
@@ -71,8 +71,8 @@
 			}
 		},
 		onLoad(option){
-			this.request()//审批列表
 			this.current = option.current || 0;   
+			this.request()//审批列表
 		},
 		onReachBottom() {
 			//触底一次页码加一
@@ -95,10 +95,10 @@
 				api.ywsp(data).then(res => {
 					let arr = res.list;
 					for(let i=0; i< res.list.length;i++){
-						let q =arr[i].neirong.split(',').join('<li>');//加开头
-						let h =q.split('#').slice(0,4)
-						let ht = h.join('</li>');
-						console.log(ht);
+						let q =arr[i].neirong.split(',').join(': <span>');//加开头
+						let h =q.split('#').slice(0,2)
+						let ht = h.join('</span></br>');
+						console.log(h);
 						arr[i].neirong = ht
 					}
 					_this.detailList.push(...arr);

@@ -22,15 +22,15 @@
 				<view>申请类型：<text class="fw">{{ form.diao }}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>现职务：<text class="fw">{{form.diaodongzw}}</text></view>
+				<view>调入职务：<text class="fw">{{form.diaodongzw}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>现店组：<text class="fw">{{form.diaodongbm}}</text></view>
+				<view>调入店组：<text class="fw">{{form.diaodongbm}}</text></view>
 			</view>
-			<view class=" details flex  a-center j-between flex-row">
+			<!-- <view class=" details flex  a-center j-between flex-row">
 				<view>是否带走房源：<text class="fw">带走</text></view>
 				<view>是否带走客源：<text class="fw">带走</text></view>
-			</view>
+			</view> -->
 			<view class=" details flex  a-center j-between flex-row">
 				<view>房源接收人：{{form.fzou}}<text class="fw"></text></view>
 			</view>
@@ -67,7 +67,8 @@
 					ygmingcheng: '刘旭',
 					bdshijian: '2020/09/17:19:33',
 					lizhiyy: "公司调配",
-					"yzhiwu": "资深经纪人",      //原职务
+					"yzhiwu": "资深经纪人",      //原职务	
+					touxiang:'../../../static/image/header.jpg'
 				},
 				current:'1',
 				numList: [

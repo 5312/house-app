@@ -34,7 +34,7 @@
 				</u-form-item>
 				<u-form-item label="离职时间">
 					<u-input v-model="form.lizhitime" placeholder="请选择离职时间" type="select" @click="isShowCalendar = true" />	
-					<u-calendar v-model="isShowCalendar" mode="date" @change='calendarChange' :isAceClick='true'></u-calendar>
+					<u-calendar v-model="isShowCalendar" max-date='40000' mode="date" @change='calendarChange' :isAceClick='true'></u-calendar>
 								
 				</u-form-item>
 
@@ -46,10 +46,6 @@
 						</u-radio>
 					</u-radio-group>
 				</u-form-item>
-				<!-- <u-form-item label="未领工资区间">
-					<u-input v-model="form.aceTime" placeholder="请选择未领工资区间" type="select" @click="isShowRangeCalendar = true" />	
-					<u-calendar v-model="isShowRangeCalendar" mode="range" @change='calendarRangeChange'></u-calendar>							
-				</u-form-item> -->
 				<u-form-item label="房源接收人">
 					<u-input v-model="form.fzouName" placeholder="请选择房源接收人" type="select" @click="actionSheet('fzou')" />
 					<u-select v-model="fzou" :list="form.yhlist" @confirm="confirm4"></u-select>
@@ -125,7 +121,6 @@
 					name: '否',
 					value:2
 				}],
-				isShowCalendar: false,
 				isShowSelect: false,
 				isShowSelect1: false,
 				isShowSelect2: false,
