@@ -140,6 +140,9 @@
 </script>
 
 <style lang="scss" scoped>
+	page{
+		height: 100%;
+	}
 	.gtap {
 		height: 20rpx;
 	}
@@ -147,7 +150,7 @@
 		text-align: center;
 	}
 	.fw {
-		font-weight: 700;
+		
 	}
 
 	.custom-style {
@@ -160,6 +163,7 @@
 	}
 
 	.wrap {
+		height: 100%;
 		background-color: #EDEDED;
 		padding-bottom: 20rpx;
 

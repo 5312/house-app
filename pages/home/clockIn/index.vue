@@ -43,6 +43,7 @@
 </template>
 
 <script>
+	import api from '@/utils/api/info.js';
 	export default {
 		data() {
 			return {
@@ -62,11 +63,11 @@
 					name: '打卡记录'
 				}],
 				current: 0,
-				latitude: 39.909,
-				longitude: 116.39742,
+				latitude: '',
+				longitude: '',
 				covers: [{
-					latitude: 39.909,
-					longitude: 116.39742,
+					latitude: '',
+					longitude: '',
 					iconPath: '../../../static/location.png'
 				}],
 				timestamp: 86400,
@@ -114,7 +115,7 @@
 					index += 1
 				} else {
 					return
-				}
+				} 
 				let ress = this.longitude + ',' + this.latitude
 				let params = {
 					type: index, //打卡类型1正常2外出
@@ -123,15 +124,9 @@
 					remark: ''
 				}
 				console.log(params)
-				_this.$tool.uniRequest({
-					url: "kaoqin/qiandao",
-					method: 'POST',
-					params,
-					success: (res) => {
-						_this.getMapInfo()
-					}
+				api.qianDaoPost(params).then( res => {
+					_this.getMapInfo()
 				})
-
 			},
 			getClockInfo(callback = null) {
 				let _this = this
@@ -139,7 +134,7 @@
 					type: 'gcj02',
 					geocode: true,
 					success: function(res) {
-						console.log(res)
+						console.log('gcj02',res)
 						_this.longitude = res.longitude
 						_this.latitude = res.latitude
 						_this.covers[0].latitude = res.latitude
@@ -215,7 +210,6 @@
 		.bg-grey {
 			background: grey !important;
 			box-shadow: 1px 1px 6px 8px #797777 !important;
-
 		}
 
 		.address-info {

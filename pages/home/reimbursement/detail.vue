@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap">
-		<a-navbar title="报账详情" @back="$tool.uniRedirectTo({url:'/pages/home/reimbursement/index'})"></a-navbar>	
+		<a-navbar title="报单详情" @back="$tool.uniRedirectTo({url:'/pages/home/reimbursement/index'})"></a-navbar>	
 		<view class="bg title">基本信息</view>
 		<u-form class="form" v-if="detail">
 			<u-form-item class="bg" label-align="right" label="成交类型:"  :label-style="color" label-width='150'>

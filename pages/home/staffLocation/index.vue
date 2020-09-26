@@ -2,7 +2,7 @@
 	<view class="staff-location">
 		 <a-navbar title="员工位置" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 		 <view class="content">
-		 	<view class="map-box relative">
+		 	<view class="map-box fixed">
 		 		<map style="width: 100%; height: 100%" :latitude="latitude" v-if="isMap" id='staffMap'
 					:longitude="longitude" :markers="covers" :scale="scale"  :key='mapKey'>
 		 		</map>
@@ -25,10 +25,6 @@
 							获取时间：{{item.addtime}}
 						</view>
 					</view>
-					<!-- <view class="right flex-shrink flex a-center flex-row j-center text-white border-radius-8">
-						<u-icon name="plus"></u-icon>
-						<text>关注</text>
-					</view> -->
 				</view>
 			</view>
 		 </view>
@@ -122,9 +118,14 @@
 			background: transparent !important;
 		}
 		.content{
-			
+			height:100%;
 			.map-box{
 				height: 600rpx;
+				top:100rpx;
+				width:100%;
+				background-color: #fff;
+				overflow: hidden;
+				z-index: 9;
 				.search-input-box{
 					width: 500rpx;
 					background: white;
@@ -142,6 +143,7 @@
 				}			
 			}
 			.list{
+				margin-top:600rpx;
 				.box{
 					padding: 30rpx 0rpx;
 					margin: 0 30rpx;

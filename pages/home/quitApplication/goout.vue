@@ -88,6 +88,7 @@
 			this.init();
 		},
 		methods: {
+			
 			init() {
 				let params = {
 					id: this.id
@@ -133,14 +134,14 @@
 </script>
 
 <style lang="scss" scoped>
+	page{
+		height:100%;
+	}
 	.gtap {
 		height: 20rpx;
 	}
 	.t{
 		text-align: center;
-	}
-	.fw {
-		font-weight: 700;
 	}
 
 	.custom-style {
@@ -155,7 +156,7 @@
 	.wrap {
 		background-color: #EDEDED;
 		padding-bottom: 20rpx;
-
+		height:100%;
 		.content {
 			background-color: #fff;
 

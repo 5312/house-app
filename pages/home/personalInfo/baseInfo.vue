@@ -42,13 +42,12 @@
 					<u-calendar v-model="chushengrq" mode="date" @change="calendarChange"></u-calendar>
 				</u-form-item>
 				<u-form-item class="bg" label-width='150' label-align='rigth' label="身份证号">
-					<u-input v-model="form.sfzh" :disabled="!isEdit" placeholder='' />
+					<u-input v-model="form.sfzh" @click='keyNum = true' :disabled="!isEdit" placeholder='' />
+					<u-keyboard :mask="false" ref="uKeyboard" @change="valChange" @backspace="backspace" mode="number" v-model="keyNum"></u-keyboard>
 				</u-form-item>
 			</u-form>
 			<view class="btn-wrap">
 				<u-button type="success" class="btn"  @click="submit">修改</u-button>
-				<!-- <u-button type="success" class="btn" v-if="isEdit" @click="submit">提交</u-button> -->
-				<!-- <u-button v-if="isEdit" @click="isEdit=false">取消</u-button> -->
 			</view>
 		</view>
 	</view>
@@ -58,6 +57,7 @@
 	export default {
 		data() {
 			return {
+				keyNum:false,
 				isEdit: true,
 				minzu:false,
 				xueli:false,
@@ -84,6 +84,18 @@
 			this.init()
 		},
 		methods: {
+			// 按键被点击(点击退格键不会触发此事件)
+			valChange(val) {
+				// 将每次按键的值拼接到value变量中，注意+=写法
+				this.form.sfzh += val;
+				console.log(this.sfzh);
+			},
+			// 退格键被点击
+			backspace() {
+				// 删除value的最后一个字符
+				if (this.form.sfzh.length) this.form.sfzh = this.form.sfzh.substr(0, this.form.sfzh.length - 1);
+				console.log(this.form.sfzh);
+			},
 			init() {
 				this.$tool.uniRequest({
 					url: "rsdangan/jiben",
