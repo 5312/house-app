@@ -1,6 +1,6 @@
 <template>
 	<view class="body">
-		<a-navbar title="详情" @back="$tool.uniNavigateTo({url:`/pages/approve/shenpi?current=${current}`})" background-color='#fff'></a-navbar>
+		<a-navbar title="审批详情" @back="$tool.uniNavigateTo({url:`/pages/approve/shenpi?current=${current}`})" background-color='#fff'></a-navbar>
 		<view class="header">
 			<view class="title">{{to_title}}</view>
 			<view class="small">{{bumen}}</view>
@@ -66,7 +66,7 @@
 					}
 				],
 				style:{
-					li:'font-size:32rpx;font-weight:700;color:#000;line-height:35rpx'
+					li:'font-size:32rpx;color:#000;line-height:35rpx'
 				}
 			}
 		},
