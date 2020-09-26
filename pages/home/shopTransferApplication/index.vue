@@ -2,22 +2,21 @@
 	<view class="shop-transfer-application">
 		<a-navbar title="员工调店申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 		<view class="content">
-			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' 
-				v-if='form'>
+			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' v-if='form'>
 				<view class="title bold u-border-bottom">
 					<u-icon size="28" name="calendar" class="mar"></u-icon><text>基本信息</text>
 				</view>
 				<u-form-item label="姓名">
-					<u-input v-model="form.ygmingcheng" disabled/>
+					<u-input v-model="form.ygmingcheng" disabled />
 				</u-form-item>
 				<u-form-item label="工号">
-					<u-input v-model="form.ygbianhao" disabled/>
+					<u-input v-model="form.ygbianhao" disabled />
 				</u-form-item>
 				<u-form-item label="职位">
-					<u-input v-model="form.gangwei" disabled/>
+					<u-input v-model="form.gangwei" disabled />
 				</u-form-item>
 				<u-form-item label="所属店组">
-					<u-input v-model="form.bumen" disabled/>
+					<u-input v-model="form.bumen" disabled />
 				</u-form-item>
 				<view class="margin-box"></view>
 				<view class="title bold u-border-bottom ">
@@ -26,68 +25,69 @@
 				<u-form-item label="调店时间">
 					<u-input v-model="form.sxshijian" placeholder="请选择时间" type="select" @click="isShowCalendar = true" />
 					<u-calendar v-model="isShowCalendar" mode="date" @change='calendarChange' :isAceClick='true'></u-calendar>
-				
+
 				</u-form-item>
 				<u-form-item label="调入组名">
 					<u-input v-model="form.groupName" placeholder="请选择店组名" type="select" @click="actionSheet('groupName')" />
-					<u-select v-model="groupName" :list="form.bumenlist" @confirm="confirm1"></u-select>				
-				
+					<u-select v-model="groupName" :list="form.bumenlist" @confirm="confirm1"></u-select>
+
 				</u-form-item>
 				<u-form-item label="调动职务">
-					<u-input v-model="form.zhiwuName" placeholder="请选择店组名" type="select"  @click="actionSheet('zhiwu')" />
-					<u-select v-model="zhiwu" :list="form.zhiwu" @confirm="confirm2"></u-select>									
-				
+					<u-input v-model="form.zhiwuName" placeholder="请选择店组名" type="select" @click="actionSheet('zhiwu')" />
+					<u-select v-model="zhiwu" :list="form.zhiwu" @confirm="confirm2"></u-select>
+
 				</u-form-item>
 				<u-form-item label="调动类型">
-					<u-input v-model="form.biandongName" placeholder="请选择店组名" type="select"  @click="actionSheet('biandong')"  />
-					<u-select v-model="biandong" :list="form.biandong" @confirm="confirm3"></u-select>	
+					<u-input v-model="form.biandongName" placeholder="请选择店组名" type="select" @click="actionSheet('biandong')" />
+					<u-select v-model="biandong" :list="form.biandong" @confirm="confirm3"></u-select>
 				</u-form-item>
 				<u-form-item label="调店原因">
 					<u-radio-group v-model="form.diao" @change="diaoChange">
-						<u-radio  v-for="(item, index) in leaveStatusList" :key="index" :name="item.value" shape="circle" >
+						<u-radio v-for="(item, index) in leaveStatusList" :key="index" :name="item.value" shape="circle">
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
-				</u-form-item>			
+				</u-form-item>
 				<u-form-item label="房源接收人">
 					<u-input v-model="form.fzouName" placeholder="请选择房源接收人" type="select" @click="actionSheet('fzou')" />
 					<u-select v-model="fzou" :list="form.yhlist" @confirm="confirm4"></u-select>
-									
-				</u-form-item>			
+
+				</u-form-item>
 				<u-form-item label="客源接收人">
 					<u-input v-model="form.yzouName" placeholder="请选择客源接收人" type="select" @click="actionSheet('yzou')" />
 					<u-select v-model="yzou" :list="form.yhlist" @confirm="confirm5"></u-select>
-						
+
 				</u-form-item>
 				<u-form-item label="申请原因">
-					<u-input v-model="form.bdyuanyin" type='textarea'/>
+					<u-input v-model="form.bdyuanyin" type='textarea' />
 				</u-form-item>
 			</u-form>
-			<u-button  class="custom-style" @click='submit'>提交</u-button>
+			<u-button class="custom-style" @click='submit'>提交</u-button>
 		</view>
 	</view>
 </template>
 
 <script>
+	import api from "@/utils/api/resign.js"; //api
 	export default {
 		data() {
 			return {
-				housed:false,
-				kd:false,
-				form:null,
-				groupName:false,
-				zhiwu:false,
-				biandong:false,
-				fzou:false,
-				yzou:false,
-				
-				
+				housed: false,
+				kd: false,
+				form: null,
+				groupName: false,
+				zhiwu: false,
+				biandong: false,
+				fzou: false,
+				yzou: false,
+
+
 				leaveStatusList: [{
 					name: '本人申请',
-					value:1
+					value: 1
 				}, {
 					name: '公司调配',
-					value:2
+					value: 2
 				}],
 				isShowCalendar: false,
 				isShowSelect: false,
@@ -103,76 +103,88 @@
 				]
 			}
 		},
-		onLoad(){
+		onLoad() {
 			this.getDetail()
 		},
 		methods: {
-			diaoChange(e){
-				this.form.diao=e
+			diaoChange(e) {
+				this.form.diao = e
 			},
-			getDetail(){
+			getDetail() {
 				let _this = this;
 				this.$tool.uniRequest({
-					url:"rsdangan/biandong",
-					method:'GET',				
-					success:(res)=>{
-						if(res.id){
-							_this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/newpage?id=${res.id}`})
+					url: "rsdangan/biandong",
+					method: 'GET',
+					success: (res) => {
+						if (res.id) {
+							_this.$tool.uniRedirectTo({
+								url: `/pages/home/shopTransferApplication/newpage?id=${res.id}`
+							})
 							return;
 						}
-						
-						this.form=res
-						this.form.bumenlist.forEach(item=>{
-							item.label=item.name
-							item.value=item.id				
+
+						this.form = res
+						this.form.bumenlist.forEach(item => {
+							item.label = item.name
+							item.value = item.id
 						})
-						this.form.zhiwu.forEach(item=>{
-							item.label=item.remark
-							item.value=item.id				
+						this.form.zhiwu.forEach(item => {
+							item.label = item.remark
+							item.value = item.id
 						})
-						this.form.biandong.forEach(item=>{
-							item.label=item.lxming
-							item.value=item.xsshunxu				
+						this.form.biandong.forEach(item => {
+							item.label = item.lxming
+							item.value = item.xsshunxu
 						})
-						this.form.yhlist.forEach(item=>{
-							item.label=item.ygmingcheng
-							item.value=item.uid				
+						this.form.yhlist.forEach(item => {
+							item.label = item.ygmingcheng
+							item.value = item.uid
 						})
 					}
 				})
 			},
-			confirm1(e){
-				this.form.groupName=e[0].label
-				this.form.groupNameId=e[0].value
+			confirm1(e) {
+				this.form.groupName = e[0].label
+				this.form.groupNameId = e[0].value
 			},
-			confirm2(e){
-				this.form.zhiwuName=e[0].label
-				this.form.zhiwuNameId=e[0].value
+			confirm2(e) {
+				this.form.zhiwuName = e[0].label
+				this.form.zhiwuNameId = e[0].value
 			},
-			confirm3(e){
-				this.form.biandongName=e[0].label
-				this.form.biandongNameId=e[0].value
+			confirm3(e) {
+				this.form.biandongName = e[0].label
+				this.form.biandongNameId = e[0].value
 			},
-			confirm4(e){
-				this.form.fzouName=e[0].label
-				this.form.fzouNameId=e[0].value
+			confirm4(e) {
+				this.form.fzouName = e[0].label
+				this.form.fzouNameId = e[0].value
 			},
-			confirm5(e){
-				this.form.yzouName=e[0].label
-				this.form.yzouNameId=e[0].value
+			confirm5(e) {
+				this.form.yzouName = e[0].label
+				this.form.yzouNameId = e[0].value
 			},
-			submit(){
-				let params={
-					sxshijian:this.form.sxshijian || '',
-					bumen:this.form.groupNameId || '',
-					diao:this.form.diao || '',
-					fzou:this.form.fzouNameId || '',
-					yzou:this.form.yzouNameId || '',
-					biandong:this.form.biandongNameId || '',
-					bdyuanyin:this.form.bdyuanyin || '',
-					zhiwu:this.form.zhiwuNameId || '',
+			submit() {
+				let params = {
+					sxshijian: this.form.sxshijian || '',
+					bumen: this.form.groupNameId || '',
+					diao: this.form.diao || '',
+					fzou: this.form.fzouNameId || '',
+					yzou: this.form.yzouNameId || '',
+					biandong: this.form.biandongNameId || '',
+					bdyuanyin: this.form.bdyuanyin || '',
+					zhiwu: this.form.zhiwuNameId || '',
 				}
-				this.$tool.uniRequest({
+				api.bianDong(params).then(res => {
+					this.$tool.uniShowToast({
+						title: "调店申请成功！"
+					})
+					setTimeout(() => {
+						this.$tool.uniRedirectTo({
+							url: `/pages/home/shopTransferApplication/newpage?id=${res.id}`
+						})
+					}, 1000)
+				})
+				/* this.$tool.uniRequest({
 					url:"rsdangan/biandong",
 					method:'POST',		
 					params,
@@ -185,44 +197,48 @@
 							this.$tool.uniRedirectTo({url:`/pages/home/shopTransferApplication/newpage?id=${res.id}`})
 						},1000)
 					}
-				})
+				}) */
 			},
-			actionSheet(type){
-				this[type]=true
+			actionSheet(type) {
+				this[type] = true
 			},
 			calendarChange(val) {
 				this.form.sxshijian = val.result
-			}			
+			}
 		}
 	}
 </script>
 
 <style scoped lang="scss">
-	.mar{
+	.mar {
 		margin-right: 10rpx;
 	}
-	.margin-box{
+
+	.margin-box {
 		position: relative;
 		left: -100rpx;
 		width: 200%;
 		height: 20rpx;
 		background-color: #EDEDED;
 	}
+
 	.shop-transfer-application {
 		.custom-style {
 			color: #FFFFFF;
 			background: #78c340;
-		}	
+		}
+
 		.content {
 			padding: 0 40rpx 40rpx 40rpx;
-			
+
 			.form {
 				.title {
 					height: 110rpx;
 					line-height: 110rpx;
 					font-size: 30rpx;
 				}
-				/deep/.u-form-item{
+
+				/deep/.u-form-item {
 					line-height: 40rpx;
 				}
 			}

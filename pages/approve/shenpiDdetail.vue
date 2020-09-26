@@ -1,6 +1,6 @@
 <template>
 	<view class="body">
-		<a-navbar title="详情" @back="$tool.uniNavigateTo({url:'/pages/approve/shenpi'})" background-color='#fff'></a-navbar>
+		<a-navbar title="详情" @back="$tool.uniNavigateTo({url:`/pages/approve/shenpi?current=${current}`})" background-color='#fff'></a-navbar>
 		<view class="header">
 			<view class="title">{{to_title}}</view>
 			<view class="small">{{bumen}}</view>
@@ -8,7 +8,7 @@
 			<view v-else class="status">等{{sbr}}处理</view>
 		</view>
 		<view class="wrap" v-if="neirong">
-			<view v-html="neirong"></view>
+			<u-parse  class="html" :html="neirong" :tag-style='style'></u-parse >
 		</view>
 		<u-empty v-else text="数据为空" class="empty" mode="list"></u-empty>
 		<view class="bottom">
@@ -22,7 +22,7 @@
 					</view>
 					<view class="center fixheig">
 						<view class="title">{{x.leixing}}</view>
-						<view class="tl" :class="{ bohui:x.bohui == 1 }" v-if="x.bohui != 1">{{x.msg?x.msg:x.msg== '0'?'':'（未审批）'}}</view>
+						<view class="tl" :class="{ bohui:x.bohui == 1 }" v-if="x.bohui != 1">{{ x.msg == "0" ? '': x.msg ? x.msg :'（未审批）'}}</view>
 						<view class="tl" :class="{ bohui:x.bohui == 1 }" v-if="x.bohui == 1">{{x.msg}}</view>
 					</view>
 					<view class=" fixheig col">{{x.addtime == 0 ? '':x.addtime}}</view>
@@ -35,7 +35,7 @@
 			<u-button type="success" :ripple="true" @click="show = true;status=0;title='批示内容'">同意</u-button>
 		</view>
 		<u-modal v-model="show" mode="center" @confirm="confirm" @cancel="cancel" :mask-close-able="true" :title="title" :show-cancel-button="true">
-			<u-field v-model="msg" label=""  label-width='0px'  placeholder="请审批意见" class="inp" type="textarea" :error-message='errmsg'>
+			<u-field v-model="msg" label=" "  label-width='0'  placeholder="请审批意见" class="inp" type="textarea" :error-message='errmsg'>
 			</u-field>
 		</u-modal>
 	</view>
@@ -64,7 +64,10 @@
 					{
 						name: '审批人'
 					}
-				]
+				],
+				style:{
+					li:'font-size:32rpx;font-weight:700;color:#000;line-height:35rpx'
+				}
 			}
 		},
 		onLoad(option) {
@@ -107,13 +110,13 @@
 				console.log('页面数据')
 				api.shengPiXiangQing(data).then(result => {
 					//console.log(result)
-				
-					let ht =result.neirong.split('#').join('</br>');
-					
+					let q =result.neirong.split(',').join(':<li>');//前
+					let h =q.split('#').join('</li>');//后
+					console.log(h)
 					_this.to_title = result.to_title;
 					_this.bumen = result.bumen;
 					_this.sbr = result.sbr;
-					_this.neirong = ht;
+					_this.neirong = h;
 					_this.numList = result.list;
 					_this.sh_zhuangtai = result.sh_zhuangtai //当前状态
 				})
@@ -155,7 +158,7 @@
 	}
 	page {
 		.title {
-			font-size: 32rpx;
+			font-size: 40rpx;
 			font-weight: 700;
 			text-align: left;
 		}
@@ -185,6 +188,12 @@
 				background: #fff;
 				padding: 20rpx;
 				line-height: 80rpx;
+				list-style: none;
+				color:#9f9f9f;
+				.html >>> li{
+					color: #000;
+					font-weight: 700;
+				}
 			}
 
 			.bottom {
