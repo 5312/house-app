@@ -11,5 +11,26 @@ export  default{
 				success:resolve,
 			})
 		})
+	},
+	//用户选择
+	xuanYongHu(params){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'rsdangan/xuanyonghu',
+				method:'GET',
+				params,
+				success:resolve
+			})
+		})
+	},
+	yongJinXuanZe(params){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'rsdangan/xuanyongjin',
+				method:'GET',
+				params,
+				success:resolve
+			})
+		})
 	}
 }

@@ -1,11 +1,7 @@
 <template>
-	<view>	
+	<view>
 		<a-navbar title="新增报账" @back="$tool.uniRedirectTo({url:'/pages/home/reimbursement/index'})"></a-navbar>
-		<u-tabs :list="lists" active-color='#07c160' inactive-color='#000' :is-scroll="false" :current="current" @change="change"></u-tabs>
-
-		<view class="wrap">
-		<!-- 	<u-subsection :list="leixingList" :current="currentIndex" @change='tagChange'></u-subsection> -->
-			<!-- <view class="title">第一步:基本信息</view> -->
+		<view class="wrap" v-show="!commAdd">
 			<view class="main">
 				<u-form class="form" :model="form" ref="uForm">
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="报单类型:">
@@ -18,13 +14,6 @@
 						<u-input :selectOpen="fangType" placeholder="" type="select" v-model="form.fwleixingLabel" @click='showSelect("fangType")' />
 						<u-select v-model="fangType" :list="formSelectInfo.fwleixing" @confirm="confirm1"></u-select>
 					</u-form-item>
-					<u-form-item class="bg" label-width='150' label-align='rigth' label="所属小区:" v-if='formSelectInfo'>
-						<u-input :selectOpen="xiaoqu" placeholder="" type="select" v-model="form.xiaoquLabel" @click='showSelect("xiaoqu")' />
-						<u-select v-model="xiaoqu" :list='formSelectInfo.xiaoqu' @confirm="confirm2"></u-select>
-					</u-form-item>
-					<u-form-item class="bg" label-width='150' label-align='rigth' label="使用面积:">
-						<u-input v-model="form.symianji" :disabled="isDisable" />
-					</u-form-item>
 					<u-form-item class="bg " label-width='150' label-align='rigth' label="门牌号">
 						<view class="inline">
 							<view class="flex  input">
@@ -34,46 +23,34 @@
 							</view>
 						</view>
 					</u-form-item>
-					<u-form-item class="bg" label-width='150' label-align='rigth' label="户型">
-						<view class="inline">
-							<view class="flex  input">
-								<u-input class="item2" :border='true' :disabled="isDisable" v-model.number="form.shi" placeholder='室' :type="type" />
-								<u-input class="item2" :border='true' :disabled="isDisable" v-model.number="form.ting" placeholder='厅' :type="type" />
-								<u-input class="item2" :border='true' :disabled="isDisable" v-model.number="form.wei" placeholder='卫' :type="type" />
-								<u-input class="item2" :border='true' :disabled="isDisable" v-model.number="form.yangtai" placeholder='阳台'
-								 :type="type" />
-							</view>
-						</view>
-					</u-form-item>
+
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="业主姓名:">
 						<u-input v-model="form.yezhu" :disabled="isDisable" />
 					</u-form-item>
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="业主电话:">
 						<u-input v-model="form.yezhudianhua" :disabled="isDisable" />
 					</u-form-item>
-					<u-form-item class="bg" label-width='150' label-align='rigth' label="业主性别:">
-						<u-radio-group class="bg  flex" v-model="form.ezhulx" :disabled="isDisable">
-							<u-radio v-for="(item, index) in listSex" :key="index" :name="item.value" :disabled="item.disabled">
-								{{item.name}}
-							</u-radio>
-						</u-radio-group>
+					<u-form-item class="bg" label-width='150' label-align='rigth' right-icon="arrow-right" label="其他类型:">
+						<view class="btnl" @click='commAdd = true;comtype=0'>
+						</view>
 					</u-form-item>
+					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in otherType" :key="item.projectId+'-'+item.price" 
+					 @click="click1" @open="open1" :options="options">
+						 <u-row class="list"  gutter="10" justify="around">
+							<u-col span="7" text-align='center'>
+								<view>{{item.project}}</view>
+							</u-col>
+							<u-col span="4" >
+								<view>{{item.price}}</view>
+							</u-col>
+						 </u-row>
+					</u-swipe-action>
+					
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="客户姓名:">
 						<u-input v-model="form.khxingming" :disabled="isDisable" />
 					</u-form-item>
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="客户电话:">
 						<u-input v-model="form.dianhua" :disabled="isDisable" />
-					</u-form-item>
-					<u-form-item class="bg" label-width='150' label-align='rigth' label="客户性别:">
-						<u-radio-group class="bg  flex" v-model="form.kehulx" :disabled="isDisable">
-							<u-radio v-for="(item, index) in listSex" :key="index" :name="item.value" :disabled="item.disabled">
-								{{item.name}}
-							</u-radio>
-						</u-radio-group>
-					</u-form-item>
-					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交时间:">
-						<u-input :selectOpen="show" placeholder="" v-model="form.cjtime" type="select" @click='showSelect("show")' />
-						<u-calendar max-date='5000' v-model="show" mode="date" @change="calendarChange"></u-calendar>
 					</u-form-item>
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交价格:">
 						<u-input v-model="form.cjjiage" placeholder='xxx元' :disabled="isDisable" />
@@ -81,6 +58,39 @@
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交业绩:">
 						<u-input v-model="form.ysyongjin" placeholder='xxx元' :disabled="isDisable" />
 					</u-form-item>
+					<u-form-item class="bg" label-width='150' label-align='rigth' right-icon="arrow-right" label="业绩列表:">
+						<view class="btnl" @click='commAdd = true;comtype = 1'></view>
+					</u-form-item>
+					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in outstandingList" :key="item.peopleId+'-'+index"
+					 @click="click" @open="open" :options="options">
+						<u-row class="list"  gutter="10" justify="between">
+							<u-col span="4" text-align='center'>
+								<view>{{item.people}}</view>
+							</u-col>
+							<u-col span="3" >
+								<view>{{item.reason}}</view>
+							</u-col>
+							<u-col span="2" >
+								<view>{{item.scale}}</view>
+							</u-col>
+							<u-col span="3" >
+								<view>{{item.outs}}</view>
+							</u-col>
+					    </u-row>
+					 </u-swipe-action>
+					<!-- <u-table class="tab">
+						<u-tr class="u-tr list a-center " v-for="(x,y) in outstandingList" :key="'out-'+y">
+							<u-td class="u-td">{{x.people}}</u-td>
+							<u-td class="u-td">{{x.reason}}</u-td>
+							<u-td class="u-td">{{x.scale}}</u-td>
+							<u-td class="u-td">{{x.outs}}</u-td>
+						</u-tr>
+					</u-table> -->
+					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交时间:">
+						<u-input :selectOpen="show" placeholder="" v-model="form.cjtime" type="select" @click='showSelect("show")' />
+						<u-calendar max-date='5000' v-model="show" mode="date" @change="calendarChange"></u-calendar>
+					</u-form-item>
+
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="备注:">
 						<u-input type='textarea' v-model="form.beizhu" placeholder="" :disabled="isDisable" />
 					</u-form-item>
@@ -95,20 +105,28 @@
 				</u-form>
 			</view>
 		</view>
+		<comadd v-if="commAdd" :ysyongjin='form.ysyongjin' v-on:update='update' :outstandingList='outstandingList' :types='comtype'></comadd>
 	</view>
 </template>
 
 <script>
+	import comadd from './components/components'
 	export default {
+		components: {
+			comadd
+		},
 		data() {
-			return {			
+			return {
+				comtype: 0,
+				commAdd: false,
 				isDisable: false,
 				fangType: false,
 				xiaoqu: false,
 				show: false,
 				formSelectInfo: null,
 				currentIndex: 0,
-				leixing:null,
+				leixing: null,
+				outstandingList: [], //业绩列表
 				leixingList: [{
 						name: '售单'
 					},
@@ -144,13 +162,7 @@
 					ysyongjin: '',
 					beizhu: ''
 				},
-				lists: [{
-						name: '发起提交'
-					},
-					{
-						name: '查看数据'
-					}
-				],
+				otherType: [],
 				current: 0,
 				listSex: [{
 						name: '先生',
@@ -163,6 +175,12 @@
 						disabled: false
 					},
 				],
+				options: [{
+					text: '删除',
+					style: {
+						backgroundColor: '#dd524d'
+					}
+				}],
 				type: 'text',
 				numList: [{
 						name: '店长审核'
@@ -181,10 +199,66 @@
 			}
 		},
 		onLoad(options) {
-			this.leixing=options.type
+			this.leixing = options.type
 			this.init()
 		},
 		methods: {
+			update(val) {
+				this.commAdd = false;
+				console.log(val)
+				if (val.type == 1) {
+					this.otherType.push(val);
+				} else { //改变比例及金额
+					this.outstandingList.push(val); //
+					///本次理由
+					let reasonId = val.reasonId;
+					let arr = this.outstandingList;
+					arr.forEach(function(item) {
+						if (item.reasonId == reasonId) {
+							item.scale = val.scale
+							item.outs = val.outs
+						}
+					})
+					this.outstandingList = arr;
+				}
+				Object.assign(this.form, val); //添加进form
+			},
+			click(index,index1) {
+				
+				if (index1 == 0) {
+					this.outstandingList.splice(index, 1);
+					this.$u.toast(`已删除`);
+				} else {
+					
+				}
+			},
+			// 如果打开一个的时候，不需要关闭其他，则无需实现本方法
+			open(index) {
+				// 先将正在被操作的swipeAction标记为打开状态，否则由于props的特性限制，
+				// 原本为'false'，再次设置为'false'会无效
+				this.outstandingList[index].show = true;
+				this.outstandingList.map((val, idx) => {
+					if (index != idx) this.outstandingList[idx].show = false;
+				})
+			},
+			click1(index,index1) {
+				
+				if (index1 == 0) {
+					this.otherType.splice(index, 1);
+					this.$u.toast(`已删除`);
+				} else {
+					
+				}
+			},
+			// 如果打开一个的时候，不需要关闭其他，则无需实现本方法
+			open1(index) {
+				// 先将正在被操作的swipeAction标记为打开状态，否则由于props的特性限制，
+				// 原本为'false'，再次设置为'false'会无效
+				this.otherType[index].show = true;
+				this.otherType.map((val, idx) => {
+					if (index != idx) this.otherType[idx].show = false;
+				})
+			},
 			init() {
 				this.$tool.uniRequest({
 					url: "fangyuan/addesfy",
@@ -228,14 +302,17 @@
 			},
 			submit() {
 				let params = this.$u.deepClone(this.form)
-				console.log(this.leixing)
-				if(this.leixing==='售单'){
-					params.leixing=1
-				}else if(this.leixing==='租单'){
-					params.leixing=2
-				}else if(this.leixing==='新盘'){
-					params.leixing=3
+
+				if (this.leixing === '售单') {
+					params.leixing = 1
+				} else if (this.leixing === '租单') {
+					params.leixing = 2
+				} else if (this.leixing === '新盘') {
+					params.leixing = 3
 				}
+				params.otherType = this.otherType;
+				params.outstandingList = this.outstandingList;
+				console.log(params)
 				this.$tool.uniRequest({
 					url: "fangyuan/addesfy",
 					method: 'POST',
@@ -258,13 +335,32 @@
 	* {
 		font-size: 30rpx;
 	}
-	.tit{
-		width:100%;
-		padding:30rpx 150rpx;
-		background: #19be6b;
-		color:#fff;
+
+	.btnl {
+		border: none;
+		width: 520rpx;
+		height: 60rpx;
 	}
-	
+
+	.tit {
+		width: 100%;
+		padding: 30rpx 150rpx;
+		background: #19be6b;
+		color: #fff;
+	}
+
+	.list {
+		padding: 20rpx;
+		border-top:1px solid #ddd;
+		border-bottom:1px solid #ddd;
+		margin:0 20rpx;
+	}
+
+	.tab {
+		margin: 20rpx 0;
+		background: #fff;
+	}
+
 	.form {
 		border-radius: 20rpx;
 		overflow: hidden;

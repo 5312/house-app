@@ -80,6 +80,14 @@
             "path" : "pages/approve/shenpiDdetail",
             "style" : {}
         }
+        ,{
+            "path" : "pages/commissie/commissie",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/home/reimbursement/components/components",
+            "style" : {}
+        }
     ],
 	"easycom": {
 		"^a-(.*)": "@/components/a-base/a-$1.vue",

@@ -2,7 +2,7 @@
 	<view class="body">
 		<a-navbar title="审批详情" @back="$tool.uniNavigateTo({url:`/pages/approve/shenpi?current=${current}`})" background-color='#fff'></a-navbar>
 		<view class="header">
-			<view class="title">{{to_title}}</view>
+			<view class="title t">{{to_title}}</view>
 			<view class="small">{{bumen}}</view>
 			<view v-if="sh_zhuangtai == -1" class="bohui">审批被拒绝</view>
 			<view v-else class="status">等{{sbr}}处理</view>
@@ -66,7 +66,7 @@
 					}
 				],
 				style:{
-					li:'font-size:32rpx;color:#000;line-height:35rpx'
+					span:'font-size:32rpx;color:#000;line-height:35rpx;list-style:none;'
 				}
 			}
 		},
@@ -110,8 +110,8 @@
 				console.log('页面数据')
 				api.shengPiXiangQing(data).then(result => {
 					//console.log(result)
-					let q =result.neirong.split(',').join(':<li>');//前
-					let h =q.split('#').join('</li>');//后
+					let q =result.neirong.split(',').join('</br><span>');//前
+					let h =q.split('#').join('</span></br>');//后
 					console.log(h)
 					_this.to_title = result.to_title;
 					_this.bumen = result.bumen;
@@ -142,6 +142,10 @@
 	.bohui{
 		color:#FD9640;
 	}
+	.t{
+		font-size:50rpx !important;
+		font-weight:700 ;
+	}
 	.fixheig {
 		height: 100rpx;
 		margin: 30rpx 0;
@@ -158,8 +162,7 @@
 	}
 	page {
 		.title {
-			font-size: 40rpx;
-			font-weight: 700;
+			font-size: 32rpx;
 			text-align: left;
 		}
 

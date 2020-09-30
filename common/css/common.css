@@ -63,9 +63,6 @@
 	justify-content: space-between;
 }
 
-.a-center {
-	align-items: center;
-}
 
 .a-start {
 	align-items: flex-start;
@@ -138,7 +135,7 @@
 .border-top {
 	border-top: 1rpx solid #f4f4f5;
 }
-
+ 
 .border-right {
 	border-right: 1rpx solid #f4f4f5;
 }
@@ -147,9 +144,6 @@
 	border: 1rpx solid #f4f4f5;
 }
 
-.bg-white {
-	background: #FFFFFF;
-}
 
 .min-height-100 {
 	min-height: 100vh;
@@ -167,9 +161,7 @@
 	padding: 0 40rpx;
 }
 
-.flex-wrap {
-	flex-wrap: wrap;
-}
+
 
 .text-blue {
 	color: #479AFE;
@@ -206,4 +198,7 @@
 
 .header-bg{
 	background: #19be6b;
+}
+.corsur{
+	cursor:pointer;
 }
