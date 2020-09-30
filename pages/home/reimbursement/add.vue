@@ -58,9 +58,12 @@
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交业绩:">
 						<u-input v-model="form.ysyongjin" placeholder='xxx元' :disabled="isDisable" />
 					</u-form-item>
-					<u-form-item class="bg" label-width='150' label-align='rigth' right-icon="arrow-right" label="业绩列表:">
+					<!-- <u-form-item class="bg" label-width='150' label-align='rigth' right-icon="arrow-right" label="业绩列表:">
 						<view class="btnl" @click='commAdd = true;comtype = 1'></view>
-					</u-form-item>
+					</u-form-item> -->
+					<u-cell-group>
+							<u-cell-item  title="业绩列表" value="增加" @click='commAdd = true;comtype = 1'></u-cell-item>
+					</u-cell-group>
 					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in outstandingList" :key="item.peopleId+'-'+index"
 					 @click="click" @open="open" :options="options">
 						<u-row class="list"  gutter="10" justify="between">
