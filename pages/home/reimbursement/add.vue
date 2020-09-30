@@ -1,7 +1,8 @@
 <template>
 	<view>
-		<a-navbar title="新增报账" @back="$tool.uniRedirectTo({url:'/pages/home/reimbursement/index'})"></a-navbar>
+		
 		<view class="wrap" v-show="!commAdd">
+			<a-navbar title="新增报账" @back="$tool.uniRedirectTo({url:'/pages/home/reimbursement/index'})"></a-navbar>
 			<view class="main">
 				<u-form class="form" :model="form" ref="uForm">
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="报单类型:">
@@ -30,22 +31,7 @@
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="业主电话:">
 						<u-input v-model="form.yezhudianhua" :disabled="isDisable" />
 					</u-form-item>
-					<u-form-item class="bg" label-width='150' label-align='rigth' right-icon="arrow-right" label="其他类型:">
-						<view class="btnl" @click='commAdd = true;comtype=0'>
-						</view>
-					</u-form-item>
-					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in otherType" :key="item.projectId+'-'+item.price" 
-					 @click="click1" @open="open1" :options="options">
-						 <u-row class="list"  gutter="10" justify="around">
-							<u-col span="7" text-align='center'>
-								<view>{{item.project}}</view>
-							</u-col>
-							<u-col span="4" >
-								<view>{{item.price}}</view>
-							</u-col>
-						 </u-row>
-					</u-swipe-action>
-					
+				
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="客户姓名:">
 						<u-input v-model="form.khxingming" :disabled="isDisable" />
 					</u-form-item>
@@ -58,16 +44,14 @@
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交业绩:">
 						<u-input v-model="form.ysyongjin" placeholder='xxx元' :disabled="isDisable" />
 					</u-form-item>
-					<!-- <u-form-item class="bg" label-width='150' label-align='rigth' right-icon="arrow-right" label="业绩列表:">
-						<view class="btnl" @click='commAdd = true;comtype = 1'></view>
-					</u-form-item> -->
+					<!--  -->
 					<u-cell-group>
-							<u-cell-item  title="业绩列表" value="增加" @click='commAdd = true;comtype = 1'></u-cell-item>
+							<u-cell-item  title="分配业绩" value="增加" @click='preList'></u-cell-item>
 					</u-cell-group>
-					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in outstandingList" :key="item.peopleId+'-'+index"
+					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in outstandingList" :key="item.peopleId+'&'+index"
 					 @click="click" @open="open" :options="options">
 						<u-row class="list"  gutter="10" justify="between">
-							<u-col span="4" text-align='center'>
+							<u-col span="3" text-align='center'>
 								<view>{{item.people}}</view>
 							</u-col>
 							<u-col span="3" >
@@ -76,19 +60,31 @@
 							<u-col span="2" >
 								<view>{{item.scale}}</view>
 							</u-col>
-							<u-col span="3" >
-								<view>{{item.outs}}</view>
+							<u-col span="4" >
+								<view>{{item.outs}}元</view>
 							</u-col>
 					    </u-row>
 					 </u-swipe-action>
-					<!-- <u-table class="tab">
-						<u-tr class="u-tr list a-center " v-for="(x,y) in outstandingList" :key="'out-'+y">
-							<u-td class="u-td">{{x.people}}</u-td>
-							<u-td class="u-td">{{x.reason}}</u-td>
-							<u-td class="u-td">{{x.scale}}</u-td>
-							<u-td class="u-td">{{x.outs}}</u-td>
-						</u-tr>
-					</u-table> -->
+					 <!--  -->
+					 <u-cell-group>
+					 	<u-cell-item  title="其他费用" :arrow='false' :value="form.other+`元`"  @click='commAdd = true;comtype=0'></u-cell-item>
+					 </u-cell-group>
+					 <!--  -->
+					 <u-cell-group>
+					 	<u-cell-item  title="金融类费用" value="增加"  @click='commAdd = true;comtype=0'></u-cell-item>
+					 </u-cell-group>
+					 <u-swipe-action :show="item.show" :index="index" v-for="(item, index) in otherType" :key="item.projectId+'-'+item.price" 
+					  @click="click1" @open="open1" :options="options">
+					 	 <u-row class="list"  gutter="10" justify="around">
+					 		<u-col span="7" text-align='center'>
+					 			<view>{{item.project}}</view>
+					 		</u-col>
+					 		<u-col span="4" >
+					 			<view>{{item.price}}元</view>
+					 		</u-col>
+					 	 </u-row>
+					 </u-swipe-action>
+					 <!-- -->
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交时间:">
 						<u-input :selectOpen="show" placeholder="" v-model="form.cjtime" type="select" @click='showSelect("show")' />
 						<u-calendar max-date='5000' v-model="show" mode="date" @change="calendarChange"></u-calendar>
@@ -114,6 +110,7 @@
 
 <script>
 	import comadd from './components/components'
+	import unit from '../../../utils/unit.js';
 	export default {
 		components: {
 			comadd
@@ -163,7 +160,8 @@
 					cjtime: '',
 					cjjiage: '',
 					ysyongjin: '',
-					beizhu: ''
+					beizhu: '',
+					other:0
 				},
 				otherType: [],
 				current: 0,
@@ -206,11 +204,30 @@
 			this.init()
 		},
 		methods: {
+			preList(){
+				
+				if(this.form.ysyongjin){
+					this.commAdd = true;
+					this.comtype = 1;
+				}else{
+					this.$u.toast(`请输入成交业绩`);
+				}
+			},
 			update(val) {
 				this.commAdd = false;
-				console.log(val)
 				if (val.type == 1) {
 					this.otherType.push(val);
+					const arr = this.otherType;
+					let other = arr.reduce(function(prev,curr,idx,arr){
+						let num = parseInt(prev.price) + parseInt(curr.price)
+						return num; 
+					})
+					if(typeof(other) == 'object'){
+						this.form.other = other.price;
+					}else{
+						this.form.other = other
+					}
+					
 				} else { //改变比例及金额
 					this.outstandingList.push(val); //
 					///本次理由
@@ -227,13 +244,13 @@
 				Object.assign(this.form, val); //添加进form
 			},
 			click(index,index1) {
-				
 				if (index1 == 0) {
 					this.outstandingList.splice(index, 1);
+					unit.getArrayOutstandingList(this.outstandingList);
+					unit.scale();
+					this.outstandingList = unit.performance(this.form.ysyongjin);
 					this.$u.toast(`已删除`);
-				} else {
-					
-				}
+				} 
 			},
 			// 如果打开一个的时候，不需要关闭其他，则无需实现本方法
 			open(index) {
@@ -247,7 +264,9 @@
 			click1(index,index1) {
 				
 				if (index1 == 0) {
+					this.form.other = this.form.other - this.otherType[index].price
 					this.otherType.splice(index, 1);
+					
 					this.$u.toast(`已删除`);
 				} else {
 					
@@ -354,7 +373,6 @@
 
 	.list {
 		padding: 20rpx;
-		border-top:1px solid #ddd;
 		border-bottom:1px solid #ddd;
 		margin:0 20rpx;
 	}

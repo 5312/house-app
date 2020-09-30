@@ -35,6 +35,7 @@
 
 <script>
 	import api from '@/utils/api/resign.js';
+	import unit from '../../../../utils/unit.js'
 	export default {
 		name: 'comadd',
 		props: {
@@ -137,7 +138,7 @@
 				this.form.projectId = val[0].value;
 			},
 			peopleFun(val){
-				this.form.people = val[0].label
+				this.form.people = val[0].label.split('-')[1]
 				this.form.peopleId = val[0].value;
 			},
 			add() {
