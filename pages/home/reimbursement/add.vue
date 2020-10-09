@@ -341,7 +341,7 @@
 				}
 				params.yjinfos = JSON.stringify(this.otherType);
 				params.fcinfos = JSON.stringify(this.outstandingList);
-				console.log(params)
+				console.log(params.fcinfos)
 				this.$tool.uniRequest({
 					url: "fangyuan/addesfy",
 					method: 'POST',
