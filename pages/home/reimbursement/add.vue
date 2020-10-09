@@ -339,8 +339,8 @@
 				} else if (this.leixing === '新盘') {
 					params.leixing = 3
 				}
-				params.otherType = JSON.stringify(this.otherType);
-				params.outstandingList = JSON.stringify(this.outstandingList);
+				params.yjinfos = JSON.stringify(this.otherType);
+				params.fcinfos = JSON.stringify(this.outstandingList);
 				console.log(params)
 				this.$tool.uniRequest({
 					url: "fangyuan/addesfy",
