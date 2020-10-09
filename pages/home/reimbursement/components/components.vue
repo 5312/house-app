@@ -1,12 +1,13 @@
 <template>
 	<view class="formWrap">
+		<a-navbar title="返回" @back="back"></a-navbar>
 		<u-form v-if="types == 0" :model="form" ref="uForm">
 			<u-form-item  label-width='150' label-align='left' label="费用项目:">
 				<u-input v-model="form.project" @click='proj = true' type="select" />
 				<u-select v-model='proj' value-name='xsshunxu' label-name='lxming' :list='projectList' @confirm='projectFun'></u-select>
 			</u-form-item>
 			<u-form-item  label-width='150' label-align='left' label="金额:">
-				<u-input v-model="form.price" />
+				<u-input v-model="form.price" type="number" />
 			</u-form-item>
 
 			<u-button @click="add">添加</u-button>
@@ -23,10 +24,10 @@
 			</u-form-item>
 			
 			<u-form-item  label-width='150' label-align='left' label="分成比例:">
-				<u-input v-model="form.scale" placeholder="" :disabled="true" />
+				<u-input v-model="form.scale" type='number' placeholder="" :disabled="true" />
 			</u-form-item>
 			<u-form-item  label-width='150' label-align='left' label="分成业绩:">
-				<u-input v-model="form.outs" placeholder=""  :disabled="true" />
+				<u-input v-model="form.outs" type='number' placeholder=""  :disabled="true" />
 			</u-form-item>
 			<u-button @click="add">添加</u-button>
 		</u-form>
@@ -141,9 +142,23 @@
 				this.form.people = val[0].label.split('-')[1]
 				this.form.peopleId = val[0].value;
 			},
+			back(){
+				this.$emit('back');
+			},
 			add() {
-				//console.log(this.types)
-				this.$emit('update',this.form)
+				if(this.types == 0){
+					console.log(this.form.price)
+					if(this.form.price === undefined) {
+						this.$u.toast(`请输入金额`);
+						return 
+					} 
+				}else{
+					if(this.form.reason === undefined){
+						this.$u.toast(`请输入分成理由`);
+						return 
+					}
+				}
+				this.$emit('update',this.form)	
 			}
 		}
 	}

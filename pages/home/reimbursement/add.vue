@@ -46,7 +46,9 @@
 					</u-form-item>
 					<!--  -->
 					<u-cell-group>
-							<u-cell-item  title="分配业绩" value="增加" @click='preList'></u-cell-item>
+							<u-cell-item  title="分配业绩" :arrow="false" value="" @click='preList'>
+								<u-icon slot='right-icon' name="plus"></u-icon>
+							</u-cell-item>
 					</u-cell-group>
 					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in outstandingList" :key="item.peopleId+'&'+index"
 					 @click="click" @open="open" :options="options">
@@ -71,7 +73,9 @@
 					 </u-cell-group>
 					 <!--  -->
 					 <u-cell-group>
-					 	<u-cell-item  title="金融类费用" value="增加"  @click='commAdd = true;comtype=0'></u-cell-item>
+					 	<u-cell-item  title="金融类费用" value="" :arrow="false"  @click='commAdd = true;comtype=0'>
+							<u-icon slot='right-icon' name="plus"></u-icon>
+						</u-cell-item>
 					 </u-cell-group>
 					 <u-swipe-action :show="item.show" :index="index" v-for="(item, index) in otherType" :key="item.projectId+'-'+item.price" 
 					  @click="click1" @open="open1" :options="options">
@@ -104,7 +108,7 @@
 				</u-form>
 			</view>
 		</view>
-		<comadd v-if="commAdd" :ysyongjin='form.ysyongjin' v-on:update='update' :outstandingList='outstandingList' :types='comtype'></comadd>
+		<comadd v-if="commAdd" :ysyongjin='form.ysyongjin' v-on:back='back' v-on:update='update' :outstandingList='outstandingList' :types='comtype'></comadd>
 	</view>
 </template>
 
@@ -212,6 +216,9 @@
 				}else{
 					this.$u.toast(`请输入成交业绩`);
 				}
+			},
+			back(){
+				this.commAdd = false;
 			},
 			update(val) {
 				this.commAdd = false;
