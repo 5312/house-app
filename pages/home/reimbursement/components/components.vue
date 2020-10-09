@@ -6,6 +6,10 @@
 				<u-input v-model="form.project" @click='proj = true' type="select" />
 				<u-select v-model='proj' value-name='xsshunxu' label-name='lxming' :list='projectList' @confirm='projectFun'></u-select>
 			</u-form-item>
+			<u-form-item label-width='150' label-align='left' label="缴费人:">
+				<u-input v-model="form.pay" type="select" @click='payp = true'></u-input>
+				<u-select v-model='payp' :list='option' @confirm='payaFun'></u-select>
+			</u-form-item>
 			<u-form-item  label-width='150' label-align='left' label="金额:">
 				<u-input v-model="form.price" type="number" />
 			</u-form-item>
@@ -58,6 +62,11 @@
 				proj:false,
 				peop:false,
 				rea:false,
+				payp:false,
+				option:[
+					{"value":1,"label":'业主'},
+					{"value":2,"label":'客户'}
+				],
 				form:{
 					type:1,
 					show:false,//用做add页面删除功能
@@ -133,6 +142,10 @@
 					this.form.scale = scale.toFixed(2);
 					this.form.outs  = sur.toFixed(2);
 				}
+			},
+			payaFun(val){
+				this.form.pay = val[0].label
+				this.form.payid = val[0].value
 			},
 			projectFun(val){
 				this.form.project = val[0].label
