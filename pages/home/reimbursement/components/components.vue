@@ -72,8 +72,8 @@
 					show:false,//用做add页面删除功能
 				},
 				reasonList:[
-					{"value":1,"label":'房源录入'},
-					{"value":2,"label":'客源录入'}
+					{"value":1,"label":'房源'},
+					{"value":3,"label":'客源'}
 				],
 				peopleList:[],
 				projectList:[],
@@ -104,15 +104,15 @@
 				let arr = this.outstandingList;
 				let tt = new Map();
 				tt.set('1',0);
-				tt.set('2',0);
+				tt.set('3',0);
 
 				arr.forEach(function(item){//计算已选各自个数
 					if(item.reasonId == 1){
 						let num = tt.get('1')*1 + 1
 						tt.set('1',num)
 					}else{
-						let num = tt.get('2')*1 + 1
-						tt.set('2',num)
+						let num = tt.get('3')*1 + 1
+						tt.set('3',num)
 					}
 				})
 				//金额ysyongjin
@@ -131,11 +131,11 @@
 					this.form.scale = scale.toFixed(2);
 					this.form.outs  = sur.toFixed(2);
 				}
-				if(val[0].value == 2){
-					let num = tt.get('2')*1 + 1
-					tt.set('2',num)
+				if(val[0].value == 3){
+					let num = tt.get('3')*1 + 1
+					tt.set('3',num)
 					
-					let all = tt.get('2')*1;
+					let all = tt.get('3')*1;
 					let scale = 1 / all ;
 					let sur = this.ysyongjin * s2 * scale;
 					this.form.scale = scale.toFixed(2);

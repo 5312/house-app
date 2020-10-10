@@ -9,7 +9,7 @@ class Popups {
 	scale() {
 		let m = new Map();
 		m.set('1', 0);
-		m.set('2', 0);
+		m.set('3', 0);
 		this.outstandingList.forEach(function(indexs,el) { //计算已选各自个数
 			let num = m.get(`${indexs.reasonId}`)*1 ;
 			let n = num + 1;
@@ -24,7 +24,7 @@ class Popups {
 		let s2 = 40 / 100;
 		let percentage = {
 			"1":0.6,
-			"2":0.4
+			"3":0.4
 		}
 		let arr = this.outstandingList;
 		
