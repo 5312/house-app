@@ -103,7 +103,7 @@
 					  <u-line color="red"></u-line>
 					 <!-- end -->
 					 <!--  -->
-					 <u-form-item class="bg" label-width='150' label-align='rigth' label="其他费用:">
+					 <u-form-item class="bg" label-width='180' label-align='rigth' label="金融类费用:">
 					 	<u-input v-model="form.other" placeholder='xxx元' :disabled="true" />
 					 </u-form-item>
 					 
@@ -257,12 +257,12 @@
 				}
 				if (this.comtype == 0) {//
 					this.otherType.push(val);
-					this.form.ysyongjin =  sum(this.otherType,val)*1 + sum(this.zjinfos,val)*1;
-					this.form.other = this.form.ysyongjin 
+					this.form.ysyongjin =   sum(this.zjinfos,val)*1;
+					this.form.other = sum(this.otherType,val)*1 
 				} else if(this.comtype == 1){
 					this.zjinfos.push(val);
-					this.form.ysyongjin =  sum(this.otherType,val)*1 + sum(this.zjinfos,val)*1;
-					this.form.other = this.form.ysyongjin 
+					this.form.ysyongjin =  sum(this.zjinfos,val)*1;
+					this.form.other = sum(this.otherType,val)*1 
 				}else{ //改变比例及金额
 					this.outstandingList.push(val);
 					let reasonId = val.reasonId;///本次理由
@@ -296,26 +296,21 @@
 			},
 			click1(index,index1) {
 				if (index1 == 0) {
-					this.form.other = this.form.other - this.otherType[index].price//其他费用计算
-					this.form.ysyongjin = this.form.other 
+					this.form.other = this.form.other - this.otherType[index].price//其他费用计算***金融
 					this.otherType.splice(index, 1);//从数组中删除
 					
 					this.$u.toast(`已删除`);
 				} 
 			},
-			// 如果打开一个的时候，不需要关闭其他，则无需实现本方法
 			open1(index) {
-				// 先将正在被操作的swipeAction标记为打开状态，否则由于props的特性限制，
-				// 原本为'false'，再次设置为'false'会无效
 				this.otherType[index].show = true;
 				this.otherType.map((val, idx) => {
 					if (index != idx) this.otherType[idx].show = false;
 				})
 			},
-			click2(index,index1) {
+			click2(index,index1) {//中介
 				if (index1 == 0) {
-					this.form.other = this.form.other - this.zjinfos[index].price//其他费用计算
-					this.form.ysyongjin = this.form.other
+					this.form.ysyongjin =  this.form.ysyongjin - this.zjinfos[index].price//其他费用计算//业绩 ** 中介
 					this.zjinfos.splice(index, 1);//从数组中删除
 					this.$u.toast(`已删除`);
 				} 
