@@ -41,6 +41,11 @@
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交价格:">
 						<u-input v-model="form.cjjiage" placeholder='xxx元' :disabled="isDisable" />
 					</u-form-item>
+					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交时间:">
+						<u-input :selectOpen="show" placeholder="" v-model="form.cjtime" type="select" @click='showSelect("show")' />
+						<u-calendar max-date='5000' v-model="show" mode="date" @change="calendarChange"></u-calendar>
+					</u-form-item>
+					
 					<!-- 金融类费用 -->
 					 <u-cell-group>
 					 	<u-cell-item  title="金融类费用" value="" :arrow="false"  @click='commAdd = true;comtype=0'>
@@ -100,22 +105,18 @@
 					 		</u-col>
 					     </u-row>
 					  </u-swipe-action>
-					  <u-line color="red"></u-line>
+					 <!-- <u-line color="red"></u-line> -->
 					 <!-- end -->
 					 <!--  -->
 					 <u-form-item class="bg" label-width='180' label-align='rigth' label="金融类费用:">
-					 	<u-input v-model="form.other" placeholder='xxx元' :disabled="true" />
+					 	<u-input v-model="form.other + '元'" placeholder='xxx元' :disabled="true" />
 					 </u-form-item>
 					 
 					 <u-form-item class="bg" label-width='150' label-align='rigth' label="成交业绩:">
-					 	<u-input v-model="form.ysyongjin" placeholder='xxx元' :disabled="true" />
+					 	<u-input v-model="form.ysyongjin + '元'" placeholder='xxx元' :disabled="true" />
 					 </u-form-item>
 					 <!-- end -->
-					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交时间:">
-						<u-input :selectOpen="show" placeholder="" v-model="form.cjtime" type="select" @click='showSelect("show")' />
-						<u-calendar max-date='5000' v-model="show" mode="date" @change="calendarChange"></u-calendar>
-					</u-form-item>
-
+	
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="备注:">
 						<u-input type='textarea' v-model="form.beizhu" placeholder="" :disabled="isDisable" />
 					</u-form-item>
@@ -417,7 +418,7 @@
 
 	.list {
 		padding: 20rpx;
-		border-bottom:1px solid #ddd;
+		border-bottom:1px solid red;
 		margin:0 20rpx;
 	}
 
