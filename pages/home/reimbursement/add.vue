@@ -52,7 +52,7 @@
 							<u-icon slot='right-icon' name="plus"></u-icon>
 						</u-cell-item>
 					 </u-cell-group>
-					 <u-swipe-action :show="item.show" :index="index" v-for="(item, index) in otherType" :key="item.projectId+'-'+item.price" 
+					 <u-swipe-action :show="item.show" :index="index" v-for="(item, index) in otherType" :key="item.projectId+'-'+item.price+index" 
 					  @click="click1" @open="open1" :options="options">
 					 	 <u-row class="listBlue"  gutter="10" justify="around">
 					 		<u-col span="7" text-align='center'>
@@ -131,7 +131,7 @@
 				</u-form>
 			</view>
 		</view>
-		<comadd v-if="commAdd" :ysyongjin='form.ysyongjin' v-on:back='back' v-on:update='update' :outstandingList='outstandingList' :types='comtype'></comadd>
+		<comadd v-if="commAdd" :ysyongjin='form.ysyongjin*1' v-on:back='back' v-on:update='update' :outstandingList='outstandingList' :types='comtype'></comadd>
 	</view>
 </template>
 
@@ -248,7 +248,8 @@
 				const sum = function(arr,vals){//数组金额之和
 					if(arr.length <= 0) return 0;
 					let other  = arr.reduce(function(prev,curr,idx,arr){
-						let num = parseInt(prev.price) + parseInt(curr.price);
+						let num = parseInt(prev.price || prev) + parseInt(curr.price);
+						
 						return num;
 					});
 					if(typeof(other) == 'object'){
@@ -258,12 +259,12 @@
 				}
 				if (this.comtype == 0) {//
 					this.otherType.push(val);
-					this.form.ysyongjin =   sum(this.zjinfos,val)*1;
-					this.form.other = sum(this.otherType,val)*1 
+					this.form.ysyongjin =   sum(this.zjinfos,val);
+					this.form.other = sum(this.otherType,val) 
 				} else if(this.comtype == 1){
 					this.zjinfos.push(val);
-					this.form.ysyongjin =  sum(this.zjinfos,val)*1;
-					this.form.other = sum(this.otherType,val)*1 
+					this.form.ysyongjin =  sum(this.zjinfos,val);
+					this.form.other = sum(this.otherType,val) 
 				}else{ //改变比例及金额
 					this.outstandingList.push(val);
 					let reasonId = val.reasonId;///本次理由
