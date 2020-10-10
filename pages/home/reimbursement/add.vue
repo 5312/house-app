@@ -54,7 +54,7 @@
 					 </u-cell-group>
 					 <u-swipe-action :show="item.show" :index="index" v-for="(item, index) in otherType" :key="item.projectId+'-'+item.price" 
 					  @click="click1" @open="open1" :options="options">
-					 	 <u-row class="list"  gutter="10" justify="around">
+					 	 <u-row class="listBlue"  gutter="10" justify="around">
 					 		<u-col span="7" text-align='center'>
 					 			<view>{{item.project}}</view>
 					 		</u-col>
@@ -72,7 +72,7 @@
 					  </u-cell-group>
 					  <u-swipe-action :show="item.show" :index="index" v-for="(item, index) in zjinfos" :key="index+'&*'+item" 
 					   @click="click2" @open="open2" :options="options">
-					  	 <u-row class="list"  gutter="10" justify="around">
+					  	 <u-row class="listBlue"  gutter="10" justify="around">
 					  		<u-col span="7" text-align='center'>
 					  			<view>{{item.project}}</view>
 					  		</u-col>
@@ -90,7 +90,7 @@
 					 </u-cell-group>
 					 <u-swipe-action :show="item.show" :index="index" v-for="(item, index) in outstandingList" :key="item.peopleId+'&'+index"
 					  @click="click" @open="open" :options="options">
-					 	<u-row class="list"  gutter="10" justify="between">
+					 	<u-row class="listRed"  gutter="10" justify="between">
 					 		<u-col span="3" text-align='center'>
 					 			<view>{{item.people}}</view>
 					 		</u-col>
@@ -416,12 +416,16 @@
 		color: #fff;
 	}
 
-	.list {
+	.listRed {
 		padding: 20rpx;
 		border-bottom:1px solid red;
 		margin:0 20rpx;
 	}
-
+	.listBlue{
+		padding: 20rpx;
+		border-bottom:1px solid blue;
+		margin:0 20rpx;
+	}
 	.tab {
 		margin: 20rpx 0;
 		background: #fff;
