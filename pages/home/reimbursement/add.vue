@@ -9,7 +9,7 @@
 						<view>{{leixing}}</view>
 					</u-form-item>
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="房屋地址:">
-						<u-input v-model="form.fdizhi" :disabled="isDisable" />
+						<u-input v-model="form.fdizhi" placeholder="请输入地址" :disabled="isDisable" />
 					</u-form-item>
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="房屋类型:" v-if='formSelectInfo'>
 						<u-input :selectOpen="fangType" placeholder="" type="select" v-model="form.fwleixingLabel" @click='showSelect("fangType")' />
@@ -26,52 +26,29 @@
 					</u-form-item>
 
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="业主姓名:">
-						<u-input v-model="form.yezhu" :disabled="isDisable" />
+						<u-input v-model="form.yezhu" placeholder="请业主姓名" :disabled="isDisable" />
 					</u-form-item>
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="业主电话:">
-						<u-input v-model="form.yezhudianhua" :disabled="isDisable" />
+						<u-input v-model="form.yezhudianhua" placeholder="请业主电话"  :disabled="isDisable" />
 					</u-form-item>
 				
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="客户姓名:">
-						<u-input v-model="form.khxingming" :disabled="isDisable" />
+						<u-input v-model="form.khxingming" placeholder="请输入客户姓名" :disabled="isDisable" />
 					</u-form-item>
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="客户电话:">
-						<u-input v-model="form.dianhua" :disabled="isDisable" />
+						<u-input v-model="form.dianhua" placeholder="请输入客户电话" :disabled="isDisable" />
 					</u-form-item>
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交价格:">
 						<u-input v-model="form.cjjiage" placeholder='xxx元' :disabled="isDisable" />
 					</u-form-item>
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交业绩:">
-						<u-input v-model="form.ysyongjin" placeholder='xxx元' :disabled="isDisable" />
+						<u-input v-model="form.ysyongjin" placeholder='xxx元' :disabled="true" />
 					</u-form-item>
 					<!--  -->
 					<u-cell-group>
-							<u-cell-item  title="分配业绩" :arrow="false" value="" @click='preList'>
-								<u-icon slot='right-icon' name="plus"></u-icon>
-							</u-cell-item>
+						<u-cell-item  title="其他费用" :arrow='false' :value="form.other+`元`" ></u-cell-item>
 					</u-cell-group>
-					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in outstandingList" :key="item.peopleId+'&'+index"
-					 @click="click" @open="open" :options="options">
-						<u-row class="list"  gutter="10" justify="between">
-							<u-col span="3" text-align='center'>
-								<view>{{item.people}}</view>
-							</u-col>
-							<u-col span="3" >
-								<view>{{item.reason}}</view>
-							</u-col>
-							<u-col span="2" >
-								<view>{{item.scale}}</view>
-							</u-col>
-							<u-col span="4" >
-								<view>{{item.outs}}元</view>
-							</u-col>
-					    </u-row>
-					 </u-swipe-action>
-					 <!--  -->
-					 <u-cell-group>
-					 	<u-cell-item  title="其他费用" :arrow='false' :value="form.other+`元`"  @click='commAdd = true;comtype=0'></u-cell-item>
-					 </u-cell-group>
-					 <!--  -->
+					<!-- 金融类费用 -->
 					 <u-cell-group>
 					 	<u-cell-item  title="金融类费用" value="" :arrow="false"  @click='commAdd = true;comtype=0'>
 							<u-icon slot='right-icon' name="plus"></u-icon>
@@ -88,7 +65,49 @@
 					 		</u-col>
 					 	 </u-row>
 					 </u-swipe-action>
-					 <!-- -->
+					 <!--end -->
+					 <!-- 中介类费用 -->
+					  <u-cell-group>
+					  	<u-cell-item  title="中介类费用" value="" :arrow="false"  @click='commAdd = true;comtype=1'>
+					 		<u-icon slot='right-icon' name="plus"></u-icon>
+					 	</u-cell-item>
+					  </u-cell-group>
+					  <u-swipe-action :show="item.show" :index="index" v-for="(item, index) in zjinfos" :key="index+'&*'+item" 
+					   @click="click2" @open="open2" :options="options">
+					  	 <u-row class="list"  gutter="10" justify="around">
+					  		<u-col span="7" text-align='center'>
+					  			<view>{{item.project}}</view>
+					  		</u-col>
+					  		<u-col span="4" >
+					  			<view>{{item.price}}元</view>
+					  		</u-col>
+					  	 </u-row>
+					  </u-swipe-action>
+					  <!--end -->
+					 <!-- 分配业绩 -->
+					 <u-cell-group>
+					 		<u-cell-item  title="分配业绩" :arrow="false" value="" @click='preList'>
+					 			<u-icon slot='right-icon' name="plus"></u-icon>
+					 		</u-cell-item>
+					 </u-cell-group>
+					 <u-swipe-action :show="item.show" :index="index" v-for="(item, index) in outstandingList" :key="item.peopleId+'&'+index"
+					  @click="click" @open="open" :options="options">
+					 	<u-row class="list"  gutter="10" justify="between">
+					 		<u-col span="3" text-align='center'>
+					 			<view>{{item.people}}</view>
+					 		</u-col>
+					 		<u-col span="3" >
+					 			<view>{{item.reason}}</view>
+					 		</u-col>
+					 		<u-col span="2" >
+					 			<view>{{item.scale}}</view>
+					 		</u-col>
+					 		<u-col span="4" >
+					 			<view>{{item.outs}}元</view>
+					 		</u-col>
+					     </u-row>
+					  </u-swipe-action>
+					 <!-- end -->
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交时间:">
 						<u-input :selectOpen="show" placeholder="" v-model="form.cjtime" type="select" @click='showSelect("show")' />
 						<u-calendar max-date='5000' v-model="show" mode="date" @change="calendarChange"></u-calendar>
@@ -163,11 +182,12 @@
 					kehulx: '',
 					cjtime: '',
 					cjjiage: '',
-					ysyongjin: '',
+					ysyongjin: 0,
 					beizhu: '',
 					other:0
 				},
 				otherType: [],
+				zjinfos:[],
 				current: 0,
 				listSex: [{
 						name: '先生',
@@ -208,11 +228,10 @@
 			this.init()
 		},
 		methods: {
-			preList(){
-				
+			preList(){//分配业绩
 				if(this.form.ysyongjin){
 					this.commAdd = true;
-					this.comtype = 1;
+					this.comtype = 2;
 				}else{
 					this.$u.toast(`请输入成交业绩`);
 				}
@@ -222,20 +241,26 @@
 			},
 			update(val) {
 				this.commAdd = false;
-				if (val.type == 1) {
-					this.otherType.push(val);
-					const arr = this.otherType;
-					let other = arr.reduce(function(prev,curr,idx,arr){
-						let num = parseInt(prev.price) + parseInt(curr.price)
-						return num; 
-					})
+				const sum = function(arr,vals){//数组金额之和
+					if(arr.length <= 0) return 0;
+					let other  = arr.reduce(function(prev,curr,idx,arr){
+						let num = parseInt(prev.price) + parseInt(curr.price);
+						return num;
+					});
 					if(typeof(other) == 'object'){
-						this.form.other = other.price;
-					}else{
-						this.form.other = other
+						other = other.price;
 					}
-					
-				} else { //改变比例及金额
+					return other;
+				}
+				if (this.comtype == 0) {//
+					this.otherType.push(val);
+					this.form.ysyongjin =  sum(this.otherType,val)*1 + sum(this.zjinfos,val)*1;
+					this.form.other = this.form.ysyongjin 
+				} else if(this.comtype == 1){
+					this.zjinfos.push(val);
+					this.form.ysyongjin =  sum(this.otherType,val)*1 + sum(this.zjinfos,val)*1;
+					this.form.other = this.form.ysyongjin 
+				}else{ //改变比例及金额
 					this.outstandingList.push(val); //
 					///本次理由
 					let reasonId = val.reasonId;
@@ -248,7 +273,8 @@
 					})
 					this.outstandingList = arr;
 				}
-				Object.assign(this.form, val); //添加进form
+				//Object.assign(this.form, val); //添加进form//**不用已加入outstandinglist,otherType
+				//console.log(this.form)
 			},
 			click(index,index1) {
 				if (index1 == 0) {
@@ -269,15 +295,13 @@
 				})
 			},
 			click1(index,index1) {
-				
 				if (index1 == 0) {
-					this.form.other = this.form.other - this.otherType[index].price
-					this.otherType.splice(index, 1);
+					this.form.other = this.form.other - this.otherType[index].price//其他费用计算
+					this.form.ysyongjin = this.form.other 
+					this.otherType.splice(index, 1);//从数组中删除
 					
 					this.$u.toast(`已删除`);
-				} else {
-					
-				}
+				} 
 			},
 			// 如果打开一个的时候，不需要关闭其他，则无需实现本方法
 			open1(index) {
@@ -286,6 +310,23 @@
 				this.otherType[index].show = true;
 				this.otherType.map((val, idx) => {
 					if (index != idx) this.otherType[idx].show = false;
+				})
+			},
+			click2(index,index1) {
+				if (index1 == 0) {
+					this.form.other = this.form.other - this.zjinfos[index].price//其他费用计算
+					this.form.ysyongjin = this.form.other
+					this.zjinfos.splice(index, 1);//从数组中删除
+					this.$u.toast(`已删除`);
+				} 
+			},
+			// 如果打开一个的时候，不需要关闭其他，则无需实现本方法
+			open2(index) {
+				// 先将正在被操作的swipeAction标记为打开状态，否则由于props的特性限制，
+				// 原本为'false'，再次设置为'false'会无效
+				this.zjinfos[index].show = true;
+				this.zjinfos.map((val, idx) => {
+					if (index != idx) this.zjinfos[idx].show = false;
 				})
 			},
 			init() {
@@ -341,7 +382,8 @@
 				}
 				params.yjinfos = JSON.stringify(this.otherType);
 				params.fcinfos = JSON.stringify(this.outstandingList);
-				console.log(params.fcinfos)
+				params.zjinfos = JSON.stringify(this.zjinfos);
+				console.log(params)
 				this.$tool.uniRequest({
 					url: "fangyuan/addesfy",
 					method: 'POST',

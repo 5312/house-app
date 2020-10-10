@@ -23,6 +23,7 @@ export  default{
 			})
 		})
 	},
+	//佣金选择
 	yongJinXuanZe(params){
 		return new Promise(function(resolve,reject){
 			request({

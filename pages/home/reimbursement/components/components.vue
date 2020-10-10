@@ -1,29 +1,29 @@
 <template>
 	<view class="formWrap">
 		<a-navbar title="返回" @back="back"></a-navbar>
-		<u-form v-if="types == 0" :model="form" ref="uForm">
+		<u-form v-if="types != 2" :model="form" ref="uForm">
 			<u-form-item  label-width='150' label-align='left' label="费用项目:">
-				<u-input v-model="form.project" @click='proj = true' type="select" />
+				<u-input v-model="form.project" @click='proj = true' placeholder="请选择" type="select" />
 				<u-select v-model='proj' value-name='xsshunxu' label-name='lxming' :list='projectList' @confirm='projectFun'></u-select>
 			</u-form-item>
 			<u-form-item label-width='150' label-align='left' label="缴费人:">
-				<u-input v-model="form.pay" type="select" @click='payp = true'></u-input>
+				<u-input v-model="form.pay" type="select" placeholder="请选择" @click='payp = true'></u-input>
 				<u-select v-model='payp' :list='option' @confirm='payaFun'></u-select>
 			</u-form-item>
 			<u-form-item  label-width='150' label-align='left' label="金额:">
-				<u-input v-model="form.price" type="number" />
+				<u-input v-model="form.price" placeholder="请输入金额" type="number" />
 			</u-form-item>
 
 			<u-button @click="add">添加</u-button>
 		</u-form>
 		
-		<u-form v-if="types == 1" :model="form" ref="uForm">
+		<u-form v-if="types == 2" :model="form" ref="uForm">
 			<u-form-item  label-width='150' label-align='left' label="经济人:">
-				<u-input v-model="form.people" @click='peop = true' type="select" />
+				<u-input v-model="form.people" @click='peop = true' placeholder="请选择" type="select" />
 				<u-select v-model="peop" value-name='uid' label-name='ygmingcheng' :list="peopleList" @confirm='peopleFun'></u-select>
 			</u-form-item>
 			<u-form-item  label-width='150' label-align='left' label="分成理由:">
-				<u-input v-model="form.reason" @click='rea = true' type='select' />
+				<u-input v-model="form.reason" @click='rea = true' placeholder="请选择" type='select' />
 				<u-select v-model="rea"  :list="reasonList" @confirm='reasonFun'></u-select>
 			</u-form-item>
 			
@@ -53,8 +53,8 @@
 				default:[],
 			},
 			ysyongjin:{
-				type:String,
-				default:""
+				type:Number,
+				default:0
 			}
 		},
 		data() {
@@ -97,7 +97,6 @@
 		},
 		methods: {
 			reasonFun(val){
-				this.form.type = 2;
 				
 				this.form.reason = val[0].label
 				this.form.reasonId = val[0].value;
@@ -159,8 +158,7 @@
 				this.$emit('back');
 			},
 			add() {
-				if(this.types == 0){
-					console.log(this.form.price)
+				if(this.types != 2){
 					if(this.form.price === undefined) {
 						this.$u.toast(`请输入金额`);
 						return 
