@@ -2,7 +2,7 @@
 	<view>
 		
 		<view class="wrap" v-show="!commAdd">
-			<a-navbar title="新增报账" @back="$tool.uniRedirectTo({url:'/pages/home/reimbursement/index'})"></a-navbar>
+			<a-navbar title="新增报单" @back="$tool.uniRedirectTo({url:'/pages/home/reimbursement/index'})"></a-navbar>
 			<view class="main">
 				<u-form class="form" :model="form" ref="uForm">
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="报单类型:">
