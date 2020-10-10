@@ -41,13 +41,6 @@
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交价格:">
 						<u-input v-model="form.cjjiage" placeholder='xxx元' :disabled="isDisable" />
 					</u-form-item>
-					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交业绩:">
-						<u-input v-model="form.ysyongjin" placeholder='xxx元' :disabled="true" />
-					</u-form-item>
-					<!--  -->
-					<u-cell-group>
-						<u-cell-item  title="其他费用" :arrow='false' :value="form.other+`元`" ></u-cell-item>
-					</u-cell-group>
 					<!-- 金融类费用 -->
 					 <u-cell-group>
 					 	<u-cell-item  title="金融类费用" value="" :arrow="false"  @click='commAdd = true;comtype=0'>
@@ -107,6 +100,16 @@
 					 		</u-col>
 					     </u-row>
 					  </u-swipe-action>
+					  <u-line color="red"></u-line>
+					 <!-- end -->
+					 <!--  -->
+					 <u-form-item class="bg" label-width='150' label-align='rigth' label="其他费用:">
+					 	<u-input v-model="form.other" placeholder='xxx元' :disabled="true" />
+					 </u-form-item>
+					 
+					 <u-form-item class="bg" label-width='150' label-align='rigth' label="成交业绩:">
+					 	<u-input v-model="form.ysyongjin" placeholder='xxx元' :disabled="true" />
+					 </u-form-item>
 					 <!-- end -->
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="成交时间:">
 						<u-input :selectOpen="show" placeholder="" v-model="form.cjtime" type="select" @click='showSelect("show")' />
@@ -261,9 +264,8 @@
 					this.form.ysyongjin =  sum(this.otherType,val)*1 + sum(this.zjinfos,val)*1;
 					this.form.other = this.form.ysyongjin 
 				}else{ //改变比例及金额
-					this.outstandingList.push(val); //
-					///本次理由
-					let reasonId = val.reasonId;
+					this.outstandingList.push(val);
+					let reasonId = val.reasonId;///本次理由
 					let arr = this.outstandingList;
 					arr.forEach(function(item) {
 						if (item.reasonId == reasonId) {
@@ -273,8 +275,6 @@
 					})
 					this.outstandingList = arr;
 				}
-				//Object.assign(this.form, val); //添加进form//**不用已加入outstandinglist,otherType
-				//console.log(this.form)
 			},
 			click(index,index1) {
 				if (index1 == 0) {
