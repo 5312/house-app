@@ -348,7 +348,7 @@
 						margin-bottom: 20rpx;
 
 						.name {
-							margin-top: 10rpx;
+							margin: 20rpx 0;
 						}
 						
 					}
