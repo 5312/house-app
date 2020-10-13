@@ -46,8 +46,8 @@
 							<view class="value">
 								{{item.yeji}}
 							</view>
-							<view>
-								已收：{{item.shishou}}
+							<view class="nowrap ">
+								已收：<text class="text-blue">{{item.shishou}}</text>
 							</view>
 						</view>
 					</view>
@@ -71,7 +71,7 @@
 								<text>月总业绩</text>
 								<text class="text-blue">{{item.yeji}}</text>
 							</view>
-							<view>
+							<view >
 								<text class="riie">已收业绩</text>
 								<text class="text-blue">{{item.shishou}}</text>
 							</view>
@@ -241,7 +241,7 @@
 					}
 					.box{						
 						.right{
-							width: 140rpx;
+							width: 180rpx;
 							padding-right: 6rpx;
 							margin:20rpx 0;
 							.value{
