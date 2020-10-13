@@ -35,7 +35,7 @@
 						<view class="name">
 							分成业绩
 						</view>
-						<view class="value">
+						<view class="value text-blue">
 							{{currentMonthPerformance.yeji}}
 						</view>
 					</view>
@@ -43,7 +43,7 @@
 						<view class="name">
 							已收业绩
 						</view>
-						<view class="value">
+						<view class="value text-blue">
 							{{currentMonthPerformance.shishou}}
 						</view>
 					</view>
@@ -59,7 +59,7 @@
 						<view class="name">
 							分成业绩
 						</view>
-						<view class="value">
+						<view class="value text-blue">
 							{{allPerformance.yeji}}
 						</view>
 					</view>
@@ -67,7 +67,7 @@
 						<view class="name">
 							已收业绩
 						</view>
-						<view class="value">
+						<view class="value text-blue">
 							{{allPerformance.shishou}}
 						</view>
 					</view>
@@ -80,7 +80,7 @@
 				</view>
 				<view class="flex a-center flex-row j-between box-1-wrap flex-wrap" v-if="rankList.length">
 					<view class="box-1 flex a-center j-center flex-column" v-for="(item,index) in rankList" :key='index'>
-						<view class="value">
+						<view class="value text-blue">
 							{{item.value}}
 						</view>
 						<view class="name">
@@ -339,7 +339,7 @@
 				}
 
 				.box-1-wrap {
-					color: #acacac;
+					/* color: #acacac; */
 					min-height: 120rpx;
 					padding: 20rpx 0;
 
@@ -350,6 +350,7 @@
 						.name {
 							margin-top: 10rpx;
 						}
+						
 					}
 				}
 			}
