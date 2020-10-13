@@ -136,11 +136,11 @@
 						img:require("../../static/icon/i.png"),
 						path:"/pages/home/base/index?type=person"
 					},{
-						name:"店组业绩",
+						name:"组业绩",
 						img:require("../../static/icon/j.png"),
 						path:"/pages/home/base/index?type=shopGroup"
 					},{
-						name:"门店业绩",
+						name:"店业绩",
 						img:require("../../static/icon/k.png"),
 						path:"/pages/home/base/index?type=shop"
 					},{

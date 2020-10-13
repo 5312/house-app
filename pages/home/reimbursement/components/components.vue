@@ -80,7 +80,7 @@
 			}
 		},
 		mounted() {
-			 console.log("调用了mounted");
+			// console.log("调用了mounted");
 		},
 		created(){
 			let data = {};

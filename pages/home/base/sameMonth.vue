@@ -2,9 +2,13 @@
 	<view class="same-month page-bg min-height-100">
 		<a-navbar title="当月业绩" @back="back"></a-navbar>
 		<view class="header header-bg text-white">
-			<view class="time">
+			<view class="time flex a-center j-start" @click="show = true">
 				{{currentMonth}}
+				<view class="right flex-shrink" style="margin-left: 20rpx;">
+					<u-icon name="arrow-down"></u-icon>
+				</view>
 			</view>
+			<u-picker v-model="show" max-date='5000' @confirm='change' mode="time" :params="params"></u-picker>
 			<view class="header-info" v-if="currentMonthPerformance">
 				<view class="text-center">当月分成总业绩</view>
 				<view class="text-center count">{{currentMonthPerformance.yeji}}</view>
@@ -54,24 +58,28 @@
 		<view class="content-shop-group" v-if="(pageType==='shopGroup' || pageType==='shop') && !isPersonDetail">
 			<view class="card-wrap">
 				<view class="card bg-white border-bottom flex j-between a-center flex-row" v-for="(item,index) in listArr" :key='index'
-					@click="toPage(item)">
+					><!-- @click="toPage(item)"-->
 					<view class="left flex-shrink">	
 						<u-avatar :src="item.touxiang"></u-avatar>
 					</view>
 					<view class="mid flex1">
 						<view class="name bold">
-							{{item.ygmingcheng}} <text v-if="item.ygbianhao">（{{item.ygbianhao}}）</text>
+							{{item.cjren}} <text v-if="item.cj_bumen">（{{item.cj_bumen}}）</text>
 						</view>
-						<view class="line flex a-center j-between flex-row">
-							<text>月总业绩</text>
-							<text class="text-blue">{{item.yeji}}</text>
-							<text>已收业绩</text>
-							<text class="text-blue">{{item.shishou}}</text>
+						<view class="line flex a-center j-start flex-row">
+							<view>
+								<text>月总业绩</text>
+								<text class="text-blue">{{item.yeji}}</text>
+							</view>
+							<view>
+								<text class="riie">已收业绩</text>
+								<text class="text-blue">{{item.shishou}}</text>
+							</view>
 						</view>
 					</view>
-					<view class="right flex-shrink">
+					<!-- <view class="right flex-shrink">
 						<u-icon name="arrow-right"></u-icon>
-					</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -83,6 +91,15 @@
 	export default {
 		data() {
 			return {
+				show:false,
+				params:{
+					year:true,
+					month:true,
+					day:false,
+					hour:false,
+					minute:false,
+					second:false
+				},
 				totalOrder:0,
 				pageType:"",
 				isPersonDetail:false,
@@ -110,6 +127,10 @@
 			this.init()
 		},
 		methods:{
+			change(data){
+				this.currentMonth = data.year+'-'+data.month
+				this.init()
+			},
 			init(){
 				switch(this.pageType){
 					case "person":
@@ -179,6 +200,12 @@
 </script>
 
 <style scoped lang="scss">
+	.text-blue{
+		margin-left:20rpx;
+	}
+	.riie{
+		margin-left: 40rpx;
+	}
 	.same-month {
 		.header {
 			.time {

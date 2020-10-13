@@ -108,38 +108,30 @@
 				rankPerformance:null,
 				rankShopList:[
 					{
-						name:"当月门店排名",
+						name:"当月组排名",
 						prop:'ypaiming',
 						value:"0"
 					},{
-						name:"门店总排名",
+						name:"组总排名",
 						prop:'zpaiming',
 						value:"0"
 					},
 				],
 				rankShopGroupList:[
 					{
-						name:"当月店组排名",
+						name:"当月店排名",
 						prop:'ypaiming',
 						value:"0"
 					},{
-						name:"店组总排名",
+						name:"店总排名",
 						prop:'zpaiming',
 						value:"0"
 					},
 				],
 				rankPersonList:[
 					{
-						name:"当前店铺内排名",
-						prop:'ydpaiming',
-						value:"0"
-					},{
-						name:"当月个人总排名",
+						name:"当月个人排名",
 						prop:'yrpaiming',
-						value:"0"
-					},{
-						name:"店铺内业绩总排名",
-						prop:'zdpaiming',
 						value:"0"
 					},{
 						name:"个人总业绩排名",
@@ -166,12 +158,12 @@
 					case "shopGroup":
 						this.rankList=this.rankShopList
 						this.getS(4)
-						this.navbarTitle="店组业绩"
+						this.navbarTitle="组业绩"
 						break
 					case "shop":
 						this.rankList=this.rankShopList
 						this.getS(3)
-						this.navbarTitle="店铺业绩"
+						this.navbarTitle="店业绩"
 						break
 				}
 				
