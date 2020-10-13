@@ -21,7 +21,7 @@
 			<view class="header-shop-group header-bg text-white flex a-center j-start flex-row" v-if="pageType==='shopGroup' || pageType==='shop'">
 				<view class="right flex1">	
 					<view class="time" v-if="currentMonthPerformance">
-						所属店铺：{{currentMonthPerformance.bumen}}
+						{{pageType == 'shopGroup'?"所属组":'所属店'}}：{{currentMonthPerformance.bumen}}
 					</view>
 				</view>
 			</view>

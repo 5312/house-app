@@ -64,7 +64,7 @@
 					</view>
 					<view class="mid flex1">
 						<view class="name bold">
-							{{item.cjren}} <text v-if="item.cj_bumen">（{{item.cj_bumen}}）</text>
+							{{item.cjren}} <text class="font-nobold" v-if="item.cj_bumen">（{{item.cj_bumen}}）</text>
 						</view>
 						<view class="line flex a-center j-start flex-row">
 							<view>
@@ -77,9 +77,6 @@
 							</view>
 						</view>
 					</view>
-					<!-- <view class="right flex-shrink">
-						<u-icon name="arrow-right"></u-icon>
-					</view> -->
 				</view>
 			</view>
 		</view>
@@ -202,6 +199,9 @@
 <style scoped lang="scss">
 	.text-blue{
 		margin-left:20rpx;
+	}
+	.font-nobold{
+		font-weight: 500;
 	}
 	.riie{
 		margin-left: 40rpx;
