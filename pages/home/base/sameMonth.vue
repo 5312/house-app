@@ -199,6 +199,7 @@
 <style scoped lang="scss">
 	.text-blue{
 		margin-left:20rpx;
+		
 	}
 	.font-nobold{
 		font-weight: 500;
@@ -240,10 +241,12 @@
 					}
 					.box{						
 						.right{
-							width: 120rpx;
+							width: 140rpx;
 							padding-right: 6rpx;
+							margin:20rpx 0;
 							.value{
 								color: #6E9FC6;
+								white-space: nowrap;
 							}
 						}
 					}
