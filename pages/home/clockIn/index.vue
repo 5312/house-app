@@ -12,10 +12,12 @@
 				<view class="info-box">
 					<view class="line">上班时间：{{workTimeRocord && workTimeRocord.list && workTimeRocord.list.length 
 						? workTimeRocord.list[0].addtime:'未打卡'}}</view>
-						<view class="line">打卡位置：{{workTimeRocord && workTimeRocord.list && workTimeRocord.list.length
+						<view class="line blue">打卡位置：{{workTimeRocord && workTimeRocord.list && workTimeRocord.list.length
 							? workTimeRocord.list[0].ress:'未打卡'}}</view>
 					<view class="line">下班时间：{{workTimeRocord && workTimeRocord.list && workTimeRocord.list.length 
 					    &&	workTimeRocord.list[1] ?workTimeRocord.list[1].addtime:'未打卡'}}</view>
+						<view class="line blue">打卡位置：{{workTimeRocord && workTimeRocord.list && workTimeRocord.list.length
+						    &&	workTimeRocord.list[1] ?workTimeRocord.list[1].ress:'未打卡'}}</view>
 					<view class="line" v-if="userInfo">当前职务：{{userInfo.gangwei || ''}}</view>
 				</view>
 				<!-- 按钮 -->
@@ -25,7 +27,7 @@
 						<text>{{currentTimeVal}}</text>
 					</view>
 				</view>
-				<view class="address-info" v-if="workTimeRocord">
+				<view class="address-info red" v-if="workTimeRocord">
 					{{ workTimeRocord.dizhi.length>0?workTimeRocord.dizhi:''}}
 				</view>
 			</view>
@@ -224,7 +226,12 @@
 			margin-left: 10%;
 			margin-top:40rpx;
 		}
-
+		.blue{
+			color: #479AFE;
+		}
+		.red{
+			color:red;
+		}
 		.content {
 			.content-1 {
 				.info-box {

@@ -224,6 +224,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _info = _interopRequireDefault(__webpack_require__(/*! @/utils/api/info.js */ 99));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -271,9 +273,9 @@ var _info = _interopRequireDefault(__webpack_require__(/*! @/utils/api/info.js *
 //
 //
 //
-var _default = { data: function data() {return { isMap: false, isShowCalendar: true, currentCalender: null, workTimeRocord: null, dateStatusList: [], currentWorkTime: null, userInfo: null, currentTimeVal: null, list: [{ name: '正常打卡' }, { name: '外勤打卡' }, { name: '打卡记录' }], current: 0, latitude: '', longitude: '', covers: [{ latitude: '', longitude: '', iconPath: '../../../static/location.png' }], timestamp: 86400, address: '' };}, onLoad: function onLoad() {var _this2 = this;this.userInfo = this.$tool.uniGetStorage('userInfo');this.getcurrentTimeVal();this.getClockInfo(function () {_this2.getMapInfo();});}, methods: { tapMap: function tapMap(e) {var that = this;var maps = uni.createMapContext("myMap", this).$getAppMap();maps.onclick = function (point) {if (that.current == 1) {that.longitude = point.longitude;that.latitude = point.latitude;
-          that.covers[0].latitude = point.latitude;
-          that.covers[0].longitude = point.longitude;
+//
+//
+var _default = { data: function data() {return { isMap: false, isShowCalendar: true, currentCalender: null, workTimeRocord: null, dateStatusList: [], currentWorkTime: null, userInfo: null, currentTimeVal: null, list: [{ name: '正常打卡' }, { name: '外勤打卡' }, { name: '打卡记录' }], current: 0, latitude: '', longitude: '', covers: [{ latitude: '', longitude: '', iconPath: '../../../static/location.png' }], timestamp: 86400, address: '' };}, onLoad: function onLoad() {var _this2 = this;this.userInfo = this.$tool.uniGetStorage('userInfo');this.getcurrentTimeVal();this.getClockInfo(function () {_this2.getMapInfo();});}, methods: { tapMap: function tapMap(e) {var that = this;var maps = uni.createMapContext("myMap", this).$getAppMap();maps.onclick = function (point) {if (that.current == 1) {that.longitude = point.longitude;that.latitude = point.latitude;that.covers[0].latitude = point.latitude;that.covers[0].longitude = point.longitude;
         }
       };
     },

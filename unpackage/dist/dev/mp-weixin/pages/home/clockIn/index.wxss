@@ -38,6 +38,12 @@
   margin-left: 10%;
   margin-top: 40rpx;
 }
+.clock-in .blue.data-v-6ea1099f {
+  color: #479AFE;
+}
+.clock-in .red.data-v-6ea1099f {
+  color: red;
+}
 .clock-in .content .content-1 .info-box.data-v-6ea1099f {
   padding: 30rpx 40rpx;
 }
