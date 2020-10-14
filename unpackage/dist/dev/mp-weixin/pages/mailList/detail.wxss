@@ -95,7 +95,8 @@ page .wrap .bottom .lint-tar.data-v-16938fc2 {
 page .wrap .bottom .box.data-v-16938fc2 {
   width: 50%;
   padding: 20px 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 page .wrap .bottom .box .name.data-v-16938fc2 {
   margin-top: 20rpx;

@@ -24,6 +24,9 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.header-bg.data-v-116d25db {
+  background-color: #19be6b;
+}
 .income-gu .content .header-person.data-v-116d25db {
   padding: 0 80rpx;
   height: 240rpx;
@@ -53,7 +56,7 @@
   line-height: 80rpx;
 }
 .income-gu .content .table .box-1-wrap.data-v-116d25db {
-  color: #8EC1E0;
+  /* color: #acacac; */
   min-height: 120rpx;
   padding: 20rpx 0;
 }
@@ -62,6 +65,6 @@
   margin-bottom: 20rpx;
 }
 .income-gu .content .table .box-1-wrap .box-1 .name.data-v-116d25db {
-  margin-top: 10rpx;
+  margin: 20rpx 0;
 }
 

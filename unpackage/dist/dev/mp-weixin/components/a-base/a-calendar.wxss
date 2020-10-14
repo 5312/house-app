@@ -40,7 +40,8 @@
   margin: 20rpx 10rpx;
   height: 100rpx;
   background: #5FA6DF;
-  border-radius: 4rpx;
+  -webkit-border-radius: 4rpx;
+          border-radius: 4rpx;
 }
 .a-calendar .t-info .info-box.data-v-71a0e211:not(:last-child) {
   border-right: 1rpx solid #FFFFFF;
@@ -71,7 +72,11 @@
 }
 .a-calendar .t-body .t-body-main .day-cell-active.data-v-71a0e211 {
   background: #fef0f0;
-  border-radius: 4rpx;
+  -webkit-border-radius: 4rpx;
+          border-radius: 4rpx;
+}
+.a-calendar .t-body .t-body-main .day-cell-today.data-v-71a0e211 {
+  color: red !important;
 }
 .a-calendar .t-body .t-body-main .day-cell-disabled.data-v-71a0e211 {
   color: #A8A8A8;

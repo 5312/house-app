@@ -24,6 +24,9 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.header-bg.data-v-6f425ccf {
+  background-color: #19be6b;
+}
 .growth-tree .header.data-v-6f425ccf {
   height: 300rpx;
 }
@@ -34,10 +37,11 @@
   margin-left: -340rpx;
   top: 100rpx;
   padding: 40rpx;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 .growth-tree .header .header-info .name.data-v-6f425ccf {
-  color: #90C5E5;
+  color: #19be6b;
 }
 .growth-tree .header .header-info .info-wrap.data-v-6f425ccf {
   margin-top: 24rpx;
@@ -51,6 +55,7 @@
 .growth-tree .content.data-v-6f425ccf {
   padding: 40rpx 80rpx;
   margin-top: 80rpx;
+  font-size: 40rpx;
 }
 .growth-tree .content .box-temp.data-v-6f425ccf {
   padding: 20rpx;

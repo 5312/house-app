@@ -2,10 +2,11 @@
   "usingComponents": {
     "a-navbar": "/components/a-base/a-navbar",
     "u-form": "/uview-ui/components/u-form/u-form",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
     "u-form-item": "/uview-ui/components/u-form-item/u-form-item",
     "u-input": "/uview-ui/components/u-input/u-input",
     "u-calendar": "/uview-ui/components/u-calendar/u-calendar",
-    "u-action-sheet": "/uview-ui/components/u-action-sheet/u-action-sheet",
+    "u-select": "/uview-ui/components/u-select/u-select",
     "u-radio-group": "/uview-ui/components/u-radio-group/u-radio-group",
     "u-radio": "/uview-ui/components/u-radio/u-radio",
     "u-button": "/uview-ui/components/u-button/u-button"

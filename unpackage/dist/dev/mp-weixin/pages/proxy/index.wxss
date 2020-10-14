@@ -57,10 +57,13 @@
   margin: 0rpx auto;
   margin-bottom: 40rpx;
   background: #FFFFFF;
-  border-radius: 20rpx;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   padding: 40rpx 40rpx 20rpx 40rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .wrap .listCard .card .top text.data-v-37984d88 {
   margin-left: 20rpx;

@@ -24,7 +24,14 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.rich .title.data-v-52fd97e3 {
+  text-align: center;
+  margin-top: 30rpx;
+  font-weight: 600;
+  padding: 0 40px;
+  font-size: 30rpx;
+}
 .rich .content.data-v-52fd97e3 {
-  padding: 40rpx;
+  padding: 30rpx;
 }
 

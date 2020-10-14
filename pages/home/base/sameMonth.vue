@@ -25,7 +25,7 @@
 			<view class="card-wrap" v-if="currentMonthPerformance">
 				<view class="card bg-white" v-for="(item,index) in currentMonthPerformance.chengjiao" :key='index'>
 					<view class="title">
-						{{$u.timeFormat(item.shijian, 'yyyy/mm/dd MM:ss')}}
+						{{item.shijian/*$u.timeFormat(item.shijian, 'yyyy/mm/dd MM:ss')*/}}
 					</view>
 					<view class="box flex j-between a-center flex-row">
 						<view class="left flex1">
@@ -44,7 +44,7 @@
 						</view>
 						<view class="right flex-shrink">
 							<view class="nowrap ">
-								业绩：<text class="value">{{item.yeji}}</text>
+								业绩：<text class="value blue">{{item.yeji}}</text>
 							</view>
 							<view class="nowrap ">
 								已收：<text class="text-blue">{{item.shishou}}</text>
@@ -200,6 +200,9 @@
 	.text-blue{
 		margin-left:20rpx;
 		
+	}
+	.blue{
+		color:#479AFE !important
 	}
 	.font-nobold{
 		font-weight: 500;

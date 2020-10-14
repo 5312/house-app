@@ -24,6 +24,16 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.mar.data-v-a8a2f74a {
+  margin-right: 10rpx;
+}
+.margin-box.data-v-a8a2f74a {
+  position: relative;
+  left: -100rpx;
+  width: 200%;
+  height: 20rpx;
+  background-color: #EDEDED;
+}
 .shop-transfer-application .custom-style.data-v-a8a2f74a {
   color: #FFFFFF;
   background: #78c340;

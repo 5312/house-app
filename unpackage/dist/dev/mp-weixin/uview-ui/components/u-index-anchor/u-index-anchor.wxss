@@ -25,7 +25,8 @@
 /* 透明度 */
 /* 文章场景相关 */
 .u-index-anchor.data-v-51a42180 {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   padding: 14rpx 24rpx;
   color: #606266;
   width: 100%;

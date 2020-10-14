@@ -59,7 +59,8 @@
 .u-dot.data-v-20f9d6c0 {
   height: 16rpx;
   width: 16rpx;
-  border-radius: 100rpx;
+  -webkit-border-radius: 100rpx;
+          border-radius: 100rpx;
   background: #ddd;
 }
 

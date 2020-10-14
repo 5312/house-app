@@ -2,7 +2,6 @@
   "usingComponents": {
     "a-navbar": "/components/a-base/a-navbar",
     "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
-    "u-count-down": "/uview-ui/components/u-count-down/u-count-down",
     "a-calendar": "/components/a-base/a-calendar"
   }
 }

@@ -1935,10 +1935,68 @@ function normalizeComponent (
 
 /***/ }),
 
+/***/ 108:
+/*!**********************************************!*\
+  !*** H:/打卡app/house-app/utils/api/resign.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _tool = _interopRequireDefault(__webpack_require__(/*! ../tool.js */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var request = _tool.default.uniRequest.bind(_tool.default); //赋值请求方式，并把this指向tool
+var _default = {
+  //调店申请
+  bianDong: function bianDong(params) {
+    return new Promise(function (resolve, reject) {
+      request({
+        url: 'rsdangan/biandong',
+        method: 'post',
+        params: params,
+        success: resolve });
+
+    });
+  },
+  //用户选择
+  xuanYongHu: function xuanYongHu(params) {
+    return new Promise(function (resolve, reject) {
+      request({
+        url: 'rsdangan/xuanyonghu',
+        method: 'GET',
+        params: params,
+        success: resolve });
+
+    });
+  },
+  //佣金选择
+  yongJinXuanZe: function yongJinXuanZe(params) {
+    return new Promise(function (resolve, reject) {
+      request({
+        url: 'rsdangan/xuanyongjin',
+        method: 'GET',
+        params: params,
+        success: resolve });
+
+    });
+  },
+  //店/组业绩
+  dzYeJi: function dzYeJi(params) {
+    return new Promise(function (resolve, reject) {
+      request({
+        url: 'juece/zdyeji/',
+        method: 'GET',
+        params: params,
+        success: resolve });
+
+    });
+  } };exports.default = _default;
+
+/***/ }),
+
 /***/ 11:
-/*!************************************!*\
-  !*** H:/house-app/utils/create.js ***!
-  \************************************/
+/*!******************************************!*\
+  !*** H:/打卡app/house-app/utils/create.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1962,15 +2020,43 @@ function create(commponet, props) {
 /***/ }),
 
 /***/ 12:
-/*!**********************************!*\
-  !*** H:/house-app/utils/tool.js ***!
-  \**********************************/
+/*!****************************************!*\
+  !*** H:/打卡app/house-app/utils/tool.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var baseUrl = "http://ming.ydeshui.com/api/";var _default =
 {
+  htmlre: function htmlre(str) {
+    var s = "";
+    if (str.length == 0) return "";
+    s = str.replace(/&amp;/g, "&");
+    s = s.replace(/&lt;/g, "<");
+    s = s.replace(/&gt;/g, ">");
+    s = s.replace(/&nbsp;/g, " ");
+    s = s.replace(/&#39;/g, "\'");
+    s = s.replace(/&quot;/g, "\"");
+    s = s.replace(/↵/g, "<br/>");
+    return s;
+  },
+  formatRichText: function formatRichText(html) {
+    var newContent = html.replace(/<img[^>]*>/gi, function (match, capture) {
+      match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
+      match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
+      match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
+      return match;
+    });
+    newContent = newContent.replace(/style="[^"]+"/gi, function (match, capture) {
+      match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi, 'max-width:100%;');
+      return match;
+    });
+    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+    newContent = newContent.replace(/\<img/gi,
+    '<img style="max-width:100%;height:auto;display:inline-block;margin:10rpx auto;"');
+    return newContent;
+  },
   dateFormat: function dateFormat(date) {var fmat = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'YYYY-MM';
     var result = new Date(date);
     var Y = result.getFullYear();
@@ -2017,11 +2103,9 @@ function create(commponet, props) {
       header = Object.assign(header, headers);
     } else {
       header = Object.assign({
-        'Accept': this.uniGetStorage('token') || '' },
+        Accept: this.uniGetStorage('token') || '' },
       headers, header);
     }
-
-    console.log(header);
     uni.request({
       url: baseUrl + url,
       method: method ? method : "GET",
@@ -2035,7 +2119,12 @@ function create(commponet, props) {
             icon: "none" });
 
         } else if (res.data.code == 1) {
-          _success && _success(res.data.data);
+          _success && _success(res.data.data, res.data);
+        } else if (res.data.code == -1) {
+          _this2.uniRemoveStorage('token');
+          _this2.uniReLaunch({
+            url: "/pages/login/index" });
+
         }
 
       },
@@ -2092,6 +2181,8 @@ function create(commponet, props) {
     uni.redirectTo({
       url: url,
       success: success ? success() : false,
+      animationType: "none",
+      animationDuration: 0,
       fail: fail ? fail() : false,
       complete: complete ? complete() : false });
 
@@ -2105,6 +2196,8 @@ function create(commponet, props) {
     options.url,success = options.success,fail = options.fail,complete = options.complete;
     uni.reLaunch({
       url: url,
+      animationType: "none",
+      animationDuration: 0,
       success: success ? success() : false,
       fail: fail ? fail() : false,
       complete: complete ? complete() : false });
@@ -2119,6 +2212,8 @@ function create(commponet, props) {
     options.url,success = options.success,fail = options.fail,complete = options.complete;
     uni.switchTab({
       url: url,
+      animationType: "none",
+      animationDuration: 0,
       success: success ? success() : false,
       fail: fail ? fail() : false,
       complete: complete ? complete() : false });
@@ -2130,13 +2225,11 @@ function create(commponet, props) {
 
 
 
-
-
-    options.url,animaType = options.animaType,time = options.time,success = options.success,fail = options.fail,complete = options.complete;
+    options.url,success = options.success,fail = options.fail,complete = options.complete;
     uni.navigateTo({
       url: url,
-      animationType: animaType,
-      animationDuration: time ? time : 3000,
+      animationType: "none",
+      animationDuration: 0,
       success: success ? success() : false,
       fail: fail ? fail() : false,
       complete: complete ? complete() : false });
@@ -2218,9 +2311,9 @@ function create(commponet, props) {
 /***/ }),
 
 /***/ 13:
-/*!**************************************!*\
-  !*** H:/house-app/uview-ui/index.js ***!
-  \**************************************/
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/index.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2353,9 +2446,9 @@ var install = function install(Vue) {
 /***/ }),
 
 /***/ 14:
-/*!*************************************************!*\
-  !*** H:/house-app/uview-ui/libs/mixin/mixin.js ***!
-  \*************************************************/
+/*!*******************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/mixin/mixin.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2393,9 +2486,9 @@ var install = function install(Vue) {
 /***/ }),
 
 /***/ 15:
-/*!***************************************************!*\
-  !*** H:/house-app/uview-ui/libs/request/index.js ***!
-  \***************************************************/
+/*!*********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/request/index.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2569,9 +2662,9 @@ new Request();exports.default = _default;
 /***/ }),
 
 /***/ 16:
-/*!********************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/deepMerge.js ***!
-  \********************************************************/
+/*!**************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/deepMerge.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2610,9 +2703,9 @@ deepMerge;exports.default = _default;
 /***/ }),
 
 /***/ 17:
-/*!********************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/deepClone.js ***!
-  \********************************************************/
+/*!**************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/deepClone.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2644,9 +2737,9 @@ deepClone;exports.default = _default;
 /***/ }),
 
 /***/ 18:
-/*!***************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/test.js ***!
-  \***************************************************/
+/*!*********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/test.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2829,9 +2922,9 @@ function empty(value) {
 /***/ }),
 
 /***/ 19:
-/*!**********************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/queryParams.js ***!
-  \**********************************************************/
+/*!****************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/queryParams.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8942,9 +9035,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 20:
-/*!****************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/route.js ***!
-  \****************************************************/
+/*!**********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/route.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9039,9 +9132,9 @@ route;exports.default = _default;
 /***/ }),
 
 /***/ 21:
-/*!*********************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/timeFormat.js ***!
-  \*********************************************************/
+/*!***************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/timeFormat.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9079,9 +9172,9 @@ timeFormat;exports.default = _default;
 /***/ }),
 
 /***/ 22:
-/*!*******************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/timeFrom.js ***!
-  \*******************************************************/
+/*!*************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/timeFrom.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9136,9 +9229,9 @@ timeFrom;exports.default = _default;
 /***/ }),
 
 /***/ 23:
-/*!************************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/colorGradient.js ***!
-  \************************************************************/
+/*!******************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/colorGradient.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9246,9 +9339,9 @@ function rgbToHex(rgb) {
 /***/ }),
 
 /***/ 24:
-/*!***************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/guid.js ***!
-  \***************************************************/
+/*!*********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/guid.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9298,9 +9391,9 @@ guid;exports.default = _default;
 /***/ }),
 
 /***/ 25:
-/*!****************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/color.js ***!
-  \****************************************************/
+/*!**********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/color.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9346,9 +9439,9 @@ color;exports.default = _default;
 /***/ }),
 
 /***/ 26:
-/*!********************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/type2icon.js ***!
-  \********************************************************/
+/*!**************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/type2icon.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9391,10 +9484,65 @@ type2icon;exports.default = _default;
 
 /***/ }),
 
+/***/ 266:
+/*!****************************************!*\
+  !*** H:/打卡app/house-app/utils/unit.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var Popups = /*#__PURE__*/function () {
+  function Popups() {_classCallCheck(this, Popups);
+    this.outstandingList = [];
+    this.typeNum = new Map(); //类型及对应数量
+  }_createClass(Popups, [{ key: "getArrayOutstandingList", value: function getArrayOutstandingList(
+    array) {
+      this.outstandingList = array;
+    } }, { key: "scale", value: function scale()
+    {
+      var m = new Map();
+      m.set('1', 0);
+      m.set('3', 0);
+      this.outstandingList.forEach(function (indexs, el) {//计算已选各自个数
+        var num = m.get("".concat(indexs.reasonId)) * 1;
+        var n = num + 1;
+        m.set("".concat(indexs.reasonId), n);
+      });
+      this.typeNum = m;
+    } }, { key: "performance", value: function performance(
+    params) {
+      //金额ysyongjin
+      var ysyongjin = params;
+      var s1 = 60 / 100;
+      var s2 = 40 / 100;
+      var percentage = {
+        "1": 0.6,
+        "3": 0.4 };
+
+      var arr = this.outstandingList;
+
+      for (var i = 0; i < arr.length; i++) {
+        var type = arr[i].reasonId;
+        var all = this.typeNum.get("".concat(type)) * 1;
+        var scale = 1 / all;
+        var sur = ysyongjin * percentage["".concat(type)] * scale;
+
+        arr[i].scale = scale.toFixed(2);
+        arr[i].outs = sur.toFixed(2);
+      }
+      return arr;
+    } }]);return Popups;}();var _default =
+
+
+new Popups();exports.default = _default;
+
+/***/ }),
+
 /***/ 27:
-/*!**********************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/randomArray.js ***!
-  \**********************************************************/
+/*!****************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/randomArray.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9410,9 +9558,9 @@ randomArray;exports.default = _default;
 /***/ }),
 
 /***/ 28:
-/*!******************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/addUnit.js ***!
-  \******************************************************/
+/*!************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/addUnit.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9429,9 +9577,9 @@ function addUnit() {var value = arguments.length > 0 && arguments[0] !== undefin
 /***/ }),
 
 /***/ 29:
-/*!*****************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/random.js ***!
-  \*****************************************************/
+/*!***********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/random.js ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9449,10 +9597,227 @@ random;exports.default = _default;
 
 /***/ }),
 
-/***/ 295:
-/*!**************************************************!*\
-  !*** H:/house-app/uview-ui/libs/util/emitter.js ***!
-  \**************************************************/
+/***/ 3:
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 30:
+/*!*********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/trim.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function trim(str) {var pos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'both';
+  if (pos == 'both') {
+    return str.replace(/^\s+|\s+$/g, "");
+  } else if (pos == "left") {
+    return str.replace(/^\s*/, '');
+  } else if (pos == 'right') {
+    return str.replace(/(\s*$)/g, "");
+  } else if (pos == 'all') {
+    return str.replace(/\s+/g, "");
+  } else {
+    return str;
+  }
+}var _default =
+
+trim;exports.default = _default;
+
+/***/ }),
+
+/***/ 31:
+/*!**********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/toast.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function toast(title) {var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;
+  uni.showToast({
+    title: title,
+    icon: 'none',
+    duration: duration });
+
+}var _default =
+
+toast;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 32:
+/*!**************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/getParent.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = getParent; // 获取父组件的参数，因为支付宝小程序不支持provide/inject的写法
+// this.$parent在非H5中，可以准确获取到父组件，但是在H5中，需要多次this.$parent.$parent.xxx
+function getParent(name, keys) {
+  var parent = this.$parent;
+  // 通过while历遍，这里主要是为了H5需要多层解析的问题
+  while (parent) {
+    // 父组件
+    if (parent.$options.name !== name) {
+      // 如果组件的name不相等，继续上一级寻找
+      parent = parent.$parent;
+    } else {var _ret = function () {
+        var data = {};
+        // 判断keys是否数组，如果传过来的是一个数组，那么直接使用数组元素值当做键值去父组件寻找
+        if (Array.isArray(keys)) {
+          keys.map(function (val) {
+            data[val] = parent[val] ? parent[val] : '';
+          });
+        } else {
+          // 历遍传过来的对象参数
+          for (var i in keys) {
+            // 如果子组件有此值则用，无此值则用父组件的值
+            // 判断是否空数组，如果是，则用父组件的值，否则用子组件的值
+            if (Array.isArray(keys[i])) {
+              if (keys[i].length) {
+                data[i] = keys[i];
+              } else {
+                data[i] = parent[i];
+              }
+            } else if (keys[i].constructor === Object) {
+              // 判断是否对象，如果是对象，且有属性，那么使用子组件的值，否则使用父组件的值
+              if (Object.keys(keys[i]).length) {
+                data[i] = keys[i];
+              } else {
+                data[i] = parent[i];
+              }
+            } else {
+              // 只要子组件有传值，即使是false值，也是“传值”了，也需要覆盖父组件的同名参数
+              data[i] = keys[i] || keys[i] === false ? keys[i] : parent[i];
+            }
+          }
+        }
+        return { v: data };}();if (typeof _ret === "object") return _ret.v;
+    }
+  }
+
+  return {};
+}
+
+/***/ }),
+
+/***/ 33:
+/*!************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/function/$parent.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = $parent; // 获取父组件的参数，因为支付宝小程序不支持provide/inject的写法
+// this.$parent在非H5中，可以准确获取到父组件，但是在H5中，需要多次this.$parent.$parent.xxx
+function $parent(name, keys) {
+  var parent = this.$parent;
+  // 通过while历遍，这里主要是为了H5需要多层解析的问题
+  while (parent) {
+    // 父组件
+    if (parent.$options.name !== name) {
+      // 如果组件的name不相等，继续上一级寻找
+      parent = parent.$parent;
+    } else {
+      return parent;
+    }
+  }
+  return false;
+}
+
+/***/ }),
+
+/***/ 34:
+/*!*********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/config/config.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 此版本发布于2020-07-17
+var version = '1.5.3';var _default =
+
+{
+  v: version,
+  version: version,
+  // 主题名称
+  type: [
+  'primary',
+  'success',
+  'info',
+  'error',
+  'warning'] };exports.default = _default;
+
+/***/ }),
+
+/***/ 35:
+/*!*********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/config/zIndex.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // uniapp在H5中各API的z-index值如下：
+/**
+ * actionsheet: 999
+ * modal: 999
+ * navigate: 998
+ * tabbar: 998
+ * toast: 999
+ */var _default =
+
+{
+  toast: 10090,
+  noNetwork: 10080,
+  // popup包含popup，actionsheet，keyboard，picker的值
+  popup: 10075,
+  mask: 10070,
+  navbar: 980,
+  topTips: 975,
+  sticky: 970,
+  indexListSticky: 965 };exports.default = _default;
+
+/***/ }),
+
+/***/ 370:
+/*!********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/util/emitter.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9509,246 +9874,29 @@ function _broadcast(componentName, eventName, params) {
 
 /***/ }),
 
-/***/ 3:
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
+/***/ 4:
+/*!*************************************!*\
+  !*** H:/打卡app/house-app/pages.json ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
 
 
 /***/ }),
 
-/***/ 30:
-/*!***************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/trim.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function trim(str) {var pos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'both';
-  if (pos == 'both') {
-    return str.replace(/^\s+|\s+$/g, "");
-  } else if (pos == "left") {
-    return str.replace(/^\s*/, '');
-  } else if (pos == 'right') {
-    return str.replace(/(\s*$)/g, "");
-  } else if (pos == 'all') {
-    return str.replace(/\s+/g, "");
-  } else {
-    return str;
-  }
-}var _default =
-
-trim;exports.default = _default;
-
-/***/ }),
-
-/***/ 31:
-/*!****************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/toast.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function toast(title) {var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;
-  uni.showToast({
-    title: title,
-    icon: 'none',
-    duration: duration });
-
-}var _default =
-
-toast;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 32:
-/*!********************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/getParent.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = getParent; // 获取父组件的参数，因为支付宝小程序不支持provide/inject的写法
-// this.$parent在非H5中，可以准确获取到父组件，但是在H5中，需要多次this.$parent.$parent.xxx
-function getParent(name, keys) {
-  var parent = this.$parent;
-  // 通过while历遍，这里主要是为了H5需要多层解析的问题
-  while (parent) {
-    // 父组件
-    if (parent.$options.name !== name) {
-      // 如果组件的name不相等，继续上一级寻找
-      parent = parent.$parent;
-    } else {var _ret = function () {
-        var data = {};
-        // 判断keys是否数组，如果传过来的是一个数组，那么直接使用数组元素值当做键值去父组件寻找
-        if (Array.isArray(keys)) {
-          keys.map(function (val) {
-            data[val] = parent[val] ? parent[val] : '';
-          });
-        } else {
-          // 历遍传过来的对象参数
-          for (var i in keys) {
-            // 如果子组件有此值则用，无此值则用父组件的值
-            // 判断是否空数组，如果是，则用父组件的值，否则用子组件的值
-            if (Array.isArray(keys[i])) {
-              if (keys[i].length) {
-                data[i] = keys[i];
-              } else {
-                data[i] = parent[i];
-              }
-            } else if (keys[i].constructor === Object) {
-              // 判断是否对象，如果是对象，且有属性，那么使用子组件的值，否则使用父组件的值
-              if (Object.keys(keys[i]).length) {
-                data[i] = keys[i];
-              } else {
-                data[i] = parent[i];
-              }
-            } else {
-              // 只要子组件有传值，即使是false值，也是“传值”了，也需要覆盖父组件的同名参数
-              data[i] = keys[i] || keys[i] === false ? keys[i] : parent[i];
-            }
-          }
-        }
-        return { v: data };}();if (typeof _ret === "object") return _ret.v;
-    }
-  }
-
-  return {};
-}
-
-/***/ }),
-
-/***/ 33:
-/*!******************************************************!*\
-  !*** H:/house-app/uview-ui/libs/function/$parent.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = $parent; // 获取父组件的参数，因为支付宝小程序不支持provide/inject的写法
-// this.$parent在非H5中，可以准确获取到父组件，但是在H5中，需要多次this.$parent.$parent.xxx
-function $parent(name, keys) {
-  var parent = this.$parent;
-  // 通过while历遍，这里主要是为了H5需要多层解析的问题
-  while (parent) {
-    // 父组件
-    if (parent.$options.name !== name) {
-      // 如果组件的name不相等，继续上一级寻找
-      parent = parent.$parent;
-    } else {
-      return parent;
-    }
-  }
-  return false;
-}
-
-/***/ }),
-
-/***/ 34:
-/*!***************************************************!*\
-  !*** H:/house-app/uview-ui/libs/config/config.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 此版本发布于2020-07-17
-var version = '1.5.3';var _default =
-
-{
-  v: version,
-  version: version,
-  // 主题名称
-  type: [
-  'primary',
-  'success',
-  'info',
-  'error',
-  'warning'] };exports.default = _default;
-
-/***/ }),
-
-/***/ 35:
-/*!***************************************************!*\
-  !*** H:/house-app/uview-ui/libs/config/zIndex.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // uniapp在H5中各API的z-index值如下：
-/**
- * actionsheet: 999
- * modal: 999
- * navigate: 998
- * tabbar: 998
- * toast: 999
- */var _default =
-
-{
-  toast: 10090,
-  noNetwork: 10080,
-  // popup包含popup，actionsheet，keyboard，picker的值
-  popup: 10075,
-  mask: 10070,
-  navbar: 980,
-  topTips: 975,
-  sticky: 970,
-  indexListSticky: 965 };exports.default = _default;
-
-/***/ }),
-
-/***/ 399:
+/***/ 488:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 400);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 489);
 
 /***/ }),
 
-/***/ 4:
-/*!*******************************!*\
-  !*** H:/house-app/pages.json ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
-/***/ 400:
+/***/ 489:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -9779,7 +9927,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 401);
+module.exports = __webpack_require__(/*! ./runtime */ 490);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -9796,7 +9944,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 401:
+/***/ 490:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -10528,10 +10676,32 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 430:
-/*!**********************************************************!*\
-  !*** H:/house-app/uview-ui/libs/util/async-validator.js ***!
-  \**********************************************************/
+/***/ 50:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/a.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABd1BMVEUAAAD/ylr/////02r/1Gv+qz39sUL9qjv+v1P/z2X8sUL/yV/+t0n+rD3+sUL/sUP/tkn/127/tEv/1WP/z2T+wFT+v1L/0Wf/ymH/1Wz+wVb+vVH/02v+xlz+uUz/1Gz/1Wz+xFj9u0/9qjz/1W7/xVn/vE79qjv/0mr/zWT/123/xV/+yF7+x13+t0n9tkj8qzz8qjv////+x1z+zWP9vE/+yWD9uk79vFL9uEv8sUL9wlb+w1j9r0H9t0n+z2b+xVv9tUj8rj/+0mn+0Gf9wFX9s0X9v1P+xFr9tEf9vlL8qzz9rT7+y2L8skT9skT+zmT+y2H9uUv8rD3+yF3+897+ymf+/fr+/Pf+9OH+4af+/vz+9+r+9uj+5rv+0nn9x23+7tL+7c3+68r+58P+467+363+3qj+3Zf90Ib+z2/9xGj++vD+8df+6Mb9xGL9wlz94rn+5bT92p/92Z/925z92JT905H90YD9zG/+02v9xV/8ulIOGlhcAAAAMnRSTlMADAGA8/Po1r+qqoGBgX9SIxYWCX/z8ujo2dnZ09PTv6WlpaVycnJyUlIjI/Pz8/O/v4SGuooAAALDSURBVDjLfdQHU+JgEAbgBexnBXvv9eqCgCZUgSPSBKRLlWrvnuXH3yaQEDy8Z94hW75JmDADtNpeXVyY6uiYWlhc3YZPjahmXw9eD0SzqhFoR6HqOPigQ6WAf2xOONqY2IRWSpXDInFYHJRGPaoEGU3vEbEcWSgfr70a2f16df/R27znqE7n0/koOpKtJpPVLNWSUWjY8tUFfcFgNYGCRFXoBb6txnuZ1NcF9WeXKLk804sm62/pizQ4O0E8SWaj0WySr5onvwAZ+XasPaZotfoI4p1eK9DfIUb0wpzydYS/oVZUQkxqJUnEktTwt5yz8rRWbTSOBatE/1LAeJSfU6xzADtWq9vq5j0ivggFDazZi1QN8VHqd2CNFRUw4na/RYX6TxxP3iJYYN2sm8Kya7DEsgzLUNg0ZhgmkXqqn0tH2QymaV7fL0EPI4pjiWFOMfXE1GKYiDJMCePSsgemnaILzDidN3nETAwj1zTI4IW0nIax36I8RujTecr/Kjf8IIJ5aTkG40bjofGQV0HM0cV5hfkbvs8hVg5F4zBjFF2n8FQocvWevu61tJyBnl1JEfG+2d0jFptdDywbDLuGXYrBcB5DLBvrtbGMGDtv7pZh3dBUQcT0Q85pzD2kqazIVuswHArthfYEofcEyiTeaU5LYT8MML/XRA8X0YNli3kA6DfLPKPkWT7vp4PqH7YGs81sLmND2UytOP+uBtLP2TiKjcJxXBEFRY4nzvuBp+jiXE22KyRXNhfHucR5lwIEQ65AwB/w+11+F4W7Rbzl/A20CLiGoGFwXxLYDwRqNeEAlfV+EETKPuGQad9EEUp536cEiabPROwmO8X0QZ8GZJSDdKgd06ASWg112cP2cNgb9sp1DbX5ax7opEMer8cT9oQpHo+3c0AB7agHuj0y3QNq+NTwxsrP7s7O7l8rG8PQ4i/B0T2hIKHpJQAAAABJRU5ErkJggg=="
+
+/***/ }),
+
+/***/ 51:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/b.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABOFBMVEUAAAD/gEn/////llv/bTb/jVT/gUn/aDL/bjj/gUn/mmH/lFr/dj//lVr/mmL/dED/oGX/m2L/mF7/jVT/dj//l13/j1b/ZjD/ilL/eEH/aDP/nGH/hEz/fUb/ZzD/bzn/bDj/nGH/hk3/fEX/ZjH/i1P/ZzP/mmD/j1X/nWL/hk7/e0P/ZzH/czv/bTb/ZjP/////e0T/fUb/azb/aTP/kVf/bjj/k1n/lVv/gEj/ll3/hUz/gUn/iE//dD3/g0v/mV//hk7/bzn/iVH+d0H/ilL/jlX/jVP/dj//q4H/cDr/k2r/eEH/cjv/up//4NP+i1P/+PX+mXD/cTv/lGz/6eD/v6X/rof/p33/mXD/+vn/9fL+8ez+0r3/z7n/sY3+nHX/l2z+j2b/dkP/077+077/s4/+s48CIqbYAAAAMHRSTlMACgF/fyPz8+jZ1qqBUhYWDPPz8/Po6NnT09O/v7+/qqqlpaWlg4OCf3JycnJSUiNGZE+tAAACLUlEQVQ4y33TB3OiUBAH8AXBnmh6773booIYciGHEb1LjMaY3q58/29w+xqHiv7mDW/3/XdgkBG6qXtrC9GxsejC2p4KA43uRM89ojuj4CcZGNd1/Vz3jI4HktBnZEr3MTUC3eSAXnTpRR0XrwMyeEixYoGe41bA5d1jkud+scIQMRmEwOlQAfc9+IHeqXbp6LZ9amPA3yg5bVPVRqpHo8qSafYr7VbsCnGX6nNns2yXfo+Jyk0F141If//5+0vU5BzXBPlGW985nt2T+p43ItvCwVmLY9FLuWyVLeuFdSKbBVDLAoveWPPGOjdUYf+bwJ/MGv5sN9yH9ZLAolfWvLLODddh0aRKJg5SHdJ2eCOy0iJETNMwDSLFtQ2zLWqa4cWMQNAQRHhtGNei1gyNhUEIagIdqomuRofdMAgRTctoGYJ8XAtrzmqQQdFHYIkV6Uya3DDjQW6Jx6xZgo00RwfTHnRQ2IAD7+Djx/+5j0fv4AGo9fpl/ZJI+cCI5SrAHC3wgufP77fo4fYB1/szHoibzAFA/Iojb93+6WqTtxZZHAcTk2dMygcNrs4mE4DifNDvr8CjOBBS+AfVeuqde2qxJCwBdeQ0m07Tcb4+W61aq+b6/HLwGLMj4JQLl3Ph4HJ3SgFBXskPsSKDS1rNcvlsHhfbEW6rEnjISnYARYZux+FsLpujsBB1+Bj6SEoo1yOkSOAnsT3vHZvfTsBAJ4ebyzOh0Mzy5uFJd/IPiK0Y1cKPfnEAAAAASUVORK5CYII="
+
+/***/ }),
+
+/***/ 512:
+/*!****************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/util/async-validator.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11891,11 +12061,11 @@ Schema.warning = warning;
 Schema.messages = messages;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/node-libs-browser/mock/process.js */ 431)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/node-libs-browser/mock/process.js */ 513)))
 
 /***/ }),
 
-/***/ 431:
+/***/ 513:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -11926,7 +12096,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 432);
+        if (!path) path = __webpack_require__(/*! path */ 514);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -11940,7 +12110,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 432:
+/***/ 514:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -12250,14 +12420,102 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 431)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 513)))
 
 /***/ }),
 
-/***/ 517:
-/*!***************************************************!*\
-  !*** H:/house-app/uview-ui/libs/util/province.js ***!
-  \***************************************************/
+/***/ 52:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/c.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAA/1BMVEUAAAD/bW3/aWn/////eHj/enr/VVX/TEz/Y2P/SUn/aGj+T0//cnL/Y2P/UVH/eHj/VFT/fn7/enr/bW3/eXn/cHD+VFT+TU3/fn7/YGD/e3v/Wlr+Skr/fX3/Zmb/YGD+SEj/aGj+Xl79SUn/fX3/SUn/eXn/c3P/V1f+Vlb+SUn+SEj/bW3/bm7/////c3P+YmL/aGj9UFD+Wlr/ZWX/eHj+TU3/dXX+U1P+bGz+X1//amr/e3v/bm7+Vlb/2tr+XFz+UFD+XV3+19f+TEz+V1f/cHD+fX39Skr/lZX9eHj9SUn/8/P++/v+39/+qKj/kpL+hIT/9fX/5ub+4uL4N5zeAAAALnRSTlMACxYBqICAgPPz1qp/clIjI/Pz8+jo6OjZ2dPT07+/v7+lpaVyclJS8/PZ2YOCpVOt8AAAAetJREFUOMuNzYdy4jAQBuB1DxBKeu/tqsEGDMYYDo6YnI8kpLz/s2QlWRoXkck3O8Dq/4eFrPq1frK/sbF/ol/XYSXVOBymHBqqtKYYm8M4Hsap6qahFHu32928uBtv3+ZqmsECnFzb0DJn9d5Keuq8pveavSaFP3DEN6Frorje/NQ6790lD/HyX8ayG0XNCIM71lN2Imr5aue8Llmyo7DDIfNmF7wlET2uboV+iOPbEuQdZ0vF4i+fkRZpgO3fWCwHfuDjBCRYjIUFLeI7ycsA9SBwAocgvSgQItKkGX4EdaiSjiiGjhCSotiqcOE4HaeD48hOi+IFnHY4W0KEp1DOFh/Hf6nxY7ZYhrUWR5MXvr3QVYRrXy8etFqD1oCQnR5wB3DGfkwHU1sCn1l+BpfTBC8+kT984kXuEqp/OBY9s+WZbSKsQqPNJUW2JEURNgCORLF4WhSPAMC8T9gSPDOxqH4fofuRtDhi2TcVkDli3ou99yQygVB2+9R8ke8t5izZVYCq9Zl2PM+I20lQg4TpChN3guO6fbePw3YTOK1CHhAt5VU0EJSKl3A9F8fzJt6EwK+KAima5a1gaZBV25s9zB5wZml7NShQrBKWsCnMSpYCMqp1/D/l2FJhpcbN1fmPUunn+dVNI5t8ABg4BddYlGn9AAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 53:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/d.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABRFBMVEUAAAB7yf9jsv9JnP9isv99yv91w/9Pov5Up/9MoP9Ro/94xf9UqP96y/9XqP9Vqv9yuP91xP9+y/9Wqf95x/9wv/9Upv5Nnv5Im/5suv9aq/9Knf59y/9gsP9InP59yv9ot/9erv5JnP1tvf9Knv1Yq/5wv/99zP9pt/9erf9JnP95x/9zwf+A1f+Av/97x/96x/9uvf9tvf9ntv9ltv////9RpP5is/5ktP5ywf9mtv9Pov5ouP91w/95xv9svP9gsf5Knf5Mn/5Zq/5uvf93xf9brP5Vp/5Tpf5NoP5ruv9Xqf5wvv9fr/5drv5zwv9Tpv5xv/9quf97yP/6/P/0+v7v9/7R6P6Ewv7m8/7W6/7O5/7F4/+z2//+/v6v2P6j1P6Y0P55x/6Mxv5ps/683f6q0/6Dxv5yuv7G5f/Z7P643v6Pum6cAAAANXRSTlMAgPPz2daqqn9/UiMjFhYMCX/z8+jo6OjZ09PTv7+/paWlpYODgn9ycnJyUlIMDPPz8/O/v8ZBL5IAAAIUSURBVDjLjdFnc9pAEAbgxfSOe++9pp7pAmSqITEi9N5ckvz/71lO6HQSxpNndmald9+BYQAt5/n+jnlpybyzf+6EudwG8y+O2eCG99waPgvDoTAUVJ8MtzDjekXQSwmplWvQMaTmWASezxKdy+IDlSX6FH2i8AFH3cgCzGKQJww6/Vc+YN9+w4VSsFcm6Hd08izhYHgD1N2qVKCkgiRJbSJrBPFVzgqrd7R4liwkcQqFyR4QxV8lQ2eA3F+TsSROLDbZNVasYEHJv7ixeBzjVQkjcPExFjcfeRXCvD6WWLwJ4CyVIqUIhQ+lJuuVSwgjOXfCRUSjz4otTX4BByGtP8pvkTTxAXwLUKGAHATeWrTXqIcwUm/fwRTQG3Vqz4OxLjTBgv+/LMBCnPLH/Thv7UaXTFVbdZorRVNcNaoQXvdFPZlg9wcz5v6WcqfXa3Tr7LYLhz+ZPlFVR/V6k7TY7RAu00yb6FXZ7RJc6fRD+oFqkhl4ku8ugC2szC9ObQHAaV5RI3pl5XSKRc9yBuUz+fwL0atl5NuyB5AtM5V/rmg/rzaeXmww4V0rZqlitohDN0Pf17xAObB0n73HoZtHs6wDpmz3H7IBYw1/wAoqnzU3Fc6FceSNcFl9wLPnRDEn5nBEpD7n7KDjWBcTYgJH5K07YIbXbkzoGO1eeI/nZJuvbZ94YC7X1dHehtG4sXd05QKNfwM0NNVz9pJHAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 54:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/e.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABSlBMVEUAAAD/i1P/////llz/mV7/bTb/kVn/aDL/gUn/bTj/gUn/gUj/cDj/jlb/m2L/jVT/gUn/gEn/dj//l13/cjv/azX/m2L/mWD/ilL/aDP/nGH/hEz/fUb/ZjH/i1P/ZzP/eEH/k1j/dD7/nWL/ZzH/mF3/klf/oGb/ilD/fEX/ZjP/aDr/mF//l17/j1f/j1b/ZjH/ZjD/eUH/eEH/ZzH/ZzD/j1b/j1T/////d0H/kVf/i1L/cDn/dT7/ekP/cjv/k1n/ajX/hk3/lVv/jVT/h1D/ll3/cz3/bjj/bDf/iVH/fUb+e0T/jlb/gkr/mV//hEz/gUn+ZzL+f0j+j1X/f0j/aTP/e0T/7eT/+/n/mm7/jlz+ybP/vqH/9fH/4NL/xq3/qoP/5tv/0Ln/s5H/kmb/iFn/3c7/18X/z7z/t5j/oXT/lF//gUu24ryRAAAAOHRSTlMADAGogH8W89mqpXJSCfPz8/Pz6Ojo2dPT07+/v6WDg4J/f3JyUlIjIyMjFvPz6OjZ2dPTv79/f0leyaAAAAIdSURBVDjLhdRnk6JAEAbgNoB5d29zznkvR9wV48GdIq6KgDlsuvz/v147jjJw6D12VTPvdI0UHwbszo58m6tzc6ubvqMzmIr3r90y1vw8uPH4X8iyfCszo8/9HvjHyZLsYukE7Lx+OTch52Qs+uz3AiPmy6VJji2NxXZfjDnPl57BZ515cD3TAVCnTFi7rmE5nk/pd3mlqmpNrWGpFjZ7OfpKHz//1ydA/PyNi9+devdeHa/meRzcdRlr3jcE1C8Ubgok2MXB9QJLwt+gJ4zcTeJ1gHPJrtWpC2PfrfgcItkJKSs12w3B8mDtRSCczZazZSxcDb4JrEaLzJD9MGyVSuVSeWhQF+x6ZbqHtiBYoloNweFnyRKEhQrVFJxaFU2raKPdZ7CgEbpW6Tnm7jDE0vWKPhwM6rqiK0P6r77tLTu4oQ+HFU1RgrCtEEWliKW0HqzZR5oR2xAuTphF0zSlLp2r45JkpIchknTo0MG+mTStNAIXyWQ8GSfwAUn0MzVxSTLSLwDexh3aZK5ry94BwL4YF+NY4rg/kSPbIpvv4yC/KDr8IP/MJos8oMMvDn/qeKAtOYQhz3LKQXx8sq2X6RUUTaRSiVQCi3QGzaJAcYmZOOtKCX2dIeRlLqlQfqpQDBheLp9xlee8YBddyRgZA8s2txJ1uZq5gGEYVaOKRXuA84Cbq72NKmNj7wqmujzeef86EHjzYef4Emz+AqP9Q8lKB378AAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 55:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/f.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABPlBMVEUAAAD/aaP/eLD/fLL/Y5/+UZD/XZr/Y5/+T5D/V5b/d7H/cKr/UJH/UZH/eK//VJL/VZX/crj/baj/S43+R4r/ebH/cKr/frT/ZaH/e7P/bKb+Soz/fbT+SIv/aKL+Xpz9SYr/baf9Sov/fbP/S43/fbX/aaP/Xpr/SYv/ebH/c6v/gL//gKr/V5X+VpX+SYv+SIn/////bKb+ZKD9TY7/aqX/aKP+Yp7/c6v/da7/bqj/d6//Z6L+XZr+VpX/erH/cKn+To/+X5z/dKz/ZqH+UJD+Wpj+U5P9UZH9SYv/cqr+WJf+S43/e7L9Soz//P7/pcj+d63/nMP+UZH/7fT/4+7/2Of/h7f/9vr/xtz/u9b/stD/rs7/lsD/irn/7/b/5/D/yd7/wdn/t9P+j7r/f7L+g7H/zuH+3er+3OmV0mu9AAAAMXRSTlMAFqjz8+jWv6qBf39/UiMjDAnz8/Po6NnZ09PTv7+lpaWDg4J/cnJyclJSDAzz89nZyYtn/QAAAn1JREFUOMt10odu4kAQBuABjhoIkN57T66MwUCMMaaE0HtLKOnJ3fu/wA1rYxaSfPql3Z35JQsJmDZ/bN5atVhWt8zH8/At0+F6aSReilNK64cm+MqlyxKfYXFdwifny9F4NE6JMvp9+RxmuGhZi9Yo0Wku4PnN198y+2HCfJ26TjF0oUxOYgbDXMSQirzVe/US906l5kB3oQ/zkXw+0qsgYrevv5nIBTBXK6omr+bzd6i552bqypX2YUmVxgaoqwwlGquqtmMfNy1IgkQRKNIdjt1LZDxfMFFxX+C0jGJb4O1TcUPkcEWREUSBIm7Q/0UUQ2KIoQv3adajEZuL83AS4nWMH/M2GcohWT6BHVlOy2mKzPRQU5Wn7YA9wKQDaSbwzHov9KZMdnZYC3DS1SZqHutpUZVCxmYNfoQnhH9o+FA7/X5HDOirH3xRbaGhqd4j6YtG0RYOJ8PJEaGJE9UBMkM5ydjArl1iydgTcjp32FVrFXzRi3bYjeniyHt7wmYy3MXnkLbdhdNx8Rl59Spi6xFxENC2p+DN6B6Q15bY+1GIaVsvgC1TyBQKhRBOG1aRDAK0IzYAcLKbUsNpLaGN+CRmCopSUApOKpp+KSMCzujFu81IWmF+moA4FeYDp1WGr513ReOEEZ/1diTzUsEpD7V84Zax+oDx0D17m83K1b+TbqVdDShZGtPSAzp3dkzJv7/Wq/XXd1VpNLKNLKXRcIPBccNL3CQoxumACb8jmAiO0JHg0dPhB56bil9JuGGGxxosB8uUYLAYLFLYafXAJ76jxXKxmCvmcuVcmZLLFRePfPAV08FmjrN5YIJvec/2tn8vLf3Z3jvzwpT/XiohC/SKuc0AAAAASUVORK5CYII="
+
+/***/ }),
+
+/***/ 56:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/g.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABiVBMVEUAAAD/55f/44j3zHDy0G3nt0L/6Zr84o/nuEPqvUz01HHuv1H/6pv/55f+5ZT53obrwVXoukbz0XHyzGrltj/uxl7ntkH/6Zz003TwzGjmtkDqvU7pvEv/6Zz11XbxymXmtj/32YDtxVz74Yv63YXtw1j21XnvyWLmtUH/5pX84IvswVTpu0j/6aDptkL/6KL/3Iv52oH42YHsxFnsw1n3137313z/653/6Z3////95JP003T84pD734rqvlDxzGj74Y3pvU3txFroukjux2Dz0XHvyWPnuUb32H7mt0L21nr11Xfz0G7uxl7+5pbwymXrwFLpu0ryzmz87Lvswlb9+/X57c/+55j213zpvEv53Yb524P42oH63ojxzWrnuETv26zq0ZX22YXjw3Xhv2z68tz47tX33Iv01n/z03r//frt2KX5453lyH7wzXHvzG3rv1H79ury0XftyGf26s/57c776LH14a/75qX03aTz253r1Jzxz3TiwW/99+b79OL36MD66bby15CV7KiMAAAAOXRSTlMAgAwK8/PWqoF/Ixbz8+jo6OjZ2dnT07+/v7+qqqWlpaWDgn9/f3JyclJSUlIjIxYW8/Pz89PTcnKo/UKCAAACL0lEQVQ4y33QB3OaYBzH8b/iNnvvvXd3SWJtrVpsmzoqrTERQVCTqImavbpeeR94eIgK+rnn5PT3vec8oN76m/FBW1ubbXD87To0tWmy/axhM22CEbOp/VuDdpMZdJY7tg10LEMDE/p1d3sXHTUh301Qi7LvNmWn4In9fQt20Mx6Wpol3YonlUp5ijc3V9/rFFOYZwV35s5kMpn/RevlklgnfktzB8gVbSR5gM0BsvX8EPlbzGf1Yf4Qe7aFwmlGlmGYokHIqKZR+CqhyuvDTIJJMOgkXgO4PhMZZWNZ/IlDbXTBwhcCh/cS+q9Z6R6H2rgAEzvEkbJVHgWaFh4rtOxIGydgqC5EeCmblXgah4GdAB6HoCdAHOORFQVBZElI9IDlK4HDkwtBkoSLE1p2rI0WsHBcjIvJcMjyvCjyPIvDGGGBXo7zcl50uCq+MZcrlXI5fGNV3hS9MOwlHvCNhYIoFgr4xgdtHIbJsCIYDp7SqlKJVp2GiUlYDBJayPNaqI2L4PITZ7TOmTa6APr3VEYh2foBYManOteHVZ9vT9lmUOh+2Ty89vn/ydMLNyDzccxP61XYO3maB5m5Kx5R/DYo2fNIJN5lBsUqisqRcjlyffmjxuWf29s7fxmNq6ByvmvJCZrRDy2MwhNqLKraj+6jg58IeoxRUMsZ/Wgo6oQGa92fDHSvgQ7lsKbT6VA6hI76tDooMOJ2DIRqDDjc0NTG0tRIn9XaNzK1tAF1/gPvLVPTW00jhwAAAABJRU5ErkJggg=="
+
+/***/ }),
+
+/***/ 57:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/h.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABWVBMVEUAAAAg0IsRuHwh14Uh2YYUv38j2YUYx4EZx4ASun0f0oUZyIEg14Yg1IcZvoAXv4Ar1Y4d0IMVv38QtHwh14Yf0oQUvX0St3wi24cPtXwj2oYdzYMWwYARtXsbyoIYxIAQtHwXxIAdz4Mk24YRtXwWvoATt3wj3Isj0YsSt30Rtnwk24cj24ccyoMcyoIPtXwPs3z///8YxYARt3wXxH8Tu30Wwn8d0IMczoIe0oMUvn4g1oQf04Qh14USuX0VwH8ZyYEYx4Af1IQTvH4ay4EVv34bzIIQtXv8/v1NzJ3u+/Xo+fLJ8eGI4r1n2qsh2YX4/ftn1axCzpctzYsryYofzoT0/Pnl+PHg+O7T9OfF8d+/8Nyw7NOq6tCX58WO4MCF4LyE5LuA5Llu369E1Zgw0o0uxYwn0okozogawYHQ9OWz7tWj5cxw3bBN0Z0805Q80pM7x5MjwIbnCLovAAAAMXRSTlMADICogIDz89mqf3JSIyMWCfPz8+jo6OjZ2dPT09O/v7+lg3JyUlIWFvPzv7+lpaWltOHR7AAAAkJJREFUOMt1k2dz2lAQRVeiG1Pce6/pEUWiV0kQDJhmx73X9OT/f8jy3pN4CDiz472+e8YamQH68W3Z3s07nfPvbVs+GMmeffEwfZgmYFi07w3VBLszbcFpFwa98WlyS6aTXXCRPD1u9exJTuKzHXiCtmSB9LgKOOZGbEFOtBVShRQBgwFG8rsNTMZSqXgqjkNlls09Zr5HyhQYhsgyeyNhJq4Q4go9YMDh9oxAH0y157vzk0bl7PZZGYQ8fH9CiSlK7OFYolTulBiF9Ep3T+yjuEnbB8nk4oiZjxgomygu0fgi9fgei+lH99WGVD65eiTXJQCfrqu6inPKmff6728s3uoEH3i7UleuceLXPwdGrNM/5IUPqppTczgvFc48NkK5rRI+wmrO4Kc0hMs8Pa6Cm4Z8Lp+/GvQO2tjnUHaDK9+jVrZ6LePkAleIo3XOq+XLtnlxgTvUR6d+U0XnrF6r1Ttc74Y1GiKhCAHDKYqNToR2+IOwBhsRC7/IY28s7QZ4ZTkiR3BkxgX9l78aHb17wS/388Rep9lf+wGW5ayc7XEtUapZnmUAcGhZLYujEV7ND7nF9w4UA5MJhpbQtKZk8CPRYzIAiCPBcW2KVa510C/XbKJo8rfCvHIzUTT6WQEIO1FKMVosRv99oTxx3Q4wHJlMNBMdiQgmHlPEYMUDPYKeMCMTzuDQjeDyBIFHxOMwMiJY2J0b5s3twgCC+AYvpXAJh+23ogDDCIgrJY4VMQAj8W9/Xl+YmlpY/7Tthz7+A4NXGMEljW69AAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 58:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/m.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABCFBMVEUAAAD/bar/UJH/fLL/Y5//SYv+UZD/Yp7/Y5//Y5/+UZH/ebL/cqz/dq7/UZH/eK//VJL/erT/V5H/da7/TY//baj/VpX/ebH/cKr/frT+SIr/e7P/bKb/Wpj+Soz/fbT+UZD+TpD/fbP9SYr/baf/fbP/fbX/aaP/Xpr/SYv+SIv+SIr/d67/////c6v+UJH+TI3+Wpj+Yp//da3/aKP+To/+ZKD/d6//b6j/aqX+XJr+VpX/bKb+U5P/e7L+X5z/ZqL+XZr+YZ39SYv/eLD+1+b/lL/+fa3+V5b+0+T+6fH+2Of/2uj/car++/z/6/P+0OL/9Pj/5/D+4uz/irf+hLP+f6/9eKrwtY/XAAAALXRSTlMAC3/z8/Po2b+lgn9/UlIjIxYWqv7z8+jo2dnT09PTv6qqpaWDgnJycnK/v6oE8FzEAAAB90lEQVQ4y33Uh3LaQBAG4JXoYLp77yXJYTo6R6YIGQKGuCXx+79J9upI6PA3N3fL7T+sGAYgrHh9frIXi+2dnF8XYa3y1UE/4OCqDCZWLtb3/b4fiMZyFkTkd3yl5/dw8XMnDyty2DTxc+Gx1dZaP4Ljq61aq8ZhgSt0VkHbqH1pQ38OedGbrOgtuVpePuCuw03eyIq3ibN0lktn1xKDHeGdRLzLFh9e3nJcB5dLDNg9ri32HV26gjGoepcYPKQS3r/8xm2+EOZYU5e6uOghQJHSNm0zhMzoH7YpM0J4DzdahBuWUcE2C+oLDOr6BjJDRY9+RovnxQvWupmBdJcbdjEYpXrDNKS6Sugd0ZwFlRTEmwo+XvMv2xR8Rl3HIe5xTY8FPR3ECw+DeKhgyvMG3gCXp0c/CWw063EpSItiNBgRA7wW/TRkRorpHXUzA7cPCiGvD//YprwSoutbKDUUzDRYUF9gUNclgCNVs6li9OwJ14yNVr0jAMj+koiB6mUxWNn+KZiCsrVdAWTLVx/R3Ids2cBYyUduGv1xTUUnaQFXeBQan9OQz4ZsFECy779kg3YaanTuO7j0eRr8kzrrrHVmQZC9WTfaVHO1QtKUSxYgwrIT43p9XB/jkmfCtsCkkj0eBxxnK7BW6e7i234isf/94q4U7vwHj7kGFUSlpIoAAAAASUVORK5CYII="
+
+/***/ }),
+
+/***/ 59:
+/*!*************************************************!*\
+  !*** H:/打卡app/house-app/static/icon/shenpi.png ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,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"
+
+/***/ }),
+
+/***/ 592:
+/*!*********************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/util/province.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12404,10 +12662,10 @@ provinceData;exports.default = _default;
 
 /***/ }),
 
-/***/ 518:
-/*!***********************************************!*\
-  !*** H:/house-app/uview-ui/libs/util/city.js ***!
-  \***********************************************/
+/***/ 593:
+/*!*****************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/util/city.js ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13918,10 +14176,10 @@ cityData;exports.default = _default;
 
 /***/ }),
 
-/***/ 519:
-/*!***********************************************!*\
-  !*** H:/house-app/uview-ui/libs/util/area.js ***!
-  \***********************************************/
+/***/ 594:
+/*!*****************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/libs/util/area.js ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26471,10 +26729,21 @@ areaData;exports.default = _default;
 
 /***/ }),
 
-/***/ 534:
-/*!*********************************************************************!*\
-  !*** H:/house-app/uview-ui/components/u-parse/libs/MpHtmlParser.js ***!
-  \*********************************************************************/
+/***/ 60:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/y.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,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"
+
+/***/ }),
+
+/***/ 609:
+/*!***************************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/components/u-parse/libs/MpHtmlParser.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26485,9 +26754,9 @@ areaData;exports.default = _default;
  * @author JinYufeng
  * @listens MIT
  */
-var cfg = __webpack_require__(/*! ./config.js */ 535),
+var cfg = __webpack_require__(/*! ./config.js */ 610),
 blankChar = cfg.blankChar,
-CssHandler = __webpack_require__(/*! ./CssHandler.js */ 536),
+CssHandler = __webpack_require__(/*! ./CssHandler.js */ 611),
 windowWidth = uni.getSystemInfoSync().windowWidth;
 var emoji;
 
@@ -27018,10 +27287,21 @@ module.exports = MpHtmlParser;
 
 /***/ }),
 
-/***/ 535:
-/*!***************************************************************!*\
-  !*** H:/house-app/uview-ui/components/u-parse/libs/config.js ***!
-  \***************************************************************/
+/***/ 61:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/z.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,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"
+
+/***/ }),
+
+/***/ 610:
+/*!*********************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/components/u-parse/libs/config.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -27121,14 +27401,14 @@ function makeMap(str) {
 
 /***/ }),
 
-/***/ 536:
-/*!*******************************************************************!*\
-  !*** H:/house-app/uview-ui/components/u-parse/libs/CssHandler.js ***!
-  \*******************************************************************/
+/***/ 611:
+/*!*************************************************************************!*\
+  !*** H:/打卡app/house-app/uview-ui/components/u-parse/libs/CssHandler.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cfg = __webpack_require__(/*! ./config.js */ 535),
+var cfg = __webpack_require__(/*! ./config.js */ 610),
 isLetter = function isLetter(c) {return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';};
 
 function CssHandler(tagStyle) {
@@ -27225,6 +27505,122 @@ parser.prototype.Content = function () {
   this.list = [];
   this.state = this.Space;
 };
+
+/***/ }),
+
+/***/ 62:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/i.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABhlBMVEUAAAAdy4YRt3wYx4EQtXwg1YQSun0Zx4Eh2Icf0oUTvn4g14Yg1IcZvoAVv4Ar1Y4j2oYi2IUd0IMVv38Rt3wQtHwh14YUvX0St3wi24cayYEZxYAj2oYdzYMWwYAj24cbyoIYxIAQtHwj24YPtHwdz4Mi2oYWwIAk24YdzIIWw4ARtXwWvoATt3wr6pUr1ZUf0oQf0YT///8d0IMe04QczoIayoERuHwg1YQSun0YxoAQtnwZyIEWwn8by4Eg14UbzIIf1IQUvX4h2YUXxIAVwH8TvH0Uv34Tu334/fvw/PcoxYnn+fL7//3e9+3N8uTL8eKN4cFl3apM0p07y5Qex4QcwoPk+PDD8N6u69Oo58+T5sSS4cOI376A3Lp727Ze06ZQ0J9DzZkux40p1IkixIYjzIUfw4Ts+vTa9evW9unT8+e87dpz2bJv17BY3aNVzaI+1ZU2x5An0IgawYLj9/CL57+K3b6A5rmA4rlt4q5p1qxp06xb06VU16BFyJkwwo0bvYH/QssMAAAAMnRSTlMAFoDz1qqqpX9/f1IjIwwJ8/Pz8/Pz6Ojo2dnZ09PTv7+/v6Wlg4KCcnJyclJSDAzo6D9yRfEAAAKESURBVDjLddQHVyIxEAfwWQRBBOy99653oSMLi7CgAiIq2HvBctbr/e6bO5uwSxbhZ56ZZP5sCLwH6NkmRwa6Ghu7BkYmbVCVMN4b5fSOCxVj85amcDgcDUdxsDnaZJl/m6tvDyt8YZ8CJ1q315fnLD4uxNcW4DWYfBG6j1MEhzYjUwMXNEVcEReFhQpLujaBps5V8vzj2+OFS6dOu0dp72KXoNQjXThdThxYFG+08N6pct0RZsPJe7fADi7tfCFFqQtdkh4uNDvdThxuHGtEteHGtbbfLGBwzK35SDT7bp0xDPZVCUqSW9I6fQA2SQpJIRwS4o6W9GwwFeJ81y5zxe16Qh7PFJg9nNAOy6388ZQxw6BufZUhKL1BF0FPEAdrDEJ3UBO4yl4TZmczqNcNNcVQMBB4TpGSg0AulwvgNuvVQE1AtbnK5T6cX56enMsiaynBHi23wuWyhf00TpktMca6PTAUY3JrXG79U6Z4/TORtYfALDLHhLN1yOb03U1ejOGfaIZpUaliIv/AVXkbH4Zv+fCMnIrUNNhZ8UI420n8d5Lcvc3vkCOZ9u0A/aIsyvJPPvgZg3uX2ULygWBQ0Q8AEwk5IcvHRH/06uUeubnH00/lBJrAoNCyhO6J/jIru6y6zSew2yIAsirBZIroPp519eORla4VFI6OpXg8/pLhk9n8QVp5wZaMvaUOB1Cz8WXF09419xUmC5u/zzG2jA+ZhSKrv+jf06/jrwdHDyd///vjeOQy3bWCptav8vq9FBY46FzL/0jVYq88QGGuAXgGbFZkgDJznd5F7yKFhVp3zsEbDkPrYplWgwMqEQxGPmY0CFCVfWZ02NjWZhwenbGDziub9CJM0IEM7QAAAABJRU5ErkJggg=="
+
+/***/ }),
+
+/***/ 63:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/j.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABX1BMVEUAAABtuv9Nof9puv////97yf9jsv9Rov5JnP51w/9Pov5vvv9Xqv9jsv92xP9Ro/94xf9UqP91xP9+y/9Wqf9Lnf9Hm/55x/9wv/9+yv9ltf9gsP97yv9suv9aq/99y/9mtv9gsP9InP59yv9ot/9erv5JnP19zP97x/96x/9uvf9tvf9Knf9Imv////9Pof5crf5Mn/52xP90w/9wvv9mtv9Ro/54xv9ktf9fr/9Tpf5zwf9aq/5hsv9erv9Yqv5Jnf1WqP5Vp/5ouP56x/9gsP1js/9ywP9quf9uvf9ruv57yP9Lnf5su//p9P9tvP9vt//6/f/t9v+12v9jsf+v1/9msv/3+//Z7P+83v+Wyv/S6P+Mxf/g8P/W6v+JxP+Av/9zuP9rtf9ps/9jsP70+v/L5f/I4//E4f+i0P+RyP+Fwf97vf94u/9gsP/x+P/c7v+l0v+dzv+p1P6p0//2RrhYAAAALnRSTlMAC4AWAYDz6NaqqoGBclJSIyN/8/Pz8+jo2dnZ09PTv7+/v6WlpaVy8/Pz83Jygt3hgAAAAtxJREFUOMt9lAdX4kAQxxeQ5oGIvfdyNa5CJJEUyiWUQ+m9N0Up3ul9/3ebTYDkRH/Zx87b+WfY3ZkM0LJ4fry/uby8uX98vgjexWDc+aVix2iYKdMZv/z8j89G3VvdwrpnBusLQMuc0XM1wXPlQUOxl+Y0f2u9cuF1NLnQmMwIq04Vz+pS4Y67XWqs05hL3gmhMN1ujNioV8XS5BzekIKb5JrFJJH6m6PD7hB6pJ+QVzmRbsMtE6e4xj2ByacTHBl3K2zI2/wUcUfQCGe4pwIx5WHAUXE3ciA+4Xx8i8Qjkego83JHaKlVkDQSR3w1SAFvJdjGM/GWapu8xUghd6MSozQxi7oYxeyiegmHg+FgUMz1km9k3SwkkQ8JwovAHpQRuUQ6r5HdPWZoColwIDs4IccIMPcnNZH9fuIgS044AQcUhhS4Qe++T5eqWFbuc6VatgU72EeR5AHYkoVCoqzEqZdTxaEcO1mkWUoUKZGitoBJxHDp6c5gK91FRqFWzVdoVhQzYiZjAiYWQw8n152UrHICDvs5SAusjAlss6zACoLAaRKY5bJJKTcJRpDZBof0GA6ikpApQOWl/ADKzkNwCsdkSi85qcgQzdfxjqsclB54CuyKbJR9xtXVRnOBwWcmiHSTqDPYbQdOBgOzhExvkEnQLWSUWrW7zgPxKvudAOwxPMPzsJKc5KRXTqByFB65RAUdi+ERewAAG4+BqlSnmG43VyQKFbSDCu9Hj00q3BU/hlelul3Mp5V3OpJvBTcXW0DBz4xT/dAZX3+dlzw2+eMy34wJMLBelnLcad/j2+nzAbRsVnqAA9nXN9doIIOHw1IL+gNMs/TY4Px4zQEU9Ndq/HxAmgJ+f+AGL+inLWX+4gPmVW1KN/+BTqdpe/qLy5lc6OeAFof5MnYZQ0OjMztmtGb9qi8W88V8aCjzql43u9nrLT4VFr0BvIvz+9mRZW3NcnT2w6n1/APjAyVhb2mddgAAAABJRU5ErkJggg=="
+
+/***/ }),
+
+/***/ 64:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/k.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABXFBMVEUAAAD/ylr/////u1D/1Gv/0mj/zGH+rj//wVP/0Gf/sUP/127/tEv/1WP9qzz+t0n+s0T+yF3+wFT+t0j+v1L/0Wf/ymH9s0X9rj//1Wz+wVb+vVH9qjv/02v+xlz+uUz/1Gz+wlf+vFD8qzv+z2b/zmX8sUL8sEL/1Wz+xFj9u0/9qjz+yF39qzz+1Gz/1W79qjv/123+rD/9rDz9qjz////+zmT9v1T9uk78r0H+z2b+yV/9vVL+0mn+zGP9wlb9rT7+0Gf+y2L9vFD+ymD9t0v9sEL9xFr9tkn8qzz+xlz9w1j+x139uUz9tUj9tEb8sUP9tEv9s0T//vz/79b9r0D//fn8rD3+xGv/8tz/6sj+1pX+wWP+u1X+uU7/+O3/7M7+26L9rD7//Pb/+vL/8+D+2Zj+1Yz8zoL+xVr9sUP/9+r+6cD/4rb/3qz+ynv+yG/9yWf+zoT+zW59nSMKAAAANXRSTlMADAEj839/f3JSUhYWCfOBf/Pz8/Lo6Ojo2dnZ2dPT07+/v7+qqqqqpaWlpYODgnJyI/PT0x9NcSUAAAJtSURBVDjLjdSHb9pAFAbwZ0YghOy9995tnWDiYAiQs3GKqTEGwgzZO2n/f6lnH4YDnKo/PXFP+j6wjAXQ6nB/Y2HS5Zpc2Ng/hC/17M2eUmb3emxrjNt12sblZjp73aMRG6PdbTWHOxJsiAQjeOq720H3eleOsOBREE/7udJLfd7q0T+sNj+zKxQ6C53hCdnqatwHLlliZzE8rXuofkfMWOzEFDuJmfCChzrHGHJhUru/ZtulX04I8+I9gxcmjbXxh2SDxjPaSZg+03bFKyO6SFzs4OJcAiUQStyxdjQcGvkcgPPxET0ihKq2xfQnIpzglU1IZ23dywjJSJa9sCnLgiwI8oveWdX15w+B5JuwKFhQR/FOaFiEqWOL0FEsHDdMwdD/FYdghLcct7ZutMsHvmEEpnk+ykfxtBbTV+Xi7/dSPMqTfBqWohae7n3k8sbxVg6QcAm2ApYo/ehyOlmqIgm3wGtXvCnnyaJVCnEz9ILzpyVAPeIifslfs5VSVRPN0AkwH6+jipf3LHsbKGoPD+y1aGTzANAvxvFuvFDFdzadK1yVSxX2WTSiflz0DycJqpgvsa9Fnc1r+D1iUkwO+wHrV5IKnqRIfTvFV/2GbDkRRwPkxzWuqKqiKspts1ktaaRXEBVFGWfA5FNVNaWmUjmq+Va+0/TKZU5UMR/UDaTqlF9Nxk2IylPq6WkALI61cztciuPOufM1B/Untc61yXAZAz7We4Hi8GRIIcyFDfgge8bjgFa+iXA2nMUTpk34oAPj+Zat1aSaJGWlLB5JqvV5GLDj3/0hUb7v+uFLzoPt5Zm+vpnl7QNna/IXmak1ZVXMSJQAAAAASUVORK5CYII="
+
+/***/ }),
+
+/***/ 65:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/l.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABOFBMVEUAAAD/aWn/VVX/d3f/TEz/fHz/Y2P/SUn/Y2P+T0//UVH/eHj/VFT/gID/VVX/cnL/dXX/bW3/Vlb/eXn/cHD+VFT+TU3/fn7/ZWX/YGD/e3v/bGz/Wlr+Skr/fX3+SEj/fX3/aGj+Xl79SUn/bW3/fX3/cHD/fX3/aWn/Xl7/SUn/eXn/c3P/TU3+SUn+SEj/d3f/Skr/////cnL+ZGT+VVX+UFD+W1v/dHT+YWH+Xl7/dnb+WFj+UlL+Tk7+Z2f+S0v/cHD/enr/b2/+TU3+a2v/aWn/eHj/bW39SUn/bGz/fX3/eXn+19f/Zmb/9PT/xcX/nZ3+jo7+hYX/7u7+ior+h4f/+fn++Pj+5+f+29v/ysr/q6v/gYH/8fH+z8/+wcH+tLT+sbH+pqb/mZn+kJD+vr7/u7t1jMaMAAAAMnRSTlMAFoB/gPPz87+qUiMjDAwJqvPz6Ojo6NnZ2dPT09O/v6WlpaWDgn9ycnJyUlL+2dmqf9E2ax0AAAJZSURBVDjLfdOHcuIwEAbgNb0F0nvv7RqYYFFiQg4MMb2GkF7u3v8NsraKTYB8s4NW+hfh8QwwLHi0vbnkdi9tbh8FYSLpYFXP6Tlu9UCCcaac7ly5nCvnLG7nFIw4m9PKWhlLM/B+7gy+cGopQUtpWKx3gl1kOqWY57goWGJFvyNgmVa+MW373di3xK+f2w6vYjG92dRZf4WFzTl7L/NXlvdBLYpqg3fb4Tx9S4fXQucuKtx1rfNDQNJMkWv0oja9hghmJBzcv+EamD7WH6Pm0sbPBj0v3hT3cXAtz7R6RpbXcaSt5xvGnS2erQEEC5z5fP/yONnWC4X/5nPmC3kaBuFYZT6ipntV1XVVvae7j4JawFLVY9hR1apaxRpExSSbQwOV2QGfbKpWa2bSf3lVZFl5femb21rVyDD1wbJMxegVmsxodB9j22XwsO6BBm/YEpkQ+Y3uHwiNPeAhFA4yFUIqvMdBygMrrLumQb3T1QnRu5063V+zeAV8SYrUaJBk6BdrhG19sMuTOr2x29KTyVyry7Y83YWTBNMRz5hIiGfs8PQEQrwVacXeciGA9UQ6kTakbmnaT6T7tLtN8WwdABxprsnueXpiTVNEDhyUZuMoHTcm2Z3svmYaAzOblQA54oJSseYqMevcAYbwQjyTiWfoUeuZ/rmeW3HLQhhMgcwQoihk+CQAjONiROYig0V7Bwj+oaHLi0sssfrBEvFfTuSPgJ3rx9/xXPBFYDE7xmIARoT/eEvZbClbwmKr1xWGcSTXRslmwyXBRKHTva2fXu+vrb3T0HDyCdLyIUtHkHUVAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 66:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/static/icon/n.png ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAABHVBMVEUAAACubf+tef+seP+lTf6nVf+mTP+sfP+pY/+tff+oXf+lSf6pY/+rb/+pY/+oUf+veP+oVP+uev+uV/+qbf+mR/6ref+qcP+mTf6pbP+sff+oZv+oYP+lSP6sff+mSf+ref+rc/+oV/+mTP+nVv6lS/6nVf6mVP6pZf+oZf////+rdv+nXP6pZv+qc/+oX/6oY/6lTf6lUf2paP+reP+pbP6mVv6lS/6qdP+qav+oYf6re/+nWf6pcP6mU/6lT/6kSf2mUf68ff6nV/6nWv2qbv+/k/+/lf/SrP7v4v+qcP/9+/758/717v7r3P7Ssf66hP6zd/77+P6+jf759f/w5v/dxP+1f//p2f7cv/7Trv7Mof6ybv65eP37+f/R/LUDAAAAKnRSTlMAC4CoqICA8/PW1talgXJSIyMWFvPz6Ojo07+/v79yclJS8/Pz8+jo2dkeZwpoAAACRElEQVQ4y32UB1PqUBCFl16liL37+otBYhLAG14EKaEKIvby/v/PcG/LEAh+s8Pes+fMXggzAS+5o9BeIhZL7IWOcrCS9WCiNkciuA5+BIKxmmnWzLloLBiAJU62TB+2TmCBoHnmYp6ZWOIc9F4bOrtkc2yXWG5HQvPXh6iBeEJyFpq79/xL3NtPxcB0ul2n62B1GTPTts9tNE7FF9we2BTnXlng3rEH9mBgb/OvuWZ3bKzOg7LEQwcNZI39HxudcgerrPhA51gb63RhWSDN/uNjX56ZgWm6cpeUSRmLcOvGodq5EUEUVO8C5AgxiEFhzt0TIY5DyNN/JpmHHyQHGUPCnIlhTEejqWFMmHTNDKSLEubcFse0jYu3TLpmGva9QVKcsMVF4g3uw19Nwjdq2lBRhprY6Jp/IO4N9jQyfH4eFrUek5ZmcTMOcUvCf/XUIhbW9I4HJXFIWlbJKlHEc5zR80w8x5IkCQfuWRGMX17G2LzBA0irEsUHtaSWsFQ1DZmvg5IM5FW1rbYpzHlTuVbfmMQj13mA5D8Bc96lemdSqiQARFqUSqvCnP5rj/HaZ5LOsVoRDBZ+VDiKDzimwW8FQCIi2F/O9ek2vhAJ/L5iNEeLuVGTO78CwMjiWb/SdfWj6eGjreMYzSwIIrrLtX6N5e0RcAnTAcLNul7Hcnt4/iUVvhDUL+pYvCPYwt53ZPRiBVFYILtT9WEnC0sEot8b1Wqj2sAS/Wc0AH4UoqnGHKloAVaSPw4fpjY3U4fh47zX+QQ1ofeZGSnkngAAAABJRU5ErkJggg=="
+
+/***/ }),
+
+/***/ 99:
+/*!********************************************!*\
+  !*** H:/打卡app/house-app/utils/api/info.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _tool = _interopRequireDefault(__webpack_require__(/*! ../tool.js */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var request = _tool.default.uniRequest.bind(_tool.default); //赋值请求方式，并把this指向tool
+var _default = {
+  /*考勤打卡
+                 POST用户进行打卡 传参数 type     //1正常2外出
+                 */
+  qianDaoPost: function qianDaoPost(params) {
+    return new Promise(function (resolve, reject) {
+      request({
+        url: 'kaoqin/qiandao',
+        method: 'POST',
+        params: params,
+        success: resolve });
+
+    });
+  },
+  //审批列表
+  ywsp: function ywsp(params) {
+    return new Promise(function (resolve, reject) {
+      request({
+        url: 'ywshenpi/index/ywsp/',
+        method: 'get',
+        params: params,
+        success: resolve,
+        fail: reject });
+
+    });
+  },
+  //审批详细
+  shengPiXiangQing: function shengPiXiangQing(params) {
+    return new Promise(function (resolve, reject) {
+      request({
+        url: 'ywshenpi/xiangqing/',
+        method: 'get',
+        params: params,
+        success: resolve });
+
+    });
+  },
+  //提交审批
+  submitShenPi: function submitShenPi(params) {
+    return new Promise(function (resolve, reject) {
+      request({
+        url: 'ywshenpi/tgshenhe',
+        method: 'get',
+        params: params,
+        success: resolve });
+
+    });
+  } };exports.default = _default;
 
 /***/ })
 

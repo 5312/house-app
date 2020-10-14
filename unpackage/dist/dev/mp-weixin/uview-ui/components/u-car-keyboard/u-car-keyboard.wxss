@@ -1,0 +1,129 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.u-keyboard-grids.data-v-be80e900 {
+  background: #d7d7d9;
+  padding: 24rpx 0;
+  position: relative;
+}
+.u-keyboard-grids-item.data-v-be80e900 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.u-keyboard-grids-btn.data-v-be80e900 {
+  text-decoration: none;
+  width: 62rpx;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 64rpx;
+          flex: 0 0 64rpx;
+  height: 80rpx;
+  display: inline-block;
+  font-size: 36rpx;
+  text-align: center;
+  line-height: 80rpx;
+  background-color: #fff;
+  margin: 8rpx 5rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
+  -webkit-box-shadow: 0 2rpx 0rpx #888992;
+          box-shadow: 0 2rpx 0rpx #888992;
+  font-weight: 500;
+}
+.u-carinput-hover.data-v-be80e900 {
+  background-color: #b9bcc3 !important;
+}
+.u-keyboard-back.data-v-be80e900 {
+  position: absolute;
+  width: 96rpx;
+  right: 22rpx;
+  bottom: 32rpx;
+  height: 80rpx;
+  background-color: #b9bcc3;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-shadow: 0 2rpx 0rpx #888992;
+          box-shadow: 0 2rpx 0rpx #888992;
+}
+.u-keyboard-change.data-v-be80e900 {
+  font-size: 24rpx;
+  -webkit-box-shadow: 0 2rpx 0rpx #888992;
+          box-shadow: 0 2rpx 0rpx #888992;
+  position: absolute;
+  width: 96rpx;
+  left: 22rpx;
+  line-height: 1;
+  bottom: 32rpx;
+  height: 80rpx;
+  background-color: #ffffff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.u-keyboard-change .inactive.zh.data-v-be80e900 {
+  -webkit-transform: scale(0.85) translateY(-10rpx);
+          transform: scale(0.85) translateY(-10rpx);
+}
+.u-keyboard-change .inactive.en.data-v-be80e900 {
+  -webkit-transform: scale(0.85) translateY(10rpx);
+          transform: scale(0.85) translateY(10rpx);
+}
+.u-keyboard-change .active.data-v-be80e900 {
+  color: #ed7040;
+  font-size: 30rpx;
+}
+.u-keyboard-change .zh.data-v-be80e900 {
+  -webkit-transform: translateY(-10rpx);
+          transform: translateY(-10rpx);
+}
+.u-keyboard-change .en.data-v-be80e900 {
+  -webkit-transform: translateY(10rpx);
+          transform: translateY(10rpx);
+}
+

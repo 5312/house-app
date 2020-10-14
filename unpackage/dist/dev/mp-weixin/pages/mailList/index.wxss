@@ -24,11 +24,16 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.header.data-v-56a73df1 {
+  font-size: 32rpx;
+  font-weight: 700;
+}
 .list-cell.data-v-56a73df1 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
@@ -43,11 +48,20 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
+  border-bottom: 1px solid #ddd;
 }
 .list-cell .leftHead.data-v-56a73df1 {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50%;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  -webkit-flex-shrink: 0;
+          flex-shrink: 0;
+  margin-right: 40rpx;
+}
+.list-cell .textname.data-v-56a73df1 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  margin-right: 20rpx;
 }
 .list-cell .textname .name.data-v-56a73df1 {
   font-size: 32rpx;

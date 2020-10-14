@@ -434,7 +434,8 @@
 	width: 0.23em;
 	height: 0.23em;
 	border: 0.05em solid black;
-	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
 }
 ._q::before {
 	content: '"';

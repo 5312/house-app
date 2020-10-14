@@ -1,0 +1,18 @@
+{
+  "usingComponents": {
+    "a-navbar": "/components/a-base/a-navbar",
+    "u-form": "/uview-ui/components/u-form/u-form",
+    "u-form-item": "/uview-ui/components/u-form-item/u-form-item",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-select": "/uview-ui/components/u-select/u-select",
+    "u-calendar": "/uview-ui/components/u-calendar/u-calendar",
+    "u-cell-group": "/uview-ui/components/u-cell-group/u-cell-group",
+    "u-cell-item": "/uview-ui/components/u-cell-item/u-cell-item",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-swipe-action": "/uview-ui/components/u-swipe-action/u-swipe-action",
+    "u-row": "/uview-ui/components/u-row/u-row",
+    "u-col": "/uview-ui/components/u-col/u-col",
+    "u-steps": "/uview-ui/components/u-steps/u-steps",
+    "comadd": "/pages/home/reimbursement/components/components"
+  }
+}

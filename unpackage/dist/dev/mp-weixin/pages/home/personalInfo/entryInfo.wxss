@@ -24,12 +24,22 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.entry-info.data-v-42e6d846 {
+  padding: 20rpx;
+}
 .entry-info .header.data-v-42e6d846 {
   height: 240rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
 }
 .entry-info .header .name.data-v-42e6d846 {
   margin-top: 14rpx;
   font-size: 30rpx;
+}
+.entry-info .content.data-v-42e6d846 {
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
+  overflow: hidden;
 }
 .entry-info .content .line.data-v-42e6d846 {
   height: 80rpx;

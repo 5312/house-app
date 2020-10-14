@@ -58,7 +58,8 @@
   right: 90rpx;
   top: 50%;
   margin-top: -60rpx;
-  border-radius: 24rpx;
+  -webkit-border-radius: 24rpx;
+          border-radius: 24rpx;
   font-size: 50rpx;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);

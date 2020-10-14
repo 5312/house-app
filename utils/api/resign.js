@@ -33,5 +33,16 @@ export  default{
 				success:resolve
 			})
 		})
+	},
+	//店/组业绩
+	dzYeJi(params){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'juece/zdyeji/',
+				method:'GET',
+				params,
+				success:resolve
+			})
+		})
 	}
 }

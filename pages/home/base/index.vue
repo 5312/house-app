@@ -95,6 +95,7 @@
 </template>
 
 <script>
+	import api from '@/utils/api/resign.js'
 	export default {
 		data(){
 			return{
@@ -161,11 +162,12 @@
 						this.navbarTitle="组业绩"
 						break
 					case "shop":
-						this.rankList=this.rankShopList
+						this.rankList=this.rankShopGroupList
 						this.getS(3)
 						this.navbarTitle="店业绩"
 						break
 				}
+				console.log(this.rankList)
 				
 			},
 			getS(type){
@@ -174,19 +176,16 @@
 				this.getSRank(type)
 			},
 			getSCurrentMonth(type){
-				this.$tool.uniRequest({
-					url:"juece/zdyeji/",
-					method:'GET',
-					params:{
+				let uThis = this
+				let data = {
 						id:this.$tool.uniGetStorage('userId'),
 						bumen_t:type,  //3店4组
 						bumen_id:this.userInfo.bumen_id,
 						datetimes:this.currentMonth
-					},
-					success:(res)=>{
-						this.currentMonthPerformance=res
 					}
-				})	
+				 api.dzYeJi(data).then( res => {
+					uThis.currentMonthPerformance=res
+				}) 	
 			},
 			getSAll(type){
 				this.$tool.uniRequest({
@@ -213,7 +212,7 @@
 					},
 					success:(res)=>{
 						this.rankPerformance=res
-						this.rankPersonList.forEach(item=>{
+						this.rankList.forEach(item=>{
 							for(let i in res){
 								if(item.prop===i){
 									item.value=res[i] || '0'

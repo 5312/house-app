@@ -2,6 +2,10 @@
   "usingComponents": {
     "a-navbar": "/components/a-base/a-navbar",
     "u-gap": "/uview-ui/components/u-gap/u-gap",
-    "a-section": "/components/a-base/a-section"
+    "u-form": "/uview-ui/components/u-form/u-form",
+    "u-form-item": "/uview-ui/components/u-form-item/u-form-item",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-keyboard": "/uview-ui/components/u-keyboard/u-keyboard",
+    "u-button": "/uview-ui/components/u-button/u-button"
   }
 }

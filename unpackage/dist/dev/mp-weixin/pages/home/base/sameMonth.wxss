@@ -24,6 +24,18 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.text-blue.data-v-bce82b7a {
+  margin-left: 20rpx;
+}
+.blue.data-v-bce82b7a {
+  color: #479AFE !important;
+}
+.font-nobold.data-v-bce82b7a {
+  font-weight: 500;
+}
+.riie.data-v-bce82b7a {
+  margin-left: 40rpx;
+}
 .same-month .header .time.data-v-bce82b7a {
   padding: 0 20rpx;
 }
@@ -43,7 +55,8 @@
 .same-month .content-person .card-wrap .card.data-v-bce82b7a {
   padding: 20rpx;
   margin: 0 20rpx 20rpx 20rpx;
-  border-radius: 8rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
   line-height: 1.6;
 }
 .same-month .content-person .card-wrap .card .title.data-v-bce82b7a {
@@ -51,11 +64,13 @@
   color: gray;
 }
 .same-month .content-person .card-wrap .card .box .right.data-v-bce82b7a {
-  width: 120rpx;
+  width: 200rpx;
   padding-right: 6rpx;
+  margin: 20rpx 0;
 }
 .same-month .content-person .card-wrap .card .box .right .value.data-v-bce82b7a {
   color: #6E9FC6;
+  white-space: nowrap;
 }
 .same-month .content-shop-group .info.data-v-bce82b7a {
   padding: 20rpx;
@@ -65,7 +80,8 @@
 }
 .same-month .content-shop-group .card-wrap .card.data-v-bce82b7a {
   padding: 20rpx;
-  border-radius: 8rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
   line-height: 1.6;
 }
 .same-month .content-shop-group .card-wrap .card .left.data-v-bce82b7a {

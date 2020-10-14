@@ -36,7 +36,8 @@ page.data-v-4586967a {
   height: 800rpx;
   background: #fefefe;
   margin-top: -80px;
-  border-radius: 20rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
 }
 .wrap .conter .logo.data-v-4586967a {
   display: block;
@@ -77,7 +78,8 @@ page.data-v-4586967a {
 .wrap .version text.data-v-4586967a {
   background: rgba(136, 136, 136, 0.68);
   padding: 10rpx 20rpx;
-  border-radius: 30rpx;
+  -webkit-border-radius: 30rpx;
+          border-radius: 30rpx;
   color: #fff;
 }
 

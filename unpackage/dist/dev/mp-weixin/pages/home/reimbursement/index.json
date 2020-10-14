@@ -5,6 +5,7 @@
     "u-form": "/uview-ui/components/u-form/u-form",
     "u-form-item": "/uview-ui/components/u-form-item/u-form-item",
     "u-steps": "/uview-ui/components/u-steps/u-steps",
-    "u-icon": "/uview-ui/components/u-icon/u-icon"
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-popup": "/uview-ui/components/u-popup/u-popup"
   }
 }

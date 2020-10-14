@@ -20,7 +20,7 @@
 					<u-avatar :src='item.touxiang'></u-avatar>
 				</view>
 				<view class="mid flex1">
-					<view class="name">{{item.ygmingcheng}} {{item.bm?"("+item.bm+")":''}}</view>
+					<view class="name"><text class="bold">{{item.ygmingcheng}}</text> {{item.bm?"("+item.bm+")":''}}</view>
 					<view class="text-blue">￥{{item.sum || 0}}</view>
 				</view>
 				<view class="right flex-shrink">

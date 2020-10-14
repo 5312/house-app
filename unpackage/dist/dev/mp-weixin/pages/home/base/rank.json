@@ -1,7 +1,6 @@
 {
   "usingComponents": {
     "a-navbar": "/components/a-base/a-navbar",
-    "u-tabs-swiper": "/uview-ui/components/u-tabs-swiper/u-tabs-swiper",
     "u-gap": "/uview-ui/components/u-gap/u-gap",
     "u-icon": "/uview-ui/components/u-icon/u-icon",
     "u-avatar": "/uview-ui/components/u-avatar/u-avatar",

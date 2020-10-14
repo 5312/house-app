@@ -42,7 +42,8 @@
   color: #606266;
   -webkit-align-self: stretch;
           align-self: stretch;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .u-col-1.data-v-35ace0c0 {
   -webkit-box-flex: 0;

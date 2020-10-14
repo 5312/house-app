@@ -24,10 +24,31 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.tit.data-v-11c4ebf8 {
+  text-align: center;
+  line-height: 2;
+  padding: 20rpx 0 10rpx 0;
+  color: white;
+  background: #07c160;
+}
+.showTa.data-v-11c4ebf8 {
+  text-align: center;
+  width: 400rpx;
+}
+.showTa .li.data-v-11c4ebf8 {
+  border-top: 1px solid #ddd;
+  padding: 30rpx;
+}
+.showTa .li.data-v-11c4ebf8:active {
+  color: #07c160;
+}
+.showTa .li.data-v-11c4ebf8:hover {
+  color: #07c160;
+}
 .reimbursement .add-icon.data-v-11c4ebf8 {
   width: 100rpx;
   height: 100rpx;
-  background: #c8c9cc;
+  background: #19be6b;
   right: 60rpx;
   bottom: 60rpx;
   z-index: 400;

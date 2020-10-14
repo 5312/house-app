@@ -33,7 +33,8 @@
 .uncollected .content .card-wrap .card.data-v-6950e048 {
   padding: 20rpx;
   margin: 0 20rpx 20rpx 20rpx;
-  border-radius: 8rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
   line-height: 1.6;
 }
 .uncollected .content .card-wrap .card .title.data-v-6950e048 {
