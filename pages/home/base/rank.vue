@@ -12,7 +12,7 @@
 				<text>{{currentTime}}</text>
 			</view>
 			<view class="flex a-center height-line-80 j-between padding-lr-40 flex-row bg-white border-bottom" v-if="rankDetail">
-				<view class="flex1">你的业绩为：{{rankDetail.zyeji}}</view>
+				<view class="flex1"><text>{{pageType=='person'?'你的':pageType=='shopGroup'?'组':'店'}}</text>业绩为：{{rankDetail.zyeji}}</view>
 				<view class="flex1">排名为：{{rankDetail.paiming}}</view>
 			</view>
 			<view class="box flex a-center j-start flex-row bg-white padding-lr-40" v-for="(item,index) in cardList" :key='index' v-if="rankDetail">
@@ -98,13 +98,13 @@
 						break
 					case "shopGroup":
 						this.list=this.listShopGroup						
-						this.navbarTitle='店组业绩排名'
+						this.navbarTitle='组业绩排名'
 						this.getS(4)
 						break
 					case "shop":
 						this.list=[]
 						this.getS(3)
-						this.navbarTitle='门店业绩排名'
+						this.navbarTitle='店业绩排名'
 						break
 				}
 			},

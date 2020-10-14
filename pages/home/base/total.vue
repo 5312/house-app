@@ -63,11 +63,11 @@
 			init(){
 				switch(this.pageType){
 					case "shop":
-						this.navbarTitle="门店总业绩"
+						this.navbarTitle="店总业绩"
 						this.getS(3)
 						break
 					case "shopGroup":
-						this.navbarTitle="店组总业绩"
+						this.navbarTitle="组总业绩"
 						this.getS(4)
 						break
 					case "person":

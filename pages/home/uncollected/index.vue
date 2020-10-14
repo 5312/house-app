@@ -124,7 +124,7 @@
 							width: 120rpx;
 							padding-right: 6rpx;
 							.value{
-								color: #6E9FC6;
+								color: #479AFE;
 							}
 						}
 					}

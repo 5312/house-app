@@ -60,19 +60,23 @@
 				return `${item.qu}（${item.list?item.list.length:0}）`
 			},
 			openLocation(item){
+				
 				uni.openLocation({
 				    latitude:item.lat,
 					longitude:item.lng,
+					name:item.dianming,
+					address:item.dizhi,
 				    success: function (res) {
 				        const latitude = res.latitude;
 				        const longitude = res.longitude;
-				        uni.openLocation({
-				            latitude: latitude,
-				            longitude: longitude,
-				            success: function () {
-				                console.log('success');
-				            }
-				        });
+						console.log(res)
+				        // uni.openLocation({
+				        //     latitude: latitude,
+				        //     longitude: longitude,
+				        //     success: function () {
+				        //         console.log('success');
+				        //     }
+				        // });
 				    }
 				});
 			},
