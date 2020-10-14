@@ -104,16 +104,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 = _vm.__map(_vm.cardList, function(item, index) {
-    var $orig = _vm.__get_orig(item)
-
-    var g0 = _vm.$u.timeFormat(item.shijian, "yyyy/mm/dd MM:ss")
-    return {
-      $orig: $orig,
-      g0: g0
-    }
-  })
-
   if (!_vm._isMounted) {
     _vm.e0 = function($event) {
       return _vm.$tool.uniSwitchTab({
@@ -121,15 +111,6 @@ var render = function() {
       })
     }
   }
-
-  _vm.$mp.data = Object.assign(
-    {},
-    {
-      $root: {
-        l0: l0
-      }
-    }
-  )
 }
 var recyclableRender = false
 var staticRenderFns = []

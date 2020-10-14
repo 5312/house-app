@@ -8,7 +8,7 @@
 			<view class="card-wrap">
 				<view class="card bg-white" v-for="(item,index) in cardList" :key='index'>
 					<view class="title">
-						{{$u.timeFormat(item.shijian, 'yyyy/mm/dd MM:ss')}}
+						{{item.shijian/*$u.timeFormat(item.shijian, 'yyyy/mm/dd MM:ss')*/}}
 					</view>
 					<view class="box flex j-between a-center flex-row">
 						<view class="left flex1">
