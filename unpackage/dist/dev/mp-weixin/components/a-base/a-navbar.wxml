@@ -1,1 +1,0 @@
-<view class="a-navbar data-v-6e5c46ba"><u-navbar vue-id="516a38c3-1" title="{{title}}" background="{{({backgroundColor:backgroundColor})}}" border-bottom="{{false}}" is-back="{{isBack}}" back-icon-color="{{backIconColor}}" title-color="#000" custom-back="{{customBack}}" height="{{50}}" class="data-v-6e5c46ba" bind:__l="__l"></u-navbar></view>

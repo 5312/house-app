@@ -1,1 +1,0 @@
-<block wx:if="{{isShow}}"><view class="a-alert fixed tblr flex a-center j-center data-v-e2d9ae4a"><block wx:if="{{title}}"><view class="content border-radius-8 text-white data-v-e2d9ae4a">{{''+title+''}}</view></block></view></block>

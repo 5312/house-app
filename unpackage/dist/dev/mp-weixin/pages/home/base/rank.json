@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "a-navbar": "/components/a-base/a-navbar",
-    "u-gap": "/uview-ui/components/u-gap/u-gap",
-    "u-icon": "/uview-ui/components/u-icon/u-icon",
-    "u-avatar": "/uview-ui/components/u-avatar/u-avatar",
-    "u-picker": "/uview-ui/components/u-picker/u-picker"
-  }
-}

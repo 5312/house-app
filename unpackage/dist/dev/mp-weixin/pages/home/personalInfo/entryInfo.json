@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "a-navbar": "/components/a-base/a-navbar",
-    "a-section": "/components/a-base/a-section",
-    "u-gap": "/uview-ui/components/u-gap/u-gap"
-  }
-}

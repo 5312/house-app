@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "a-navbar": "/components/a-base/a-navbar",
-    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
-    "a-calendar": "/components/a-base/a-calendar"
-  }
-}
