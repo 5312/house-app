@@ -12,10 +12,13 @@
 				<view class="info-box">
 					<view class="line">上班时间：{{workTimeRocord && workTimeRocord.list && workTimeRocord.list.length 
 						? workTimeRocord.list[0].addtime:'未打卡'}}</view>
+						<view class="line">打卡位置：{{workTimeRocord && workTimeRocord.list && workTimeRocord.list.length
+							? workTimeRocord.list[0].dizhi:'未打卡'}}</view>
 					<view class="line">下班时间：{{workTimeRocord && workTimeRocord.list && workTimeRocord.list.length 
 					    &&	workTimeRocord.list[1] ?workTimeRocord.list[1].addtime:'未打卡'}}</view>
 					<view class="line" v-if="userInfo">当前职务：{{userInfo.gangwei || ''}}</view>
 				</view>
+				<!-- 按钮 -->
 				<view class="count-box flex a-center j-center">
 					<view class="count-bg radius flex  a-center j-center" @click="punchClock" :class="[this.workTimeRocord && this.workTimeRocord.list.length>=2 && 'bg-grey']">
 						<view class="count-text" v-if="!this.workTimeRocord || this.workTimeRocord.list.length<2">打卡</view>
@@ -23,7 +26,7 @@
 					</view>
 				</view>
 				<view class="address-info" v-if="workTimeRocord">
-					{{workTimeRocord && workTimeRocord.dizhi || ''}}
+					{{ workTimeRocord.dizhi.length>0?workTimeRocord.dizhi:''}}
 				</view>
 			</view>
 			<view class="content-3" v-if="current===2">
@@ -219,6 +222,7 @@
 			text-align: center;
 			width: 80%;
 			margin-left: 10%;
+			margin-top:40rpx;
 		}
 
 		.content {
@@ -233,8 +237,7 @@
 				}
 
 				.count-box {
-					margin-top: 40rpx;
-
+					margin: 40rpx 0;
 					.count-bg {
 						box-shadow: 1px 1px 6px 11px #6ce8aa;
 						width: 200rpx;
