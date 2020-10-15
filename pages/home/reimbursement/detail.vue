@@ -177,8 +177,8 @@
 						_this.$tool.uniShowToast({
 							title: msg.msg
 						})
-						_this.$tool.uniSwitchTab({
-							url: `/pages/home/index`
+						_this.$tool.uniRedirectTo({
+							url: `/pages/home/reimbursement/index`
 						})
 					}
 				})
