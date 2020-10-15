@@ -50,12 +50,15 @@
 			<u-form-item class="bg" label-align="right" label="应收佣金:" :label-style="color" label-width='150'>
 				<u-input type="text" :disabled="isDisable" placeholder="" v-model="detail.ysyongjin"></u-input>
 			</u-form-item>
-			<u-form-item class="bg" label-align="right" label="中介类应收佣金:" :label-style="color" label-width='240'>
+			<u-form-item class="bg" label-align="right" label="其他费用:" :label-style="color" label-width='150'>
+				<u-input type="text" :disabled="isDisable" placeholder="" v-model="detail.zjyongjin"></u-input>
+			</u-form-item>
+			<!-- <u-form-item class="bg" label-align="right" label="中介类应收佣金:" :label-style="color" label-width='240'>
 				<u-input type="text" :disabled="isDisable" placeholder="" v-model="detail.zjyongjin"></u-input>
 			</u-form-item>
 			<u-form-item class="bg" label-align="right" label="金融类应收佣金:" :label-style="color" label-width='240'>
 				<u-input type="text" :disabled="isDisable" placeholder="" v-model="detail.jryongjin"></u-input>
-			</u-form-item>
+			</u-form-item> -->
 			<view class="detail">补充条款</view>
 			<view class="bg ta">
 				<u-input type="textarea " height="200" :disabled="isDisable" v-model="detail.beizhu"></u-input>
@@ -105,6 +108,13 @@
 					<view v-if="y != numList.length-1" class="line"></view>
 				</view>
 			</view>
+			<view class="btnq">
+				<u-button type="success" v-if="sh_type <= 2" @click="show = true">撤回申请</u-button>
+			</view>
+			<u-modal v-model="show" mode="center" @confirm="confirm" @cancel="cancel" :mask-close-able="true" title=""
+			 :show-cancel-button="true">
+				<view class="t"> 是否撤回？</view>
+			</u-modal>
 		</u-form>
 	</view>
 </template>
@@ -115,6 +125,8 @@
 		data() {
 			return {
 				detail: null,
+				show: false,
+				sh_type: 0,
 				isDisable: true,
 				th: {
 					fontWeight: '600'
@@ -133,7 +145,7 @@
 		},
 		onLoad(options) {
 			options.id && this.getDetail(options.id)
-			
+
 		},
 		methods: {
 			getDetail(id) {
@@ -146,10 +158,31 @@
 					success: (res) => {
 						this.detail = res
 						this.numList = res.shenpi;
+						this.sh_type = res.cjtype;
 					}
 				})
 			},
-			
+			confirm() { //确认
+				let _this = this
+				this.$tool.uniRequest({
+					url: 'chengjiao/backsp/',
+					method: 'GET',
+					params: {
+						id: this.id,
+						cjbianhao:this.detail.cjbianhao
+					},
+					success: function(res, msg) {
+
+						_this.$tool.uniShowToast({
+							title: msg.msg
+						})
+						_this.$tool.uniSwitchTab({
+							url: `/pages/home/index`
+						})
+					}
+				})
+
+			},
 		}
 	}
 </script>
@@ -161,18 +194,25 @@
 		display: inline-block;
 		vertical-align: middle;
 	}
-	.col{
-		color:#888888;
+
+	.col {
+		color: #888888;
+	}
+	.t{
+		text-align: center;
 	}
 	.warning {
 		background-color: #FD9640;
 	}
-	.bohui{
-		color:#FD9640;
+
+	.bohui {
+		color: #FD9640;
 	}
+
 	.success {
 		background-color: #08C081;
 	}
+
 	.icon {
 		position: absolute;
 		right: -8rpx;
@@ -180,26 +220,35 @@
 		border-radius: 50%;
 		/* box-shadow: 1px 1px 1px 1px #ddd; */
 	}
+
 	.fixheig {
 		height: 100rpx;
 		margin: 30rpx 0;
 		white-space: nowrap;
 		text-align: right;
-		width:200rpx;
+		width: 200rpx;
 		overflow: hidden;
 	}
+
 	.height {
 		height: 480rpx;
 		overflow: auto;
 	}
 
+	.btnq {
+		width: 85%;
+		margin: 0rpx auto;
+		padding: 0 0 100rpx;
+	}
+
 	label {
 		color: #ddd;
 	}
-.titles {
-			font-size: 32rpx;
-			text-align: left;
-		}
+
+	.titles {
+		font-size: 32rpx;
+		text-align: left;
+	}
 
 	.bottom {
 		margin-bottom: 100rpx;
@@ -228,6 +277,7 @@
 		line-height: 50rpx;
 		margin-right: 80rpx;
 	}
+
 	.line {
 		border: 1px solid #ddd;
 		width: 65rpx;
@@ -235,9 +285,11 @@
 		left: 50rpx;
 		transform: rotate(90deg);
 	}
-	.tl{
+
+	.tl {
 		text-align: left;
 	}
+
 	.bg {
 		background-color: #fff;
 
