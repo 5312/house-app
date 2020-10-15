@@ -78,6 +78,7 @@
 				})
 			})
 			//#endif  
+			this.cookieLogin();
 		},
 		methods: {
 			confirm() {
@@ -123,13 +124,24 @@
 						this.$tool.uniSetStorage('token', res.Accept)
 						this.$tool.uniSetStorage('userId', res.id)
 						this.$tool.uniSetStorage('userInfo', res)
+						this.$tool.uniSetStorage('ygbianhao',res.ygbianhao)
 						this.$tool.uniReLaunch({
 							url: "/pages/home/index"
 						})
 					}
 				})
 			},
-
+			cookieLogin(){
+				const token = this.$tool.uniGetStorage('token');
+				const userId = this.$tool.uniGetStorage('userId');
+				const userInfo = this.$tool.uniGetStorage('userInfo');
+				this.bianhao = this.$tool.uniGetStorage('ygbianhao');
+				if(token && userId && userInfo){
+					this.$tool.uniReLaunch({
+						url: "/pages/home/index"
+					})
+				}
+			}
 		}
 	}
 </script>

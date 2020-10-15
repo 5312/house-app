@@ -47,5 +47,6 @@ export default {
 				success:resolve,
 			})
 		})
-	}
+	},
+	
 }

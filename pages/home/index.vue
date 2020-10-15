@@ -159,7 +159,13 @@
 			}
 		},
 		onLoad(){
-			this.userInfo=this.$tool.uniGetStorage('userInfo')
+			this.userInfo=this.$tool.uniGetStorage('userInfo');
+			const token = this.$tool.uniGetStorage('token')		
+			if(!token){
+				this.$tool.uniReLaunch({
+					url: "/pages/login/index"
+				})
+			}
 			this.init()
 		},
 		methods:{
