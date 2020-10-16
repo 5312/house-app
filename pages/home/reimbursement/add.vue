@@ -300,7 +300,13 @@
 							required: true,
 							message: '请选择中介类费用',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							validator:(ruels ,value,callback)=>{
+								if(value){
+									return true
+								}
+								return false
+							}
+							//trigger: ['blur', 'change'],
 						},
 					],
 				},
@@ -489,7 +495,7 @@
 			refsSubmit() {
 				//console.log(this.form)
 				this.$refs.uForm.validate(valid => {
-					//console.log(valid)
+					console.log(valid,this.form)
 					if (valid) {
 						console.log('验证成功')
 						this.submit();
