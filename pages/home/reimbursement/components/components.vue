@@ -159,6 +159,10 @@
 			},
 			add() {
 				if(this.types != 2){
+					if(this.form.pay === undefined) {
+						this.$u.toast(`请输入金额`);
+						return 
+					} 
 					if(this.form.price === undefined) {
 						this.$u.toast(`请输入金额`);
 						return 

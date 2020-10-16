@@ -211,7 +211,7 @@
 					fwleixingLabel: [ // 必填规则
 						{
 							required: true,
-							message: '请填写房屋类型',
+							message: '请选择房屋类型',
 							// blur和change事件触发检验
 							trigger: ['blur', 'change'],
 						},
@@ -282,7 +282,7 @@
 					cjtime: [ // 必填规则
 						{
 							required: true,
-							message: '请填写成交时间',
+							message: '请选择成交时间',
 							// blur和change事件触发检验
 							trigger: ['blur', 'change'],
 						},
