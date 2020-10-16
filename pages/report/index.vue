@@ -11,7 +11,7 @@
 				<u-dropdown-list :dropdownList='dropdownList' @change='dropdownChange'></u-dropdown-list>
 				<u-notice-bar mode="horizontal" :list="list"></u-notice-bar>
 			</view>
-			<view class="list-wrap">
+			<view class="list-wrap" v-if="shop">
 				<view v-for="(x,y) in shop" class="list border-bottom flex a-start j-start flex-row" @click="toPage(x)">
 					<view class="left flex-shrink">
 						<image :src="x.img" class="img"></image>
@@ -33,18 +33,22 @@
 					</view>
 				</view>
 			</view>
+			<view v-if="!shop" class="empty">
+				<u-empty  text="数据为空" mode="data"></u-empty>
+			</view>
 		</view>
 	</view>
 
 </template>
 
 <script>
+	import api from '@/utils/api/info.js'
 	export default {
 		data() {
 			return {
-				pageNum:1,//分页
-				total:null,//总数
-				intPage:null,//当前
+				pageNum: 1, //分页
+				total: null, //总数
+				intPage: null, //当前
 				searchVal: '',
 				dropdownList: [{
 						show: false,
@@ -81,130 +85,137 @@
 				count: 0,
 				list: [
 					'暂时没有推送消息'
-				]
+				],
+				param: null,
+				isPush:false,
 			}
 		},
 		onLoad() {
-			console.log("report,xxxxxxx")
 			this.init()
 		},
 		onPullDownRefresh() {
 			console.log("下拉了")
-			/* this.pageNum = 1
-			this.getList() */
 		},
 		onReachBottom() {
-			console.log("触底了")
+			this.isPush = true;
 			if (this.intPage < this.total) {
 				this.pageNum += 1
 				this.getList()
+			}else{
+				this.isPush = false;
 			}
 		},
 		methods: {
 			init() {
 				this.getList()
 			},
-			getList() {
-				let quyu, wuyelx, xlpzt = ''
-				console.log(this.dropdownList)
+			selectParams() {
+				let a ={
+					0:'',
+					1:'',
+					2:''
+				}; //['quyu','wuyelx','xlpzt']
 				this.dropdownList.forEach((item, i) => {
-					switch (i) {
-						case 0:
-							if (item.options && item.options.length > 0) {
-								item.options.forEach(val => {
-									if (val.select) quyu = val.id
-								})
+					if (item.options && item.options.length > 0) {
+						item.options.forEach(val => {
+							if (val.select) {
+								a[i]= i==0?val.id : val.lxid
 							}
-						case 1:
-							if (item.options && item.options.length > 0) {
-								item.options.forEach(val => {
-									if (val.select) wuyelx = val.id
-								})
-							}
-
-						case 2:
-							if (item.options && item.options.length > 0) {
-								item.options.forEach(val => {
-									if (val.select) xlpzt = val.id
-								})
-							}
-						default:
-							break
+						})
 					}
 				})
-				this.$tool.uniRequest({
-					url: "xinfang/ysfy",
-					method: 'GET',
-					params: {
-						quyu,
-						wuyelx,
-						xlpzt,
-						sousuo: this.searchVal,
-						p:this.pageNum,//分页
-					},
-					success: (res) => {
-						this.intPage  = res.intPage;//当前页
-						this.total = res.totalpage;//总页数
+				this.param = [a[0], a[1], a[2]]
+			},
+			getList() {
+				this.selectParams();
+				this.isSelectPush()
+				const params = {
+					quyu: this.param[0],
+					wuyelx: this.param[1],
+					xlpzt: this.param[2],
+					sousuo: this.searchVal,
+					p: this.pageNum, //分页
+				};
+				
+				api.xinFang(params).then(res => {
+					this.intPage = res.intPage; //当前页
+					this.total = res.totalpage; //总页数
+					if(this.isSelectPush() ||  !this.searchVal){
+						console.log('触底加载')
 						this.shop.push(...res.ysfang || []);
-						console.log(this.shop)
-						this.count += 1
-						if (this.count > 1) return
-						this.dropdownList = [{
-								show: false,
-								options: [{
-									id: 0,
-									text: '全部区域',
-									value: '',
-									type: 'area',
-									select: false
-								}]
-							},
-							{
-								show: false,
-								options: [{
-									id: 0,
-									text: '全部类型',
-									value: '',
-									type: 'type',
-									select: false
-								}]
-							},
-							{
-								show: false,
-								options: [{
-									id: 0,
-									text: '全部状态',
-									value: '',
-									type: 'status',
-									select: false
-								}]
-							}
-						]
-						res.quyu.forEach(item => {
-							let obj = item
-							obj.text = item.xzqming
-							obj.value = item.id
-							obj.select = false
-							obj.type = 'area'
-							this.dropdownList[0].options.push(obj)
-						})
-						res.xlpzt.forEach(item => {
-							let obj = item
-							obj.text = item.lxming
-							obj.value = item.id
-							obj.select = false
-							obj.type = 'status'
-							this.dropdownList[2].options.push(obj)
-						})
-						res.wuyelx.forEach(item => {
-							let obj = item
-							obj.text = item.lxming
-							obj.value = item.id
-							obj.select = false
-							obj.type = 'type'
-							this.dropdownList[1].options.push(obj)
-						})
+					}else{
+						console.log('筛选加载')
+						this.shop = res.ysfang;
 					}
+					console.log(params.p,this.shop.length);
+					this.isPush = false;
+					this.count += 1
+					if (this.count > 1) return
+					this.select(res);
+				})
+			},
+			isSelectPush(){
+				if(this.isPush){
+					return true;//触底
+				}
+				this.pageNum = 1;
+				return false;
+			},
+			select(res) {
+				this.dropdownList = [{
+						show: false,
+						options: [{
+							id: 0,
+							text: '全部区域',
+							value: '',
+							type: 'area',
+							select: false
+						}]
+					},
+					{
+						show: false,
+						options: [{
+							id: 0,
+							text: '全部类型',
+							value: '',
+							type: 'type',
+							select: false
+						}]
+					},
+					{
+						show: false,
+						options: [{
+							id: 0,
+							text: '全部状态',
+							value: '',
+							type: 'status',
+							select: false
+						}]
+					}
+				]
+				res.quyu.forEach(item => {
+					let obj = item
+					obj.text = item.xzqming
+					obj.value = item.id
+					obj.select = false
+					obj.type = 'area'
+					this.dropdownList[0].options.push(obj)
+				})
+				res.xlpzt.forEach(item => {
+					let obj = item
+					obj.text = item.lxming
+					obj.value = item.id
+					obj.select = false
+					obj.type = 'status'
+					this.dropdownList[2].options.push(obj)
+				})
+				res.wuyelx.forEach(item => {
+					let obj = item
+					obj.text = item.lxming
+					obj.value = item.id
+					obj.select = false
+					obj.type = 'type'
+					this.dropdownList[1].options.push(obj)
 				})
 			},
 			toPage(item) {
@@ -227,7 +238,9 @@
 	* {
 		font-size: 32rpx;
 	}
-
+	.empty{
+		margin-top:40rpx;
+	}
 	.flex-dropdown {
 		left: 0;
 		right: 0;

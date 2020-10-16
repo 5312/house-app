@@ -5,6 +5,9 @@
 			<a-navbar title="新增报单" @back="$tool.uniRedirectTo({url:'/pages/home/reimbursement/index'})"></a-navbar>
 			<view class="main">
 				<u-form class="form" :model="form" ref="uForm" :error-type="errorType">
+					<view class="bold lineTitle">
+						<u-icon name="tags"></u-icon><text class="titl">填写信息</text>
+					</view>
 					<u-form-item class="bg" label-width='150' label-align='rigth' label="报单类型:">
 						<view>{{leixing}}</view>
 					</u-form-item>
@@ -49,6 +52,9 @@
 					</u-form-item>
 					<u-gap height="40" bg-color="#F8F8F8"></u-gap>
 					<!--end -->
+					<view class="bold lineTitle">
+						<u-icon name="list"></u-icon><text class="titl">选择费用</text>
+					</view>
 					<!-- 中介类费用 -->
 					<u-cell-group>
 						<u-cell-item :required='true' prop='zjinfos' title="中介类费用" value="" :arrow="false" @click='commAdd = true;comtype=1'>
@@ -249,6 +255,9 @@
 							message: '请填写业主电话',
 							// blur和change事件触发检验
 							trigger: ['blur', 'change'],
+							validator: (rule ,value ,callback) => {
+							  return this.$u.test.mobile(value)
+							}
 						},
 					],
 					khxingming: [ // 必填规则
@@ -265,6 +274,9 @@
 							message: '请填写客户电话',
 							// blur和change事件触发检验
 							trigger: ['blur', 'change'],
+							validator: (rule ,value ,callback) => {
+							  return this.$u.test.mobile(value)
+							}
 						},
 					],
 					cjtime: [ // 必填规则
@@ -286,7 +298,7 @@
 					ysyongjin: [ // 必填规则
 						{
 							required: true,
-							message: '请填写成交业绩',
+							message: '请选择中介类费用',
 							// blur和change事件触发检验
 							trigger: ['blur', 'change'],
 						},
@@ -522,13 +534,19 @@
 	* {
 		font-size: 30rpx;
 	}
-
+	.lineTitle{
+		padding:20rpx;
+		background-color: #fff;
+		border-bottom: 1px solid #ddd;
+	}
 	.btnl {
 		border: none;
 		width: 520rpx;
 		height: 60rpx;
 	}
-
+	.titl{
+		margin-left: 20rpx;
+	}
 	.tit {
 		width: 100%;
 		padding: 30rpx 150rpx;
@@ -554,7 +572,7 @@
 	}
 
 	.form {
-		border-radius: 20rpx;
+		// border-radius: 20rpx;
 		overflow: hidden;
 	}
 

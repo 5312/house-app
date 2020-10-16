@@ -36,10 +36,10 @@
 					<a-calendar ref='calendarDom' @getNowDate='getNowDate' :dateStatusList='dateStatusList'></a-calendar>
 				</view>
 				<view class="record-time">
-					<view class="line border-bottom border-top">上班：{{currentWorkTime && currentWorkTime.am &&
-						currentWorkTime.am.addtime || '无记录'}}</view>
-					<view class="line border-bottom">下班：{{ currentWorkTime && currentWorkTime.pm &&
-						currentWorkTime.pm.addtime || '无记录'}}</view>
+					<view class="line border-bottom border-top">上班：{{currentWorkTime && currentWorkTime[0].am &&
+						currentWorkTime[0].am.addtime || '无记录'}}</view>
+					<view class="line border-bottom">下班：{{ currentWorkTime && currentWorkTime[1].pm &&
+						currentWorkTime[1].pm.addtime || '无记录'}}</view>
 					<view class="line-info">提示：未审核考勤将不计算工资，请联系上一级及时审核！</view>
 				</view>
 			</view>
@@ -197,7 +197,7 @@
 					},
 					success: (res) => {
 						if (isDay) {
-							this.currentWorkTime = res && res[0] || null
+							this.currentWorkTime = res || null
 						} else {
 							this.dateStatusList = res || []
 						}

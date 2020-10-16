@@ -48,5 +48,15 @@ export default {
 			})
 		})
 	},
-	
+	//新房
+	xinFang(params){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'xinfang/ysfy',
+				method:'GET',
+				params,
+				success:resolve,
+			})
+		})
+	},
 }
