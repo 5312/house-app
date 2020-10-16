@@ -5,11 +5,11 @@
 			<u-gap height="12"></u-gap>
 			<u-form class="form" :model="form" ref="uForm" v-if="form">
 				<u-form-item class="bg" label-width='150' label-align='rigth' label="联系电话">
-					<u-input v-model="form.dianhua" @click='keyNum = true' :disabled="!isEdit" placeholder='' />
-					<u-keyboard :mask="false" ref="uKeyboard" @change="valChange" @backspace="backspace" mode="number" v-model="keyNum"></u-keyboard>
+					<u-input v-model="form.dianhua" :disabled="!isEdit"  placeholder='' type="number" />
+					<!-- <u-keyboard :mask="false" ref="uKeyboard" @change="valChange" @backspace="backspace" mode="number" v-model="keyNum"></u-keyboard> -->
 				</u-form-item>
 				<u-form-item class="bg" label-width='150' label-align='rigth' label="邮编">
-					<u-input v-model="form.yzbm" :disabled="!isEdit" placeholder='' />
+					<u-input v-model="form.yzbm" type="number" :disabled="!isEdit" placeholder='' />
 				</u-form-item>
 
 				<u-form-item class="bg" label-width='150' label-align='rigth' label="家庭住址">

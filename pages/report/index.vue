@@ -140,7 +140,7 @@
 				api.xinFang(params).then(res => {
 					this.intPage = res.intPage; //当前页
 					this.total = res.totalpage; //总页数
-					if(this.isSelectPush() ||  !this.searchVal){
+					if(this.isSelectPush()){
 						console.log('触底加载')
 						this.shop.push(...res.ysfang || []);
 					}else{

@@ -2,7 +2,8 @@
 	<view class="shop-transfer-application">
 		<a-navbar title="离职申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 		<view class="content">
-			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' v-if="form">
+			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' v-if="form"
+			 :error-type="errorType">
 				<view class="title bold u-border-bottom">
 					<u-icon size="28" name="man-add" class="mar"></u-icon><text>基本信息</text>
 				</view>
@@ -26,49 +27,49 @@
 				<view class="title bold u-border-bottom ">
 					<u-icon size="28" name="calendar" class="mar"></u-icon><text>操作信息</text>
 				</view>
-				<u-form-item label="离职类型">
+				<u-form-item label="离职类型" :required="true" prop='lizhiyyName'>
 					<u-input v-model="form.lizhiyyName" placeholder="请选择离职类型" type="select" @click="actionSheet('lizhiyy')" />
 					<u-select v-model="lizhiyy" :list="form.lizhiyy" @confirm="confirm1"></u-select>
 
 				</u-form-item>
-				<u-form-item label="离职时间">
+				<u-form-item label="离职时间" :required="true" prop='lizhitime'>
 					<u-input v-model="form.lizhitime" placeholder="请选择离职时间" type="select" @click="isShowCalendar = true" />
 					<u-calendar v-model="isShowCalendar" max-date='40000' mode="date" @change='calendarChange' :isAceClick='true'></u-calendar>
 
 				</u-form-item>
 
-				</u-form-item>
-				<u-form-item label="档案是否在公司">
+				
+				<u-form-item label="档案是否在公司" :required="true" prop='dashifou'>
 					<u-radio-group v-model="form.dashifou" @change="dashifouChange">
 						<u-radio v-for="(item, index) in leaveStatusList" :key="index" :name="item.value" shape="circle">
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
 				</u-form-item>
-				<u-form-item label="房源接收人">
+				<u-form-item label="房源接收人" :required="true" prop='fzouName'>
 					<u-input v-model="form.fzouName" placeholder="请选择房源接收人" type="select" @click="actionSheet('fzou')" />
 					<u-select v-model="fzou" :list="form.yhlist" @confirm="confirm4"></u-select>
 
 				</u-form-item>
-				<u-form-item label="客源接收人">
+				<u-form-item label="客源接收人" :required="true" prop='yzouName'>
 					<u-input v-model="form.yzouName" placeholder="请选择客源接收人" type="select" @click="actionSheet('yzou')" />
 					<u-select v-model="yzou" :list="form.yhlist" @confirm="confirm5"></u-select>
 
 				</u-form-item>
-				<u-form-item label="银行卡类型">
+				<u-form-item label="银行卡类型" :required="true" prop='bankname'>
 					<u-input v-model="form.bankname" placeholder="请选择银行卡类型" type="select" @click="actionSheet('bankname')" />
 					<u-select v-model="bankname" :list="form.yinhang" @confirm="confirm3"></u-select>
 
 				</u-form-item>
-				<u-form-item label="银行卡号">
-					<u-input v-model="form.banknum" @click='keyNum = true' placeholder="请输入银行卡号" type="text" />
-					<u-keyboard :mask="false" ref="uKeyboard" @change="valChange" @backspace="backspace" v-model="keyNum"></u-keyboard>
+				<u-form-item label="银行卡号" :required="true" prop='banknum'>
+					<u-input v-model="form.banknum"  placeholder="请输入银行卡号" type="number" />
+					<!-- <u-keyboard :mask="false" ref="uKeyboard" @change="valChange" @backspace="backspace" v-model="keyNum"></u-keyboard> -->
 				</u-form-item>
-				<u-form-item label="离职原因">
+				<u-form-item label="离职原因" :required="true" prop='bdyuanyin'>
 					<u-input v-model="form.bdyuanyin" type='textarea' />
 				</u-form-item>
 			</u-form>
-			<u-button class="custom-style" @click="submit">提交</u-button>
+			<u-button class="custom-style" @click="refsSubmit">提交</u-button>
 		</view>
 	</view>
 </template>
@@ -77,6 +78,7 @@
 	export default {
 		data() {
 			return {
+				errorType: ['message'],
 				keyNum: false,
 				lizhiyy: false,
 				isShowCalendar: false,
@@ -97,8 +99,74 @@
 				kd: false,
 				portAccept: '',
 				form: {
-					banknum:''
-					
+					banknum: ''
+
+				},
+				rules: {
+					lizhiyyName:[ // 必填规则
+						{
+							required: true,
+							message: '请选择离职类型',
+							// blur和change事件触发检验
+							trigger: ['blur', 'change'],
+						},
+					],
+					lizhitime:[ // 必填规则
+						{
+							required: true,
+							message: '请选择离职时间',
+							// blur和change事件触发检验
+							trigger: ['blur', 'change'],
+						},
+					],
+					dashifou:[ // 必填规则
+						{
+							required: true,
+							message: '请选择',
+							// blur和change事件触发检验
+							//trigger: ['blur', 'change'],
+						},
+					],
+					fzouName:[ // 必填规则
+						{
+							required: true,
+							message: '请选择房源接受人',
+							// blur和change事件触发检验
+							trigger: ['blur', 'change'],
+						},
+					],
+					yzouName:[ // 必填规则
+						{
+							required: true,
+							message: '请选择客源接受人',
+							// blur和change事件触发检验
+							trigger: ['blur', 'change'],
+						},
+					],
+					bankname:[ // 必填规则
+						{
+							required: true,
+							message: '请选择银行卡类型',
+							// blur和change事件触发检验
+							trigger: ['blur', 'change'],
+						},
+					],
+					banknum:[ // 必填规则
+						{
+							required: true,
+							message: '请输入银行卡号',
+							// blur和change事件触发检验
+							trigger: ['blur', 'change'],
+						},
+					],
+					bdyuanyin:[ // 必填规则
+						{
+							required: true,
+							message: '请输入离职原因',
+							// blur和change事件触发检验
+							trigger: ['blur', 'change'],
+						},
+					],
 				},
 				portList: [{
 					name: '是'
@@ -142,6 +210,11 @@
 					}
 				]
 			}
+		},
+		// 必须要在onReady生命周期，因为onLoad生命周期组件可能尚未创建完毕
+		onReady() {
+			this.$refs.uForm.setRules(this.rules);
+
 		},
 		onLoad() {
 			this.getDetail()
@@ -220,6 +293,18 @@
 				this.form.aceTime = val.startDate + "~" + val.endDate
 				this.form.gzstime = val.startDate
 				this.form.gzetime = val.endDate
+			},
+			refsSubmit() {
+				//console.log(this.form)
+				this.$refs.uForm.validate(valid => {
+					//console.log(valid)
+					if (valid) {
+						console.log('验证成功')
+						this.submit();
+					} else {
+						console.log('验证失败');
+					}
+				});
 			},
 			submit() {
 				let params = {

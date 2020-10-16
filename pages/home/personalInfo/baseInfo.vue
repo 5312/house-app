@@ -42,7 +42,7 @@
 					<u-calendar v-model="chushengrq" mode="date" @change="calendarChange"></u-calendar>
 				</u-form-item>
 				<u-form-item class="bg" label-width='150' label-align='rigth' label="身份证号">
-					<u-input v-model="form.sfzh"type="number" />
+					<u-input v-model="form.sfzh" type="number" />
 					<!-- <u-keyboard :mask="false" ref="uKeyboard" @change="valChange" @backspace="backspace" mode="number" v-model="keyNum"></u-keyboard> -->
 				</u-form-item>
 			</u-form>
