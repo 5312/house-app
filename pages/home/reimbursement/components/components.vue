@@ -160,7 +160,7 @@
 			add() {
 				if(this.types != 2){
 					if(this.form.pay === undefined) {
-						this.$u.toast(`请输入金额`);
+						this.$u.toast(`请选择缴费人`);
 						return 
 					} 
 					if(this.form.price === undefined) {

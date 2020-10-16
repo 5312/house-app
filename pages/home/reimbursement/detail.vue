@@ -168,7 +168,7 @@
 					url: 'chengjiao/backsp/',
 					method: 'GET',
 					params: {
-						id: this.id,
+						id: this.detail.id,
 						cjbianhao:this.detail.cjbianhao,
 						htbianhao:this.detail.htbianhao
 					},
