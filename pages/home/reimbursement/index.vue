@@ -91,7 +91,6 @@
 		onLoad(option) {
 			if(option.type){
 				this.currentIndex = option.type - 1 || 0;
-				console.log(this.currentIndex)
 			}
 			
 			this.init()
@@ -126,7 +125,7 @@
 			},
 			toDetail(item){
 				this.$tool.uniNavigateTo({
-					url: `/pages/home/reimbursement/detail?id=${item.id}&curr=${this.currentIndex}`
+					url: `/pages/home/reimbursement/detail?id=${item.id}&curr=${this.currentIndex + 1}`
 				})
 			},
 			add(item) {

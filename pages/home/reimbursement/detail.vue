@@ -145,7 +145,7 @@
 		},
 		onLoad(options) {
 			options.id && this.getDetail(options.id)
-			this.curr = options.curr + 1
+			this.curr = options.curr
 		},
 		methods: {
 			getDetail(id) {
