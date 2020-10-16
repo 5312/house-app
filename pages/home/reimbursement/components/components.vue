@@ -159,6 +159,10 @@
 			},
 			add() {
 				if(this.types != 2){
+					if(this.form.project === undefined) {
+						this.$u.toast(`请选择费用项目`);
+						return 
+					} 
 					if(this.form.pay === undefined) {
 						this.$u.toast(`请选择缴费人`);
 						return 
