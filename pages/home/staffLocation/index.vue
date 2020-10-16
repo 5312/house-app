@@ -8,7 +8,7 @@
 		 		</map>
 				
 				<view class="search-input-box flex a-center flex-row j-between absolute">
-					<u-search placeholder="内容" v-model="searchVal" :clearabled="true" :show-action="false" bg-color='#fff'></u-search>
+					<!-- <u-search placeholder="内容" v-model="searchVal" :clearabled="true" :show-action="false" bg-color='#fff'></u-search> -->
 				</view>
 		 	</view>
 			<view class="list">
