@@ -145,7 +145,7 @@
 		},
 		onLoad(options) {
 			options.id && this.getDetail(options.id)
-
+			this.curr = options.curr + 1
 		},
 		methods: {
 			getDetail(id) {
@@ -178,7 +178,7 @@
 							title: msg.msg
 						})
 						_this.$tool.uniRedirectTo({
-							url: `/pages/home/reimbursement/index`
+							url: `/pages/home/reimbursement/index?type=${_this.curr}`
 						})
 					}
 				})

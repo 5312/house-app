@@ -528,7 +528,7 @@
 						})
 						setTimeout(()=>{
 							this.$tool.uniRedirectTo({
-								url: '/pages/home/reimbursement/index'
+								url: `/pages/home/reimbursement/index?type=${params.leixing}`
 							})
 						},2000)
 					}

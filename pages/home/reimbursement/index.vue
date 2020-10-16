@@ -88,7 +88,12 @@
 				this.getList(true)
 			}
 		},
-		onLoad() {
+		onLoad(option) {
+			if(option.type){
+				this.currentIndex = option.type - 1 || 0;
+				console.log(this.currentIndex)
+			}
+			
 			this.init()
 		},
 		methods: {
@@ -121,7 +126,7 @@
 			},
 			toDetail(item){
 				this.$tool.uniNavigateTo({
-					url: `/pages/home/reimbursement/detail?id=${item.id}`
+					url: `/pages/home/reimbursement/detail?id=${item.id}&curr=${this.currentIndex}`
 				})
 			},
 			add(item) {

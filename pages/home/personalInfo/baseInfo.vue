@@ -110,7 +110,7 @@
 							item.value=item.xsshunxu
 							if(item.id===this.form.minzu){
 								this.form.minzu=item.lxming
-								this.form.minzuId=item.id
+								this.form.minzuId=item.lxid
 							}
 						})
 						this.form.hunyin_list.forEach(item=>{
@@ -118,7 +118,7 @@
 							item.value=item.xsshunxu
 							if(item.id===this.form.hunyin){
 								this.form.hunyin=item.lxming
-								this.form.hunyinId=item.id
+								this.form.hunyinId=item.lxid
 							}  
 						})
 						this.form.mianmao_list.forEach(item=>{
@@ -126,7 +126,7 @@
 							item.value=item.xsshunxu
 							if(item.id===this.form.zzmianmao){
 								this.form.zzmianmao=item.lxming
-								this.form.zzmianmaoId=item.id
+								this.form.zzmianmaoId=item.lxid
 							}
 						})
 						this.form.xueli_list.forEach(item=>{
@@ -134,7 +134,7 @@
 							item.value=item.xsshunxu
 							if(item.id===this.form.xueli){
 								this.form.xueli=item.lxming
-								this.form.xueliId=item.id
+								this.form.xueliId=item.lxid
 							}
 						})
 						console.log(this.form)
