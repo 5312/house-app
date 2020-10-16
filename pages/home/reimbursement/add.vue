@@ -44,7 +44,7 @@
 						<u-input v-model="form.dianhua" placeholder="请输入客户电话" :disabled="isDisable" />
 					</u-form-item>
 					<u-form-item class="bg" :required='true' prop="cjjiage" label-width='150' label-align='rigth' label="成交价格:">
-						<u-input v-model="form.cjjiage" placeholder='xxx元' :disabled="isDisable" />
+						<u-input v-model="form.cjjiage" type="number" placeholder='xxx元' :disabled="isDisable" />
 					</u-form-item>
 					<u-form-item class="bg" :required='true' prop="cjtime" label-width='150' label-align='rigth' label="成交时间:">
 						<u-input :selectOpen="show" placeholder="" v-model="form.cjtime" type="select" @click='showSelect("show")' />
