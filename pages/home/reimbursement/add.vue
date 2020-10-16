@@ -108,7 +108,7 @@
 						</u-row>
 					</u-swipe-action>
 					<!-- end -->
-					<u-form-item :required='true' prop="other" class="bg" label-width='150' label-align='rigth' label="其他费用:">
+					<u-form-item   class="bg" label-width='150' label-align='rigth' label="其他费用:">
 						<u-input v-model="form.other + '元'" placeholder='xxx元' :disabled="true" />
 					</u-form-item>
 
@@ -287,14 +287,6 @@
 						{
 							required: true,
 							message: '请填写成交业绩',
-							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
-						},
-					],
-					other: [ // 必填规则
-						{
-							required: true,
-							message: '请填写其他费用',
 							// blur和change事件触发检验
 							trigger: ['blur', 'change'],
 						},
