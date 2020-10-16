@@ -522,13 +522,15 @@
 					url: "fangyuan/addesfy",
 					method: 'POST',
 					params,
-					success: (res) => {
+					success: (res,a) => {
 						this.$tool.uniShowToast({
-							title: "添加成功"
+							title: a.msg
 						})
-						this.$tool.uniRedirectTo({
-							url: '/pages/home/reimbursement/index'
-						})
+						setTimeout(()=>{
+							this.$tool.uniRedirectTo({
+								url: '/pages/home/reimbursement/index'
+							})
+						},2000)
 					}
 				})
 			}

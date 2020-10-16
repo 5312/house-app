@@ -4,7 +4,7 @@
 		<u-form v-if="types != 2" :model="form" ref="uForm">
 			<u-form-item  label-width='150' label-align='left' label="费用项目:">
 				<u-input v-model="form.project" @click='proj = true' placeholder="请选择" type="select" />
-				<u-select v-model='proj' value-name='xsshunxu' label-name='lxming' :list='projectList' @confirm='projectFun'></u-select>
+				<u-select v-model='proj' value-name='lxid' label-name='lxming' :list='projectList' @confirm='projectFun'></u-select>
 			</u-form-item>
 			<u-form-item label-width='150' label-align='left' label="缴费人:">
 				<u-input v-model="form.pay" type="select" placeholder="请选择" @click='payp = true'></u-input>
