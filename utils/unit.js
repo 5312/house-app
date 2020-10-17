@@ -20,8 +20,8 @@ class Popups {
 	performance(params){
 		//金额ysyongjin
 		let ysyongjin = params
-		let s1 = 60 / 100;
-		let s2 = 40 / 100;
+		let s1 = 40 / 100;
+		let s2 = 60 / 100;
 		let percentage = {
 			"1":0.6,
 			"3":0.4

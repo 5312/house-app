@@ -116,8 +116,8 @@
 					}
 				})
 				//金额ysyongjin
-				let s1 = 60 / 100;
-				let s2 = 40 / 100;
+				let s1 = 40 / 100;
+				let s2 = 60 / 100;
 				//理由选择后计算
 				if(val[0].value == 1){//刚选的
 					let num = tt.get('1')*1 + 1
