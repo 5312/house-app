@@ -36,10 +36,8 @@
 					<a-calendar ref='calendarDom' @getNowDate='getNowDate' :dateStatusList='dateStatusList'></a-calendar>
 				</view>
 				<view class="record-time">
-					<view class="line border-bottom border-top">上班：{{currentWorkTime && currentWorkTime[0].am &&
-						currentWorkTime[0].am.addtime || '无记录'}}</view>
-					<view class="line border-bottom">下班：{{ currentWorkTime && currentWorkTime[1].pm &&
-						currentWorkTime[1].pm.addtime || '无记录'}}</view>
+					<view class="line border-bottom border-top">上班：{{ am }}</view>
+					<view class="line border-bottom">下班：{{ pm }}</view>
 					<!-- <view class="line-info">提示：未审核考勤将不计算工资，请联系上一级及时审核！</view> -->
 				</view>
 			</view>
@@ -87,7 +85,24 @@
 			})
 
 		},
-
+		computed:{
+			pm:function(){
+				if(!this.currentWorkTime) return '无记录'
+				if(this.currentWorkTime[1]){
+					if(!this.currentWorkTime[1].pm) return '无记录'
+					return this.currentWorkTime[1].pm.addtime;
+				}
+				return '无记录'
+			},
+			am:function(){
+				if(!this.currentWorkTime) return '无记录'
+				if(this.currentWorkTime[0]){
+					if(!this.currentWorkTime[0].am) return '无记录'
+					return this.currentWorkTime[0].am.addtime;
+				}
+				return '无记录'
+			}
+		},
 		methods: {
 			tapMap(e) {
 				let that = this
