@@ -88,6 +88,18 @@
             "path" : "pages/home/reimbursement/components/components",
             "style" : {}
         }
+        ,{
+            "path" : "pages/report/myReport/myReport",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/home/slider/slider",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/home/slider/yinsi",
+            "style" : {}
+        }
     ],
 	"easycom": {
 		"^a-(.*)": "@/components/a-base/a-$1.vue",

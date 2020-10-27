@@ -73,11 +73,16 @@
 						name:"修改密码",
 						prop:"changePassword"
 					},
-					/* {
+					 {
 						icon:"",
-						name:"退出账号",
-						prop:"loginOut"
-					} */
+						name:"服务协议",
+						prop:"fuwuxieyi"
+					} ,
+					 {
+						icon:"",
+						name:"隐私条款",
+						prop:"yinsitiaokuan"
+					} 
 				],
 				personList:[
 					{
@@ -186,7 +191,6 @@
 			},
 			popHandle(item){
 				console.log(item)
-				
 				switch(item.prop){
 					case 'loginOut':
 						this.loginOut()
@@ -194,6 +198,16 @@
 					case 'changePassword':
 						this.$tool.uniRedirectTo({
 							url:'/pages/home/changePassword'
+						})
+						break
+					case 'fuwuxieyi':
+						this.$tool.uniRedirectTo({
+							url:'/pages/home/slider/slider'
+						})
+						break
+					case 'yinsitiaokuan':
+						this.$tool.uniRedirectTo({
+							url:'/pages/home/slider/yinsi'
 						})
 						break
 					default :
