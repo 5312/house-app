@@ -37,7 +37,7 @@
 				</view>
 				<view class="popup-contet">
 					<view class="pop-line border-bottom flex a-center j-start flex-row" v-for="(item,index) in popList" :key="index" @click="popHandle(item)">
-						<u-icon name="man-add" class="icon"></u-icon>
+						<u-icon :name="item.icon ||'man-add'" class="icon"></u-icon>
 						<view class="label">
 							{{item.name}}
 							<text v-if="item.text" :style="{color:item.textColor || 'black'}">{{item.text}}</text>
@@ -69,17 +69,17 @@
 						name:"修改头像",
 						prop:"changeAvatar"
 					},{
-						icon:"",
+						icon:"lock",
 						name:"修改密码",
 						prop:"changePassword"
 					},
 					 {
-						icon:"",
+						icon:"edit-pen",
 						name:"服务协议",
 						prop:"fuwuxieyi"
 					} ,
 					 {
-						icon:"",
+						icon:"list",
 						name:"隐私条款",
 						prop:"yinsitiaokuan"
 					} 
