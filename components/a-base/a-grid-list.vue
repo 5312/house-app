@@ -38,7 +38,7 @@
 		methods:{
 			toPage(item){
 				console.log(item)
-				if(item.name == '开店申请' || item.name == '闭店申请'){
+				if(item.name == '闭店申请'){
 					uni.showToast({
 						title:'稍后开放',
 						icon:'none'

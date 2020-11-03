@@ -44,5 +44,27 @@ export  default{
 				success:resolve
 			})
 		})
-	}
+	},
+	//开店申请api/rsdangan/postdian
+	dianApplication(params){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'rsdangan/postdian',
+				method:'GET',
+				params,
+				success:resolve
+			})
+		})
+	},
+	//开店详情
+	detail(params){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'Dshenpi/backpostdian',
+				method:'GET',
+				params,
+				success:resolve
+			})
+		})
+	},
 }
