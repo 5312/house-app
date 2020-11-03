@@ -1,6 +1,6 @@
 <template>
 	<view class="shop-transfer-application">
-		<a-navbar title="员工调店申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
+		<a-navbar title="员工开店申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 		<view class="content">
 			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' v-if='form'
 			 :error-type="errorType">
@@ -15,7 +15,7 @@
 					<u-input v-model="form.d_fangzu" placeholder="请输入房租" type="number" />
 				</u-form-item>
 				<u-form-item label="投资金额" :required="true" prop='d_touzu'>
-					<u-input v-model="form.d_touzu" placeholder="请输入投资金额" type="number" />
+					<u-input v-model="form.d_touzi" placeholder="请输入投资金额" type="number" />
 				</u-form-item>
 				<u-form-item label="押金" :required="true" prop='d_yajin'>
 					<u-input v-model="form.d_yajin" placeholder="请输入押金" type="number" />
@@ -49,6 +49,7 @@
 				errorType: ['message'],
 				d_type: false,
 				d_fukuan: false,
+				thisId:null,
 				fuKuan: [ //1季付  1半年  2年付  
 					{
 						label: '季付',
@@ -104,7 +105,7 @@
 							trigger: ['blur', 'change'],
 						},
 					],
-					d_touzu: [ // 必填规则
+					d_touzi: [ // 必填规则
 						{
 							required: true,
 							message: '请输入投资金额',
@@ -161,7 +162,7 @@
 			this.$refs.uForm.setRules(this.rules);
 		},
 		onLoad() {
-			//this.getDetail()
+			this.getDetail()
 		},
 		methods: {
 			actionSheet(type) {
@@ -169,11 +170,14 @@
 			},
 			getDetail() {
 				let _this = this;
-				let data = {
-
-				};
-				api.detail(data).then(res => {
-					console.log(res);
+				let data = {};
+				api.dianApplication(data,'GET').then(res => {
+					console.log(res)
+					setTimeout(() => {
+						this.$tool.uniRedirectTo({
+							url: `/pages/home/shopApply/detail?id=${res.id}`
+						})
+					}, 1000)
 				})
 			},
 			confirm1(e) {
@@ -186,9 +190,18 @@
 			},
 			submit() {
 				let data = this.form;
-				console.log(data);
-				api.dianApplication(data).then(res => {
-					console.log(res)
+				let iThis = this;
+				console.log(data)
+				api.dianApplication(data,'POST').then(res => {
+					iThis.thisId= res.id;
+					this.$tool.uniShowToast({
+						title: "开店申请成功！"
+					})
+					setTimeout(() => {
+						this.$tool.uniRedirectTo({
+							url: `/pages/home/shopApply/detail?id=${res.id}`
+						})
+					}, 1000)
 				})
 			},
 			validataSublime() {

@@ -33,7 +33,7 @@
 
 				</u-form-item>
 				<u-form-item label="调动职务" :required="true" prop='zhiwuName'>
-					<u-input v-model="form.zhiwuName" placeholder="请选择店组名" type="select" @click="actionSheet('zhiwu')" />
+					<u-input v-model="form.zhiwuName" placeholder="请选择调动职务" type="select" @click="actionSheet('zhiwu')" />
 					<u-select v-model="zhiwu" :list="form.zhiwu" @confirm="confirm2"></u-select>
 
 				</u-form-item>
@@ -85,9 +85,6 @@
 							message: '请选择调店时间',
 							// blur和change事件触发检验
 							trigger: ['blur', 'change'],
-							// validator: (rule ,value ,callback) => {
-							//   return this.$u.test.mobile(value)
-							// }
 						},
 					],
 					groupName:[ // 必填规则
@@ -220,7 +217,8 @@
 			},
 			confirm1(e) {
 				this.form.groupName = e[0].label
-				this.form.groupNameId = e[0].value
+				this.form.groupNameId = e[0].value;
+				
 			},
 			confirm2(e) {
 				this.form.zhiwuName = e[0].label

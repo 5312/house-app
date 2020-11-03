@@ -104,6 +104,10 @@
             "path" : "pages/home/shopApply/shopPage",
             "style" : {}
         }
+        ,{
+            "path" : "pages/home/shopApply/detail",
+            "style" : {}
+        }
     ],
 	"easycom": {
 		"^a-(.*)": "@/components/a-base/a-$1.vue",

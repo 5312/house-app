@@ -84,20 +84,23 @@ export default {
 			data: params,
 			header: header,
 			success: (res) => {
-				if (res.data.code == 0) {
-					this.uniShowToast({
-						title: res.data.msg || "请求失败，请重试",
-						icon: "none"
-					})
-				} else if (res.data.code == 1) {
-					success && success(res.data.data,res.data)
-				} else if (res.data.code == -1) {
-					this.uniRemoveStorage('token')
-					this.uniReLaunch({
-						url: "/pages/login/index"
-					})
+				if(!isNoCode){
+					if (res.data.code == 0) {
+						this.uniShowToast({
+							title: res.data.msg || "请求失败，请重试",
+							icon: "none"
+						})
+					} else if (res.data.code == 1) {
+						success && success(res.data.data,res.data)
+					} else if (res.data.code == -1) {
+						this.uniRemoveStorage('token')
+						this.uniReLaunch({
+							url: "/pages/login/index"
+						})
+					}
+				}else{
+					success && success(res.data)
 				}
-
 			},
 			fail: (err) => {
 				this.uniShowToast({

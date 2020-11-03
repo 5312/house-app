@@ -46,11 +46,11 @@ export  default{
 		})
 	},
 	//开店申请api/rsdangan/postdian
-	dianApplication(params){
+	dianApplication(params,method){
 		return new Promise(function(resolve,reject){
 			request({
 				url:'rsdangan/postdian',
-				method:'GET',
+				method:method,
 				params,
 				success:resolve
 			})
@@ -66,5 +66,16 @@ export  default{
 				success:resolve
 			})
 		})
-	},
+	},//rsdangan/backdian撤回申请
+	backPost(params){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'rsdangan/backdian',
+				method:'GET',
+				params,
+				isNoCode:true,
+				success:resolve
+			})
+		})
+	}
 }
