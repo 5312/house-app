@@ -10,12 +10,12 @@
 				</view>
 			</view>
 			
-			<view class=" details  flex  a-center j-between flex-row">
+			<!-- <view class=" details  flex  a-center j-between flex-row">
 				<view>职务：<text class="fw">{{form.zhiwu}}</text></view>
 			</view>
 			<view class="details flex a-center j-between flex-row">
 				<view>部门：<text class="fw">{{ form.bumen }}</text></view>
-			</view>
+			</view> -->
 			<view class=" details flex  a-center j-between flex-row">
 				<view>开店类型：<text class="fw">{{form.d_type}}</text></view>
 			</view>

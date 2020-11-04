@@ -1,8 +1,8 @@
 <template>
 	<view class="shop-transfer-application">
 		<a-navbar title="员工开店申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
-		<view class="content">
-			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' v-if='form'
+		<view class="content" v-show="show">
+			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' v-if='form' 
 			 :error-type="errorType">
 				<!--  -->
 				<view class="title bold u-border-bottom ">
@@ -49,6 +49,7 @@
 				errorType: ['message'],
 				d_type: false,
 				d_fukuan: false,
+				show:false,
 				thisId:null,
 				fuKuan: [ //1季付  1半年  2年付  
 					{
@@ -64,10 +65,9 @@
 						value: 3
 					}
 				],
-				type: [{
-						label: '直营店',
-						value: 1
-					}, {
+				type: [
+					
+					 {
 						label: 'A店 ',
 						value: 2
 					},
@@ -170,14 +170,14 @@
 			},
 			getDetail() {
 				let _this = this;
-				let data = {};
+				let data =this.form
 				api.dianApplication(data,'GET').then(res => {
-					console.log(res)
-					setTimeout(() => {
+					_this.show = true
+					if(res.id){
 						this.$tool.uniRedirectTo({
 							url: `/pages/home/shopApply/detail?id=${res.id}`
 						})
-					}, 1000)
+					}
 				})
 			},
 			confirm1(e) {

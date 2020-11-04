@@ -9,7 +9,7 @@
 					<view>申请时间：{{data.close_time}}</view>
 				</view>
 			</view>
-			<view class=" details  flex  a-center j-between flex-row">
+			<!-- <view class=" details  flex  a-center j-between flex-row">
 				<view>名称：<text class="fw">{{data.ygmingcheng}}</text></view>
 			</view>
 			<view class=" details  flex  a-center j-between flex-row">
@@ -20,20 +20,22 @@
 			</view>
 			<view class=" details  flex  a-center j-between flex-row">
 				<view>职务：<text class="fw">{{data.zhiwu}}</text></view>
-			</view>
-			<view class="details flex a-center j-between flex-row">
+			</view> -->
+			<!-- <view class="details flex a-center j-between flex-row">
 				<view>部门：<text class="fw">{{ data.bumen }}</text></view>
+			</view> -->
+			<view class=" details flex  a-center j-between flex-row">
+				<view>店类型：<text class="fw">{{data.d_type}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>店铺类型：<text class="fw">{{data.d_type}}</text></view>
+				<view>关闭店：<text class="fw">{{data.bmming}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>店铺名称：<text class="fw">{{data.bmming}}</text></view>
+				<view>店地址：<text class="fw">{{data.bmdizhi}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>店铺地址：<text class="fw">{{data.bmdizhi}}</text></view>
+				<view>关闭原因：<text class="fw">{{data.yuanyin}}</text></view>
 			</view>
-			
 		</view>
 		<view class="gtap"></view>
 		<view class="list">
