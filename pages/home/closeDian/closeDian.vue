@@ -26,13 +26,13 @@
 				:key="y+'-coll'"
 				>
 				<view class='card'>
-					<label for="" style="padding:0 40rpx;color:#000">关店原因</label>
+					<!-- <label for="" style="padding:0 40rpx;color:#000">关店原因</label> -->
 					<u-field
 					v-model="item.cause"
 					label=""
 					label-width="0"
 					type="textarea"
-					placeholder="关店原因"
+					placeholder="请输入关店原因"
 					required
 					:error-message="item.msg"
 					@input="inputChange(index,item.cause)"
@@ -93,17 +93,18 @@
 				api.closeDian({
 					dian_id: item.id, //店铺id
 					yuanyin: item.cause//关店原因
-				},'POST').then(res => {
+				},'POST').then(result => {
 					this.$refs.uToast.show({
 						title: '提交成功',
 						type: 'success',
 					})
 					setTimeout(()=>{
 						api.closeDetail({
-							id:res.id
+							id:result.id
 						}).then(res => {
-							res.data.id = res.id
+							res.data.id = result.id
 							sThis.data = res.data
+							console.log(sThis.data)
 						})
 					},2000)
 				})
