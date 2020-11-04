@@ -9,16 +9,16 @@
 					<view>申请时间：{{data.close_time}}</view>
 				</view>
 			</view>
-			<view class=" details old flex  a-center j-between flex-row">
+			<view class=" details  flex  a-center j-between flex-row">
 				<view>名称：<text class="fw">{{data.ygmingcheng}}</text></view>
 			</view>
-			<view class=" details old flex  a-center j-between flex-row">
+			<view class=" details  flex  a-center j-between flex-row">
 				<view>开店时间：<text class="fw">{{data.dian_kaitime}}</text></view>
 			</view>
-			<view class=" details old flex  a-center j-between flex-row">
+			<view class=" details  flex  a-center j-between flex-row">
 				<view>闭店时间：<text class="fw">{{data.close_time}}</text></view>
 			</view>
-			<view class=" details old flex  a-center j-between flex-row">
+			<view class=" details  flex  a-center j-between flex-row">
 				<view>职务：<text class="fw">{{data.zhiwu}}</text></view>
 			</view>
 			<view class="details flex a-center j-between flex-row">

@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap">
-		<a-navbar title="员工开店详情" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
+		<a-navbar title="开店详情" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 		<view class="content">
 			<view class="header">
 				<image class="head" :src="form.touxiang || '../../../static/image/header.jpg'" mode=""></image>
@@ -10,7 +10,7 @@
 				</view>
 			</view>
 			
-			<view class=" details old flex  a-center j-between flex-row">
+			<view class=" details  flex  a-center j-between flex-row">
 				<view>职务：<text class="fw">{{form.zhiwu}}</text></view>
 			</view>
 			<view class="details flex a-center j-between flex-row">

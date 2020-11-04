@@ -1,6 +1,6 @@
 <template>
 <view class="main">
-<a-navbar title="员工闭店申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
+<a-navbar title="闭店申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
 <!-- 内容 -->
 	<view class="wrap" v-if='!data'>
 	<u-toast ref="uToast" />
