@@ -130,9 +130,9 @@
 						img:require("../../static/icon/y.png"),
 						path:"/pages/home/shopApply/shopPage"
 					},{
-						name:"闭店申请",
+						name:"闭店申请", 
 						img:require("../../static/icon/z.png"),
-						path:"/pages/home/reimbursement/index"
+						path:"/pages/home/closeDian/closeDian"
 					},
 				],
 				achievementList:[

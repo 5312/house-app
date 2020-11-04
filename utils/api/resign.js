@@ -77,5 +77,38 @@ export  default{
 				success:resolve
 			})
 		})
+	},
+	//关店申请rsdangan/closedian
+	closeDian(params,method){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'rsdangan/closedian',
+				method,
+				params,
+				success:resolve
+			})
+		})
+	},//关店详细
+	closeDetail(params){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'Dshenpi/backclosedian',
+				method:'GET',
+				params,
+				isNoCode:true,
+				success:resolve
+			})
+		})
+	},//驳回申请
+	backCloseDetail(params){
+		return new Promise(function(resolve,reject){
+			request({
+				url:'rsdangan/backclosedian',
+				method:'GET',
+				params,
+				isNoCode:true,
+				success:resolve
+			})
+		})
 	}
 }

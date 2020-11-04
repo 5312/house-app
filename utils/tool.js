@@ -90,6 +90,7 @@ export default {
 							title: res.data.msg || "请求失败，请重试",
 							icon: "none"
 						})
+						success && success(res.data.code)
 					} else if (res.data.code == 1) {
 						success && success(res.data.data,res.data)
 					} else if (res.data.code == -1) {

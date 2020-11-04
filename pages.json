@@ -108,6 +108,14 @@
             "path" : "pages/home/shopApply/detail",
             "style" : {}
         }
+        ,{
+            "path" : "pages/home/closeDian/closeDian",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/home/closeDian/detail",
+            "style" : {}
+        }
     ],
 	"easycom": {
 		"^a-(.*)": "@/components/a-base/a-$1.vue",

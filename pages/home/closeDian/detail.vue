@@ -1,45 +1,39 @@
 <template>
 	<view class="wrap">
-		<a-navbar title="员工开店详情" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
+		<u-toast ref="uToast" />
 		<view class="content">
 			<view class="header">
-				<image class="head" :src="form.touxiang || '../../../static/image/header.jpg'" mode=""></image>
+				<image class="head" :src="data.touxiang || '../../../static/image/header.jpg'" mode=""></image>
 				<view class="h-right">
-					<view>姓名：{{form.ygmingcheng}}</view>
-					<view>申请时间：{{form.d_time}}</view>
+					<view>负责人：{{data.fuzeren}}</view>
+					<view>申请时间：{{data.close_time}}</view>
 				</view>
 			</view>
-			
 			<view class=" details old flex  a-center j-between flex-row">
-				<view>职务：<text class="fw">{{form.zhiwu}}</text></view>
+				<view>名称：<text class="fw">{{data.ygmingcheng}}</text></view>
+			</view>
+			<view class=" details old flex  a-center j-between flex-row">
+				<view>开店时间：<text class="fw">{{data.dian_kaitime}}</text></view>
+			</view>
+			<view class=" details old flex  a-center j-between flex-row">
+				<view>闭店时间：<text class="fw">{{data.close_time}}</text></view>
+			</view>
+			<view class=" details old flex  a-center j-between flex-row">
+				<view>职务：<text class="fw">{{data.zhiwu}}</text></view>
 			</view>
 			<view class="details flex a-center j-between flex-row">
-				<view>部门：<text class="fw">{{ form.bumen }}</text></view>
+				<view>部门：<text class="fw">{{ data.bumen }}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>开店类型：<text class="fw">{{form.d_type}}</text></view>
+				<view>店铺类型：<text class="fw">{{data.d_type}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>开店地址：<text class="fw">{{form.d_dizhi}}</text></view>
+				<view>店铺名称：<text class="fw">{{data.bmming}}</text></view>
 			</view>
 			<view class=" details flex  a-center j-between flex-row">
-				<view>房租：{{form.d_fangzu}}<text class="fw"></text></view>
+				<view>店铺地址：<text class="fw">{{data.bmdizhi}}</text></view>
 			</view>
-			<view class=" details flex  a-center j-between flex-row">
-				<view>投资金额：{{form.d_touzi}}<text class="fw"></text></view>
-			</view>
-			<view class=" details flex  a-center j-between flex-row">
-				<view>押金：<text class="fw">{{form.d_yajin}}</text></view>
-			</view>
-			<view class="details flex  a-center j-between flex-row">
-				<view>付款方式：{{form.d_fukuan}}</view>
-			</view>
-			<view class="details flex  a-center j-between flex-row">
-				<view>组数：{{form.d_zu}}</view>
-			</view>
-			<view class="details flex  a-center j-between flex-row">
-				<view>人数：{{form.d_ren}}</view>
-			</view>
+			
 		</view>
 		<view class="gtap"></view>
 		<view class="list">
@@ -57,11 +51,18 @@
 <script>
 	import api from "@/utils/api/resign.js"; //api
 	export default {
+		name:'detail',
+		props:{
+			// 点击遮罩是否可以关闭actionsheet
+			data: {
+				type: Object,
+				default: ''
+			},
+		},
 		data() {
 			return {
 				show:false,
-				form:{},
-				current:'1',
+				current:'0',
 				numList: [
 					{
 						name: '店长审核'
@@ -80,30 +81,20 @@
 			}
 		},
 		onLoad(option) {
-			this.id = option.id;
-			this.init();
+			this.current = this.data.d_sh;
 		},
 		methods: {
-			init() {
-				let iThis = this
-				api.detail({
-					id:this.id
-				}).then(res => {
-					console.log(res)
-					iThis.form = res;
-					iThis.current  = res.d_sh 
-				})
-			},
 			confirm(){//确认
 				let _this = this
-				api.backPost({
-					id:this.id,
+				api.backCloseDetail({
+					id:this.data.id,
 				}).then(res=> {
-					console.log(res);
-					_this.$tool.uniShowToast({
-						title:res.msg
+					this.$refs.uToast.show({
+						title: res.msg,
+						type: 'success',
+						isTab:true,
+						url:'/pages/home/index'
 					})
-					_this.$tool.uniSwitchTab({url:`/pages/home/index`})
 				})
 			},
 			backApplication(){//撤回申请
