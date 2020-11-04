@@ -1,7 +1,7 @@
 <template>
 	<view class="shop-transfer-application">
 		<a-navbar title="离职申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
-		<view class="content">
+		<view class="content" v-show="show">
 			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' v-if="form"
 			 :error-type="errorType">
 				<view class="title bold u-border-bottom">
@@ -78,6 +78,7 @@
 	export default {
 		data() {
 			return {
+				show:false,
 				errorType: ['message'],
 				keyNum: false,
 				lizhiyy: false,
@@ -108,7 +109,7 @@
 							required: true,
 							message: '请选择离职类型',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					lizhitime:[ // 必填规则
@@ -116,7 +117,7 @@
 							required: true,
 							message: '请选择离职时间',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					dashifou:[ // 必填规则
@@ -132,7 +133,7 @@
 							required: true,
 							message: '请选择房源接受人',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					yzouName:[ // 必填规则
@@ -140,7 +141,7 @@
 							required: true,
 							message: '请选择客源接受人',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					bankname:[ // 必填规则
@@ -148,7 +149,7 @@
 							required: true,
 							message: '请选择银行卡类型',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					banknum:[ // 必填规则
@@ -245,6 +246,8 @@
 								url: `/pages/home/quitApplication/goout?id=${res.id}`
 							})
 							return;
+						}else{
+							_this.show = true;
 						}
 						res.banknum = '';
 						this.form = res

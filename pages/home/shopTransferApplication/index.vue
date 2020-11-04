@@ -1,7 +1,7 @@
 <template>
 	<view class="shop-transfer-application">
 		<a-navbar title="员工调店申请" @back="$tool.uniSwitchTab({url:'/pages/home/index'})"></a-navbar>
-		<view class="content">
+		<view class="content" v-show="show">
 			<u-form :model="form" ref="uForm" label-width='140rpx' class="form form-top" label-position='top' v-if='form' :error-type="errorType">
 				<view class="title bold u-border-bottom">
 					<u-icon size="28" name="calendar" class="mar"></u-icon><text>基本信息</text>
@@ -72,6 +72,7 @@
 	export default {
 		data() {
 			return {
+				show:false,
 				housed: false,
 				kd: false,
 				errorType:['message'],
@@ -84,7 +85,7 @@
 							required: true,
 							message: '请选择调店时间',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					groupName:[ // 必填规则
@@ -92,7 +93,7 @@
 							required: true,
 							message: '请选择调入组名',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					zhiwuName:[ // 必填规则
@@ -100,7 +101,7 @@
 							required: true,
 							message: '请选择调动职务',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					biandongName:[ // 必填规则
@@ -108,7 +109,7 @@
 							required: true,
 							message: '请选择调动类型',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					diao:[ // 必填规则
@@ -124,7 +125,7 @@
 							required: true,
 							message: '请选择房源接收人',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					yzouName:[ // 必填规则
@@ -132,7 +133,7 @@
 							required: true,
 							message: '请选择客源接收人',
 							// blur和change事件触发检验
-							trigger: ['blur', 'change'],
+							//trigger: ['blur', 'change'],
 						},
 					],
 					bdyuanyin:[ // 必填规则
@@ -193,6 +194,8 @@
 								url: `/pages/home/shopTransferApplication/newpage?id=${res.id}`
 							})
 							return;
+						}else{
+							_this.show = true;
 						}
 
 						this.form = res

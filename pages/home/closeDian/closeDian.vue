@@ -5,16 +5,16 @@
 	<view class="wrap" v-if='!data'>
 	<u-toast ref="uToast" />
 	<u-card 
-	v-for="item,index in list" 
+	v-for="(item,index) in list" 
 	:key="index+'-card'"
-	:title="item.type_name" 
-	:sub-title="item.dian_kaitime" 
+	:title="item.bmming" 
 	:foot-style='foot'
 	>
 		<view class="" slot="body">
-			<view class="card-name">店铺名称：{{item.bmming}}</view>
-			<view class="card-people">负责人：{{item.fuzeren}}</view>
-			<view class="card-address">店铺地址：{{item.bmdizhi}}</view>
+			<view class="card-item">类型：{{item.type_name}}</view>
+			<view class="card-item">负责人：{{item.fuzeren}}</view>
+			<view class="card-item">店铺地址：{{item.bmdizhi}}</view>
+			<view class="card-item">开店时间：{{item.dian_kaitimei}}</view>
 		</view>
 		<view slot="foot">
 			<u-collapse hover-class='active'
@@ -132,7 +132,7 @@
 						return res
 					} else {
 						res.forEach(function(item){
-							item.msg = '请输入关店原因';
+							item.msg = '必须填写';
 						})
 						gThis.list = res;
 					}
@@ -162,6 +162,8 @@
 			
 		}
 	}
-	
+	.card-item{
+		padding:15rpx 0;
+	}
 }
 </style>

@@ -125,9 +125,12 @@
 						this.$tool.uniSetStorage('userId', res.id)
 						this.$tool.uniSetStorage('userInfo', res)
 						this.$tool.uniSetStorage('ygbianhao',res.ygbianhao)
-						this.$tool.uniReLaunch({
-							url: "/pages/home/index"
-						})
+						  
+						if(res != 0 ){
+							this.$tool.uniReLaunch({
+								url: "/pages/home/index"
+							})
+						}
 					}
 				})
 			},

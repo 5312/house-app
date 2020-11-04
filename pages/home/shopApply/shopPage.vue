@@ -172,11 +172,13 @@
 				let _this = this;
 				let data =this.form
 				api.dianApplication(data,'GET').then(res => {
-					_this.show = true
+					//
 					if(res.id){
 						this.$tool.uniRedirectTo({
 							url: `/pages/home/shopApply/detail?id=${res.id}`
 						})
+					}else{
+						_this.show = true
 					}
 				})
 			},

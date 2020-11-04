@@ -85,7 +85,7 @@
 		onLoad(option) {
 			this.current = this.data.d_sh;
 		},
-		methods: {
+		methods: { 
 			confirm(){//确认
 				let _this = this
 				api.backCloseDetail({
