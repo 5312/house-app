@@ -98,65 +98,65 @@
 				money1: false,
 				housed: false,
 				kd: false,
-				portAccept: '',
+				portAccept: null,
 				form: {
-					banknum: ''
-
+					lizhiyyName:null,
+					lizhitime:null,
+					dashifou:null,
+					fzouName:null,
+					yzouName:null,
+					bankname:null,
+					banknum:null,
+					bdyuanyin:null,
 				},
 				rules: {
 					lizhiyyName:[ // 必填规则
 						{
 							required: true,
 							message: '请选择离职类型',
-							// blur和change事件触发检验
-							//trigger: ['blur', 'change'],
+							trigger: ['blur', 'change'],
 						},
 					],
 					lizhitime:[ // 必填规则
 						{
 							required: true,
 							message: '请选择离职时间',
-							// blur和change事件触发检验
-							//trigger: ['blur', 'change'],
+							trigger: ['blur', 'change'],
 						},
 					],
 					dashifou:[ // 必填规则
 						{
 							required: true,
 							message: '请选择',
-							// blur和change事件触发检验
-							//trigger: ['blur', 'change'],
+							trigger: ['blur', 'change'],
+							type:'number'
 						},
 					],
 					fzouName:[ // 必填规则
 						{
 							required: true,
 							message: '请选择房源接受人',
-							// blur和change事件触发检验
-							//trigger: ['blur', 'change'],
+							trigger: ['blur', 'change'],
 						},
 					],
 					yzouName:[ // 必填规则
 						{
 							required: true,
 							message: '请选择客源接受人',
-							// blur和change事件触发检验
-							//trigger: ['blur', 'change'],
+							trigger: ['blur', 'change'],
 						},
 					],
 					bankname:[ // 必填规则
 						{
 							required: true,
 							message: '请选择银行卡类型',
-							// blur和change事件触发检验
-							//trigger: ['blur', 'change'],
+							trigger: ['blur', 'change'],
 						},
 					],
 					banknum:[ // 必填规则
 						{
 							required: true,
 							message: '请输入银行卡号',
-							// blur和change事件触发检验
 							trigger: ['blur', 'change'],
 						},
 					],
@@ -164,7 +164,6 @@
 						{
 							required: true,
 							message: '请输入离职原因',
-							// blur和change事件触发检验
 							trigger: ['blur', 'change'],
 						},
 					],

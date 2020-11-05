@@ -9,7 +9,7 @@
 	:key="index+'-card'"
 	:title="item.bmming" 
 	:foot-style='foot'
-	>
+	> 
 		<view class="" slot="body">
 			<view class="card-item">类型：{{item.type_name}}</view>
 			<view class="card-item">负责人：{{item.fuzeren}}</view>
