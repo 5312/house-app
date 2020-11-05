@@ -64,11 +64,11 @@
 					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in zjinfos" :key="index+'&*'+item" @click="click2"
 					 @open="open2" :options="options">
 						<u-row class="listBlue" gutter="10" justify="around">
-							<u-col span="7" text-align='center'>
-								<view>{{item.project}}</view>
+							<u-col span="4" text-align='right'>
+								<view class="white">{{item.project}}</view>
 							</u-col>
-							<u-col span="4">
-								<view>{{item.price}}元</view>
+							<u-col span="8">
+								<view class="text-center">{{item.price}}元</view>
 							</u-col>
 						</u-row>
 					</u-swipe-action>
@@ -82,7 +82,7 @@
 					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in outstandingList" :key="item.peopleId+'&'+index"
 					 @click="click" @open="open" :options="options">
 						<u-row class="listRed" gutter="10" justify="between">
-							<u-col span="3" text-align='center'>
+							<u-col span="2" text-align='center'>
 								<view>{{item.people}}</view>
 							</u-col>
 							<u-col span="3">
@@ -572,8 +572,13 @@
 		padding: 20rpx;
 		border-bottom: 1px solid blue;
 		margin: 0 20rpx;
+		width:100%;
+		
 	}
-
+	.white{
+		white-space: nowrap;
+		text-align: center;
+	}
 	.tab {
 		margin: 20rpx 0;
 		background: #fff;
