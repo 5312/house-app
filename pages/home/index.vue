@@ -2,11 +2,11 @@
 	<view class="home">
 		<u-navbar :background="headerBg" title="" :is-back="false" :height='50' :border-bottom='false'>
 			<view class="header flex j-between a-center flex-row">
-				<view class="left" @click.stop.prevet="isShowPopup=true">
+				<view class="left" 
+					  @click.stop="isShowPopup=true">
 					<u-icon name="list"></u-icon>
 				</view>
 				<view class="right flex j-end a-center flex-row">
-					<!-- <u-icon name="scan" class="scan-icon"></u-icon> -->
 					<u-icon name="chat"></u-icon>
 				</view>
 			</view>
@@ -25,14 +25,13 @@
 			<view class="relative h100 wrap">
 				<view class="popup-header" v-if="userInfo">
 					<view class="line1 flex a-center j-center flex-row">
-						<u-avatar :src="userInfo.touxiang" 
+						<u-avatar :src="avatar" 
 							size="120" class="flex-shrink"></u-avatar>
 						<view class="line-right flex1">
 							<view class="name">{{userInfo.ygmingcheng}}</view>
 							<view class="Job">{{userInfo.gangwei}}</view>
 						</view>
 					</view>
-					<!-- <view class="line margin-b-20">{{userInfo.bumen}}</view> -->
 					<view class="line">{{userInfo.bumen}}-{{userInfo.ygmingcheng}}{{userInfo.ygbianhao}}</view>
 				</view>
 				<view class="popup-contet">
@@ -160,11 +159,29 @@
 						img:require("../../static/icon/n.png"),
 						path:"/pages/home/rules/index"
 					}
-				]
+				],
+				uploadPath:'http://ming.ydeshui.com/api/ad/homead '
 			}
+		},
+		created() {
+			// 监听从裁剪页发布的事件，获得裁剪结果
+			uni.$on('uAvatarCropper', path => {
+				this.$tool.uniShowLoading({})
+				// 可以在此上传到服务端
+				uni.uploadFile({
+					url: this.uploadPath,
+					filePath: path,
+					name: 'file',
+					complete: res => {
+						this.avatar = path;
+						this.$tool.uniHideLoading()
+					}
+				});
+			});
 		},
 		onLoad(){
 			this.userInfo=this.$tool.uniGetStorage('userInfo');
+			this.avatar = this.userInfo.touxiang;
 			const token = this.$tool.uniGetStorage('token')		
 			if(!token){
 				this.$tool.uniReLaunch({
@@ -189,30 +206,51 @@
 					}
 				})
 			},
+			chooseAvatar() {
+				this.$u.route({
+					url: '/uview-ui/components/u-avatar-cropper/u-avatar-cropper',
+					params: {
+						// 输出图片宽度，高等于宽，单位px
+						destWidth: 300,
+						// 裁剪框宽度，高等于宽，单位px
+						rectWidth: 200,
+						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
+						fileType: 'jpg'
+					}
+				});
+			},
 			popHandle(item){
-				console.log(item)
-				switch(item.prop){
-					case 'loginOut':
-						this.loginOut()
-						break
-					case 'changePassword':
-						this.$tool.uniRedirectTo({
+				const pThis = this;
+				const navigator = {
+					changeAvatar:function(){
+						pThis.chooseAvatar();
+						// let avatar = pThis.userInfo.touxiang;
+						// pThis.$tool.uniRedirectTo({
+						// 	url:`/pages/home/changeAvatar?avatar=${avatar}`,
+							
+						// })
+					}, 
+					loginOut:function(){
+						pThis.loginOut()
+					},
+					changePassword:function(){
+						pThis.$tool.uniRedirectTo({
 							url:'/pages/home/changePassword'
 						})
-						break
-					case 'fuwuxieyi':
-						this.$tool.uniRedirectTo({
+					},
+					fuwuxieyi:function(){
+						pThis.$tool.uniRedirectTo({
 							url:'/pages/home/slider/slider'
 						})
-						break
-					case 'yinsitiaokuan':
-						this.$tool.uniRedirectTo({
+					},
+					yinsitiaokuan:function(){
+						pThis.$tool.uniRedirectTo({
 							url:'/pages/home/slider/yinsi'
 						})
-						break
-					default :
-						break
-				}
+					}
+				};
+				//调用
+				navigator[item.prop]()
 			},
 			loginOut(){
 				this.$tool.uniRequest({

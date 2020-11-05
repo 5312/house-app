@@ -1,122 +1,119 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages	
 		{
-			"path": "pages/login/index"		
-		},{
-			"path": "pages/home/index"		
-		},{
-			"path": "pages/proxy/index"		
-		},{
-			"path": "pages/report/index"		
-		},{
-			"path": "pages/mailList/index"		
-		},{
-			"path": "pages/home/clockIn/index"		
-		},{
-			"path": "pages/home/shopTransferApplication/index"		
-		},{
-			"path": "pages/home/quitApplication/index"		
-		},{
-			"path": "pages/home/personalInfo/index"		
-		},{
-			"path": "pages/home/personalInfo/baseInfo"		
-		},{
-			"path": "pages/home/personalInfo/contactInfo"		
-		},{
-			"path": "pages/home/personalInfo/entryInfo"		
-		},{
-			"path": "pages/home/shopMap/index"		
-		},{
-			"path": "pages/home/staffLocation/index"		
-		},{
-			"path": "pages/home/incomeGu/index"		
-		},{
-			"path": "pages/home/growthTree/index"		
-		},{
-			"path": "pages/home/base/index"		
-		},{
-			"path": "pages/home/base/rank"		
-		},{
-			"path": "pages/home/base/sameMonth"		
-		},{
-			"path": "pages/home/base/total"		
-		},{
-			"path": "pages/home/uncollected/index"		
-		},{
-			"path": "pages/home/rules/index"		
-		},{
-			"path": "pages/home/base/rich"		
-		},{
+			"path": "pages/login/index"
+		}, {
+			"path": "pages/home/index"
+		}, {
+			"path": "pages/proxy/index"
+		}, {
+			"path": "pages/report/index"
+		}, {
+			"path": "pages/mailList/index"
+		}, {
+			"path": "pages/home/clockIn/index"
+		}, {
+			"path": "pages/home/shopTransferApplication/index"
+		}, {
+			"path": "pages/home/quitApplication/index"
+		}, {
+			"path": "pages/home/personalInfo/index"
+		}, {
+			"path": "pages/home/personalInfo/baseInfo"
+		}, {
+			"path": "pages/home/personalInfo/contactInfo"
+		}, {
+			"path": "pages/home/personalInfo/entryInfo"
+		}, {
+			"path": "pages/home/shopMap/index"
+		}, {
+			"path": "pages/home/staffLocation/index"
+		}, {
+			"path": "pages/home/incomeGu/index"
+		}, {
+			"path": "pages/home/growthTree/index"
+		}, {
+			"path": "pages/home/base/index"
+		}, {
+			"path": "pages/home/base/rank"
+		}, {
+			"path": "pages/home/base/sameMonth"
+		}, {
+			"path": "pages/home/base/total"
+		}, {
+			"path": "pages/home/uncollected/index"
+		}, {
+			"path": "pages/home/rules/index"
+		}, {
+			"path": "pages/home/base/rich"
+		}, {
 			"path": "pages/home/reimbursement/index",
-			"enablePullDownRefresh":true
-		},{
-			"path": "pages/home/reimbursement/detail"		
-		},{
-			"path": "pages/home/reimbursement/add"		
-		},{
-			"path": "pages/report/manage"		
-		},{
-			"path": "pages/report/detail"		
-		},{
-			"path": "pages/mailList/index"		
-		},{
-			"path": "pages/mailList/detail"		
-		},{
-			"path": "pages/home/changePassword"		
+			"enablePullDownRefresh": true
+		}, {
+			"path": "pages/home/reimbursement/detail"
+		}, {
+			"path": "pages/home/reimbursement/add"
+		}, {
+			"path": "pages/report/manage"
+		}, {
+			"path": "pages/report/detail"
+		}, {
+			"path": "pages/mailList/index"
+		}, {
+			"path": "pages/mailList/detail"
+		}, {
+			"path": "pages/home/changePassword"
+		}, {
+			"path": "pages/home/shopTransferApplication/newpage",
+			"style": {}
+		}, {
+			"path": "pages/home/quitApplication/goout",
+			"style": {}
+		}, {
+			"path": "pages/approve/shenpi",
+			"style": {}
+		}, {
+			"path": "pages/approve/shenpiDdetail",
+			"style": {}
+		}, {
+			"path": "pages/commissie/commissie",
+			"style": {}
+		}, {
+			"path": "pages/home/reimbursement/components/components",
+			"style": {}
+		}, {
+			"path": "pages/report/myReport/myReport",
+			"style": {}
+		}, {
+			"path": "pages/home/slider/slider",
+			"style": {}
+		}, {
+			"path": "pages/home/slider/yinsi",
+			"style": {}
+		}, {
+			"path": "pages/home/shopApply/shopPage",
+			"style": {}
+		}, {
+			"path": "pages/home/shopApply/detail",
+			"style": {}
+		}, {
+			"path": "pages/home/closeDian/closeDian",
+			"style": {}
+		}, {
+			"path": "pages/home/closeDian/detail",
+			"style": {}
+		}, {
+			"path": "pages/home/changeAvatar"
+		},
+		{
+			"path": "uview-ui/components/u-avatar-cropper/u-avatar-cropper",
+			"style": {
+				"navigationBarTitleText": "头像裁剪",
+				"navigationStyle": "default" ,// 隐藏系统导航栏
+				"navigationBarBackgroundColor": "#000000"
+			}
 		}
-	    ,{
-            "path" : "pages/home/shopTransferApplication/newpage",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/home/quitApplication/goout",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/approve/shenpi",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/approve/shenpiDdetail",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/commissie/commissie",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/home/reimbursement/components/components",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/report/myReport/myReport",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/home/slider/slider",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/home/slider/yinsi",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/home/shopApply/shopPage",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/home/shopApply/detail",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/home/closeDian/closeDian",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/home/closeDian/detail",
-            "style" : {}
-        }
-    ],
+	],
 	"easycom": {
 		"^a-(.*)": "@/components/a-base/a-$1.vue",
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
@@ -129,32 +126,30 @@
 		"navigationStyle": "custom" // 隐藏系统导航栏
 	},
 	"tabBar": {
-	    "color": "#7A7E83",
-	    "selectedColor": "#78C340",
-	    "borderStyle": "black",
-	    "backgroundColor": "#ffffff",
-	    "list": [
-			{
-				"pagePath": "pages/home/index",
-				"iconPath": "static/image/a.png",
-				"selectedIconPath": "static/image/a1.png",
-				"text": "首页"
-			}, {
-				"pagePath": "pages/proxy/index",
-				"iconPath": "static/image/b.png",
-				"selectedIconPath": "static/image/b1.png",
-				"text": "代理查询"
-			}, {
-				"pagePath": "pages/report/index",
-				"iconPath": "static/image/c.png",
-				"selectedIconPath": "static/image/c1.png",
-				"text": "新房"
-			}, {
-				"pagePath": "pages/mailList/index",
-				"iconPath": "static/image/d.png",
-				"selectedIconPath": "static/image/d1.png",
-				"text": "通讯录"
-			}
-		]
+		"color": "#7A7E83",
+		"selectedColor": "#78C340",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/home/index",
+			"iconPath": "static/image/a.png",
+			"selectedIconPath": "static/image/a1.png",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/proxy/index",
+			"iconPath": "static/image/b.png",
+			"selectedIconPath": "static/image/b1.png",
+			"text": "代理查询"
+		}, {
+			"pagePath": "pages/report/index",
+			"iconPath": "static/image/c.png",
+			"selectedIconPath": "static/image/c1.png",
+			"text": "新房"
+		}, {
+			"pagePath": "pages/mailList/index",
+			"iconPath": "static/image/d.png",
+			"selectedIconPath": "static/image/d1.png",
+			"text": "通讯录"
+		}]
 	}
 }
